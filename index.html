@@ -87,9 +87,17 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0efe9;color:#1a1
     </div>
     <span class="hsub" id="hdsub">AI Copy + Poster Generator</span>
   </div>
-  <div class="ltgl">
-    <button class="active" onclick="setLang('en')">EN</button>
-    <button onclick="setLang('zh')">中文</button>
+  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+    <!-- Style Library Button -->
+    <button onclick="openLibModal()" id="lib-hdr-btn" style="display:flex;align-items:center;gap:7px;background:transparent;border:1px solid rgba(123,167,196,.4);color:rgba(255,255,255,.75);padding:6px 13px;cursor:pointer;font-family:inherit;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;transition:all .18s;white-space:nowrap" onmouseover="this.style.borderColor='#7ba7c4';this.style.color='#7ba7c4'" onmouseout="this.style.borderColor='rgba(123,167,196,.4)';this.style.color='rgba(255,255,255,.75)'">
+      <i class="ti ti-books" style="font-size:14px"></i>
+      <span id="lib-hdr-lbl">Style Library</span>
+      <span id="lib-count" style="background:#7ba7c4;color:#fff;font-size:8px;font-weight:700;border-radius:9px;padding:1px 7px;min-width:18px;text-align:center">0</span>
+    </button>
+    <div class="ltgl">
+      <button class="active" onclick="setLang('en')">EN</button>
+      <button onclick="setLang('zh')">中文</button>
+    </div>
   </div>
 </div>
 
@@ -124,14 +132,14 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0efe9;color:#1a1
       <div class="fg"><label id="l-ct">Register / Contact</label><input id="fcontact" placeholder="Scan QR to register"></div>
     </div>
   </div>
-  <!-- Speakers -->
+  <!-- Extras -->
+  <div class="sbs" style="border:none">
   <div class="sbs">
     <div class="sbh" id="s-spk">Speakers</div>
     <div id="spk-list"></div>
     <button class="badd" id="addSpkBtn" onclick="addSpk()"><i class="ti ti-plus" style="font-size:12px"></i><span id="addSpkLbl">Add Speaker</span></button>
   </div>
-  <!-- Extras -->
-  <div class="sbs" style="border:none">
+
     <div class="sbh" id="s-ex">Extras</div>
     <div class="fg"><label id="l-ex">Highlights / Perks</label><input id="fex" placeholder="Free admissions guide · Limited to 30 seats"></div>
     <div style="margin-top:10px">
@@ -196,7 +204,69 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0efe9;color:#1a1
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- Library Modal -->
+<div id="lib-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);align-items:center;justify-content:center">
+  <div style="background:#fff;width:min(680px,96vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,.35)">
+    <div style="background:#0e1117;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #7ba7c4;flex-shrink:0">
+      <div>
+        <div style="display:flex;align-items:flex-end;gap:1px;line-height:1;margin-bottom:3px">
+          <span style="font-size:15px;font-weight:900;color:#7ba7c4">In</span><span style="font-size:15px;font-weight:900;color:#fff">Genius</span><span style="font-size:9px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:2px;margin-left:3px;margin-bottom:1px">Prep</span>
+        </div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase" id="ml-title">Style Library — Reference Articles</div>
+      </div>
+      <button onclick="closeLibModal()" style="background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);width:28px;height:28px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center">×</button>
+    </div>
+
+    <!-- Add form -->
+    <div style="padding:16px 20px;border-bottom:1px solid #f0f0ec;flex-shrink:0;background:#fafafa">
+      <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:8px" id="ml-add-title">+ Add New Reference Article</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div><label style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;display:block;margin-bottom:4px" id="ml-label-title">Article Label</label>
+        <input id="lib-label" style="width:100%;border:none;border-bottom:1.5px solid #e0e0e0;padding:5px 0;font-size:12px;font-family:inherit;outline:none;background:transparent" placeholder="e.g. 2026 RD Results Breakdown"></div>
+        <div><label style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;display:block;margin-bottom:4px" id="ml-label-style">Style Tag</label>
+        <select id="lib-tag" style="width:100%;border:none;border-bottom:1.5px solid #e0e0e0;padding:5px 0;font-size:12px;font-family:inherit;outline:none;background:transparent;cursor:pointer">
+          <option value="knowledge">Knowledge Share</option>
+          <option value="clickbait">Clickbait / Viral</option>
+          <option value="minimal">Clean & Direct</option>
+          <option value="all">General Reference</option>
+        </select></div>
+      </div>
+      <div><label style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;display:block;margin-bottom:4px" id="ml-label-content">Article Content (paste full text)</label>
+      <textarea id="lib-content" style="width:100%;border:1px solid #e8e8e4;border-radius:0;padding:10px;font-size:12px;font-family:inherit;outline:none;resize:vertical;min-height:130px;max-height:260px;line-height:1.7" placeholder="Paste the full article text here. The AI will learn the writing style, tone, and structure from it…"></textarea></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">
+        <div style="font-size:10px;color:#bbb" id="ml-char-hint">Character count: <span id="lib-chars">0</span></div>
+        <button onclick="saveLibArticle()" style="background:#0e1117;color:#fff;border:none;padding:8px 20px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .2s" onmouseover="this.style.background='#7ba7c4'" onmouseout="this.style.background='#0e1117'">
+          <i class="ti ti-device-floppy" style="font-size:13px"></i><span id="ml-save">Save to Library</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Saved list -->
+    <div style="flex:1;overflow-y:auto;padding:14px 20px">
+      <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
+        <span id="ml-saved-title">Saved Articles</span>
+        <span id="lib-modal-count" style="background:#7ba7c4;color:#fff;font-size:8px;padding:1px 7px;border-radius:9px">0</span>
+      </div>
+      <div id="lib-modal-list"></div>
+      <div id="lib-empty" style="text-align:center;padding:32px 0;color:#ccc;font-size:12px;font-style:italic">No articles yet. Add your first reference above.</div>
+    </div>
+  </div>
+</div>
+
+<style>
+.lib-card{border:1px solid #eee;padding:12px 14px;margin-bottom:8px;position:relative;background:#fff;transition:border-color .15s}
+.lib-card:hover{border-color:#7ba7c4}
+.lib-tag{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 8px;border-radius:9px;display:inline-block;margin-bottom:6px}
+.lib-tag.knowledge{background:#e1f5ee;color:#0f6e56}
+.lib-tag.clickbait{background:#faece7;color:#993c1d}
+.lib-tag.minimal{background:#e6f1fb;color:#185fa5}
+.lib-tag.all{background:#f0f0ec;color:#666}
+.lib-preview{font-size:11px;color:#888;line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.lib-actions{position:absolute;top:10px;right:10px;display:flex;gap:5px}
+.lib-actions button{background:transparent;border:1px solid #eee;color:#ccc;padding:3px 7px;font-size:9px;cursor:pointer;transition:all .15s;font-family:inherit}
+.lib-actions button:hover{border-color:#7ba7c4;color:#7ba7c4}
+.lib-actions button.del:hover{border-color:#e74c3c;color:#e74c3c}
+</style>
 <script>
 /* ===== STATE ===== */
 let uL='en', LD=null, BD=null, eon=false;
@@ -238,7 +308,15 @@ function aUI(){
   document.getElementById('o-sp').textContent=T('osp');
   document.getElementById('ehhint').textContent=T('ehhint');
   document.getElementById('ftht').textContent=T('ftht');
-  document.getElementById('zrst').textContent=T('zrst');
+  document.getElementById('lib-hdr-lbl').textContent=uL==='zh'?'素材库':'Style Library';
+  document.getElementById('ml-title').textContent=uL==='zh'?'素材库 — 参考文章':'Style Library — Reference Articles';
+  document.getElementById('ml-add-title').textContent=uL==='zh'?'+ 添加新文章':'+ Add New Reference Article';
+  document.getElementById('ml-label-title').textContent=uL==='zh'?'文章标题':'Article Label';
+  document.getElementById('ml-label-style').textContent=uL==='zh'?'风格标签':'Style Tag';
+  document.getElementById('ml-label-content').textContent=uL==='zh'?'文章内容（粘贴全文）':'Article Content (paste full text)';
+  document.getElementById('ml-char-hint').innerHTML=uL==='zh'?`字数：<span id="lib-chars">${document.getElementById('lib-chars')?.textContent||0}</span>`:`Character count: <span id="lib-chars">${document.getElementById('lib-chars')?.textContent||0}</span>`;
+  document.getElementById('ml-save').textContent=uL==='zh'?'保存到素材库':'Save to Library';
+  document.getElementById('ml-saved-title').textContent=uL==='zh'?'已保存文章':'Saved Articles';
   document.getElementById('addSpkLbl').textContent=T('adds');
   document.querySelectorAll('.ltgl button').forEach(b=>b.classList.toggle('active',(b.textContent==='EN'&&uL==='en')||(b.textContent==='中文'&&uL==='zh')));
   renderSpkSidebar();
@@ -545,7 +623,102 @@ ${spkCreds}`;
   rf();
 }
 
-/* ===== COPY GENERATION ===== */
+/* ===== STYLE LIBRARY ===== */
+let libArticles=[];
+
+async function loadLib(){
+  try{
+    const r=await window.storage.get('ingeniusprep-lib');
+    if(r&&r.value){libArticles=JSON.parse(r.value);}
+  }catch(e){libArticles=[];}
+  renderLibSidebar();
+}
+
+async function saveLib(){
+  try{await window.storage.set('ingeniusprep-lib',JSON.stringify(libArticles));}
+  catch(e){console.error('Storage error',e);}
+}
+
+function renderLibSidebar(){
+  const cnt=libArticles.length;
+  document.getElementById('lib-count').textContent=cnt;
+}
+
+function renderLibModal(){
+  const list=document.getElementById('lib-modal-list');
+  const empty=document.getElementById('lib-empty');
+  document.getElementById('lib-modal-count').textContent=libArticles.length;
+  if(libArticles.length===0){list.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  list.innerHTML=libArticles.map((a,i)=>`
+    <div class="lib-card">
+      <div class="lib-tag ${a.tag}">${a.tag==='all'?'General Reference':a.tag==='knowledge'?'Knowledge Share':a.tag==='clickbait'?'Clickbait / Viral':'Clean & Direct'}</div>
+      <div style="font-size:13px;font-weight:700;color:#0e1117;margin-bottom:4px;padding-right:80px">${a.label||'Untitled Article'}</div>
+      <div style="font-size:10px;color:#bbb;margin-bottom:6px">${a.chars.toLocaleString()} characters · Added ${a.date}</div>
+      <div class="lib-preview">${a.content.slice(0,200)}…</div>
+      <div class="lib-actions">
+        <button onclick="previewLib(${i})" title="Preview full text">Preview</button>
+        <button class="del" onclick="removeLibArticle(${i})" title="Delete">Delete</button>
+      </div>
+    </div>`).join('');
+}
+
+function previewLib(i){
+  const a=libArticles[i];
+  const win=window.open('','_blank','width=700,height=600');
+  win.document.write(`<html><head><title>${a.label}</title><style>body{font-family:'Helvetica Neue',Arial,sans-serif;padding:32px;line-height:1.8;color:#222;max-width:680px;margin:0 auto}h2{color:#0e1117}pre{white-space:pre-wrap;font-family:inherit;font-size:14px}</style></head><body><h2>${a.label}</h2><pre>${a.content}</pre></body></html>`);
+}
+
+function openLibModal(){
+  renderLibModal();
+  document.getElementById('lib-modal').style.display='flex';
+  document.getElementById('lib-content').value='';
+  document.getElementById('lib-label').value='';
+  document.getElementById('lib-chars').textContent='0';
+}
+function closeLibModal(){document.getElementById('lib-modal').style.display='none';}
+
+document.getElementById('lib-content').addEventListener('input',function(){
+  document.getElementById('lib-chars').textContent=this.value.length.toLocaleString();
+});
+
+async function saveLibArticle(){
+  const label=document.getElementById('lib-label').value.trim();
+  const content=document.getElementById('lib-content').value.trim();
+  const tag=document.getElementById('lib-tag').value;
+  if(!content){toast('Please paste article content first');return;}
+  const article={id:Date.now(),label:label||'Untitled Article',tag,content,chars:content.length,date:new Date().toLocaleDateString()};
+  libArticles.unshift(article);
+  await saveLib();
+  document.getElementById('lib-content').value='';
+  document.getElementById('lib-label').value='';
+  document.getElementById('lib-chars').textContent='0';
+  renderLibSidebar();
+  renderLibModal();
+  toast(uL==='zh'?'文章已保存到素材库':'Article saved to library ✓');
+}
+
+async function removeLibArticle(i){
+  libArticles.splice(i,1);
+  await saveLib();
+  renderLibSidebar();
+  renderLibModal();
+}
+
+// Close modal on backdrop click
+document.getElementById('lib-modal').addEventListener('click',e=>{if(e.target===document.getElementById('lib-modal'))closeLibModal();});
+
+/* ===== STYLE LIBRARY PROMPT INJECTION ===== */
+function buildStyleContext(sty){
+  const relevant=libArticles.filter(a=>a.tag===sty||a.tag==='all').slice(0,3);
+  const fallback=sty!=='all'?libArticles.filter(a=>a.tag!==sty&&a.tag!=='all').slice(0,1):[];
+  const all=[...relevant,...fallback].slice(0,3);
+  if(all.length===0)return'';
+  return`\n\n===STYLE REFERENCE ARTICLES (learn tone, structure, vocabulary from these)===\n`+
+    all.map((a,i)=>`\n--- Reference ${i+1}: "${a.label}" ---\n${a.content.slice(0,1800)}`).join('\n')+
+    `\n===END OF REFERENCES===\n\nBased on the writing style, sentence patterns, emotional rhythm, and structural approach of these reference articles, now write the requested copy. Replicate their voice naturally.`;
+}
+
 const SYS=`You are a professional bilingual copywriter for InGenius Prep, a top college admissions consulting firm. Write in the style of the brand's existing content.
 
 1. Knowledge Share style: Open with real data/statistics to establish authority. Use "Why...?" or "The truth behind..." framing. Clear structure: Problem → Data → Analysis → Solution → Event CTA. Include A/B student case examples. High information density, authoritative tone.
@@ -563,7 +736,17 @@ Rules:
 function bP(sty,inf){
   const spkLine=inf.spks.filter(s=>s.n).map(s=>`${s.n} (${s.c||'speaker'})`).join(', ')||'InGenius Prep Expert';
   const m={knowledge:'Knowledge Share style: data-driven, structured, authoritative',clickbait:'Clickbait/Viral style: dramatic headline, FOMO, emotional hooks, strong CTA',minimal:'Clean & Direct style: emoji bullets, structured info, concise, shareable'};
-  return`Write a [${m[sty]}] promotional post for this event:\n\nTitle: ${inf.th}\nDate/Time: ${inf.tm}\nLocation: ${inf.lc}\nSpeakers: ${spkLine}\nAgenda: ${inf.kp||'(not specified)'}\nPerks: ${inf.ex||'none'}\n\nOutput body text only.`;
+  const ctx=buildStyleContext(sty);
+  return`Write a [${m[sty]}] promotional post for this event:${ctx}
+
+Event Title: ${inf.th}
+Date/Time: ${inf.tm}
+Location: ${inf.lc}
+Speakers: ${spkLine}
+Agenda: ${inf.kp||'(not specified)'}
+Perks: ${inf.ex||'none'}
+
+Output body text only — no labels or prefixes.`;
 }
 function skel(id){const ws=[72,90,58,84,68,54,78];document.getElementById('c-'+id).innerHTML=ws.map(w=>`<div class="sk" style="width:${w}%"></div>`).join('');}
 async function callA(sty,inf,attempt=0){
@@ -641,6 +824,7 @@ function stab(n,el){document.querySelectorAll('.tab').forEach(t=>t.classList.rem
 setZoom(0.74);
 aUI();
 rf();
+loadLib();
 </script>
 </body>
 </html>
