@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0efe9;color:#1a1a1a;font-size:13px}
+.header{background:#0e1117;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #7ba7c4;gap:12px}
+.hlogo{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+#hdr-logo{display:flex;align-items:center}
+#hdr-logo img{height:28px;max-width:190px;object-fit:contain;display:block}
+.hfb{display:flex;align-items:center;gap:7px}
+.hfb .in{color:#7ba7c4;font-size:18px;font-weight:900}
+.hfb .gp{color:#fff;font-size:18px;font-weight:900}
+.hsub{color:rgba(255,255,255,.35);font-size:9px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap}
+.ltgl{display:flex;border:1px solid rgba(255,255,255,.2);overflow:hidden;flex-shrink:0}
+.ltgl button{background:transparent;color:rgba(255,255,255,.45);border:none;padding:5px 11px;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .15s}
+.ltgl button.active{background:#7ba7c4;color:#fff}
+.layout{display:grid;grid-template-columns:258px 1fr;height:calc(100vh - 46px);overflow:hidden}
+.sb{background:#fff;border-right:1px solid #e0e0da;display:flex;flex-direction:column;overflow-y:auto}
+.sbs{padding:11px 14px;border-bottom:1px solid #f0f0ec}
+.sbh{font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#bbb;margin-bottom:9px;display:flex;align-items:center;gap:5px}
+.sbh::before{content:'';display:block;width:12px;height:1.5px;background:#7ba7c4;flex-shrink:0}
+.fg{margin-bottom:8px}
+.fg label{display:block;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;margin-bottom:3px}
+.fg input,.fg textarea{width:100%;border:none;border-bottom:1.5px solid #e8e8e4;padding:5px 0;font-size:12px;font-family:inherit;color:#1a1a1a;background:transparent;outline:none;transition:border-color .15s}
+.fg input:focus,.fg textarea:focus{border-bottom-color:#7ba7c4}
+.fg textarea{resize:vertical;min-height:46px}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ubl{display:inline-flex;align-items:center;gap:5px;border:1px dashed #ccc;padding:5px 9px;cursor:pointer;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#aaa;transition:border-color .15s}
+.ubl:hover{border-color:#7ba7c4;color:#7ba7c4}
+.rmb{font-size:9px;color:#ccc;background:none;border:none;cursor:pointer;padding:0;letter-spacing:1px;text-transform:uppercase;margin-left:8px}
+.bgen{width:100%;background:#0e1117;color:#fff;border:none;padding:10px;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .2s}
+.bgen:hover{background:#7ba7c4}
+.bgen:disabled{opacity:.35;cursor:not-allowed;background:#0e1117}
+.main{display:flex;flex-direction:column;overflow:hidden}
+.tabs{background:#fff;border-bottom:1px solid #e0e0da;display:flex;flex-shrink:0}
+.tab{padding:10px 16px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#bbb;border-bottom:2px solid transparent;transition:all .15s}
+.tab.active{color:#0e1117;border-bottom-color:#7ba7c4}
+.tc{display:none;flex:1;overflow:auto}
+.tc.active{display:flex;flex-direction:column}
+.ca{padding:12px;display:flex;flex-direction:column;gap:10px}
+.rc{background:#fff;border:1px solid #e8e8e4;overflow:hidden}
+.rch{background:#0e1117;padding:8px 12px;display:flex;align-items:center;justify-content:space-between}
+.rcl{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.rca{display:flex;gap:4px}
+.rca button{background:transparent;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.55);padding:3px 8px;font-size:8px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:3px}
+.rca button:hover{border-color:#7ba7c4;color:#7ba7c4}
+.rca button:disabled{opacity:.22;cursor:not-allowed}
+.rb{width:3px;flex-shrink:0}
+.rbd{padding:12px 14px;font-size:12px;line-height:1.85;color:#222;white-space:pre-wrap;word-break:break-word;min-height:68px}
+.sk{background:#eee;animation:pulse 1.3s ease-in-out infinite;height:11px;margin-bottom:8px;border-radius:2px}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.ph{color:#ccc;font-size:11px;font-style:italic}
+.fa{padding:12px;display:flex;flex-direction:column;gap:10px}
+.fctrl{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.fctrl select{border:1px solid #ddd;padding:5px 8px;font-size:11px;font-family:inherit;background:#fff;color:#1a1a1a;outline:none;cursor:pointer}
+.cb{background:#0e1117;color:#fff;border:none;padding:6px 12px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .2s;white-space:nowrap}
+.cb:hover{background:#7ba7c4}
+.cb:disabled{opacity:.35;cursor:not-allowed;background:#0e1117}
+.cb.on{background:#7ba7c4}
+.fwrap{display:flex;justify-content:center;padding-bottom:20px}
+.fsc{transform-origin:top center;display:inline-block}
+/* Edit mode */
+#flyer.eon [data-block]{outline:1.5px dashed rgba(123,167,196,.35);cursor:grab}
+#flyer.eon [data-block]:hover{outline:2px dashed #7ba7c4}
+#flyer.eon [data-block].sel{outline:2px solid #7ba7c4}
+#flyer.eon [data-block].drg{cursor:grabbing;opacity:.92}
+/* Float toolbar */
+#ftb{position:fixed;z-index:9999;background:#0e1117;border:1px solid rgba(123,167,196,.35);padding:4px 8px;display:none;align-items:center;gap:5px;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+#ftb button{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);padding:3px 8px;font-size:10px;cursor:pointer;transition:all .15s;font-family:inherit;font-weight:700}
+#ftb button:hover{background:#7ba7c4;border-color:#7ba7c4;color:#fff}
+#ftb .sp{width:1px;height:14px;background:rgba(255,255,255,.15)}
+#ftb .ht{font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.8px;white-space:nowrap}
+/* Hint bar */
+#ehbar{background:#edf4f9;border:1px solid #cde0ed;padding:7px 12px;font-size:10px;color:#5a8aa8;display:none;align-items:center;gap:7px;flex-shrink:0}
+/* Toast */
+.toast{position:fixed;bottom:14px;right:14px;background:#0e1117;color:#fff;padding:7px 13px;font-size:9px;letter-spacing:2px;text-transform:uppercase;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9999;border-left:3px solid #7ba7c4}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="hlogo">
+    <div id="hdr-logo">
+      <div style="display:flex;align-items:flex-end;gap:1px;line-height:1">
+        <span style="font-size:20px;font-weight:900;color:#7ba7c4;letter-spacing:-0.5px">In</span><span style="font-size:20px;font-weight:900;color:#fff;letter-spacing:-0.5px">Genius</span><span style="font-size:10px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:2px;margin-left:4px;margin-bottom:2px">Prep</span>
+      </div>
+    </div>
+    <span class="hsub" id="hdsub">AI 文案 + 海报生成器</span>
+  </div>
+  <div class="ltgl">
+    <button class="active" onclick="setLang('zh')">中文</button>
+    <button onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<div class="layout">
+<!-- SIDEBAR -->
+<div class="sb">
+  <!-- Logo -->
+  <div class="sbs">
+    <div class="sbh" id="s-logo">品牌 Logo</div>
+    <div id="lp" style="display:none;margin-bottom:6px"><img id="lpv" style="max-height:30px;max-width:180px;object-fit:contain;display:block"><button class="rmb" onclick="clr('logo')" id="lrmb">× 移除</button></div>
+    <label for="flogo" class="ubl" id="lubl"><i class="ti ti-upload" style="font-size:12px"></i><span id="llbl">上传 Logo</span></label>
+    <input type="file" id="flogo" accept="image/*" style="display:none" onchange="up('logo',this)">
+  </div>
+  <!-- Background -->
+  <div class="sbs">
+    <div class="sbh" id="s-bg">海报背景图</div>
+    <div style="font-size:10px;color:#bbb;margin-bottom:7px" id="bghint">上传后将作为海报英雄区背景</div>
+    <div id="bp" style="display:none;margin-bottom:6px"><img id="bpv" style="max-height:40px;max-width:200px;object-fit:cover;display:block;border:1px solid #eee"><button class="rmb" onclick="clr('bg')" id="brmb">× 移除</button></div>
+    <label for="fbg" class="ubl" id="bubl"><i class="ti ti-photo" style="font-size:12px"></i><span id="blbl">上传背景图</span></label>
+    <input type="file" id="fbg" accept="image/*" style="display:none" onchange="up('bg',this)">
+  </div>
+  <!-- Event -->
+  <div class="sbs">
+    <div class="sbh" id="s-ev">活动信息</div>
+    <div class="fg"><label id="l-theme">活动主题 *</label><input id="ftheme" placeholder="2026申请季终极复盘会"></div>
+    <div class="fg"><label id="l-kp">核心议程（每行一条）</label><textarea id="fkp" placeholder="• 拆解哈佛/耶鲁录取案例&#10;• AI筛选时代如何突围&#10;• 前招生官1v1答疑&#10;• 名校选校策略解析"></textarea></div>
+    <div class="r2">
+      <div class="fg"><label id="l-time">日期时间</label><input id="ftime" placeholder="5月18日 10am PST"></div>
+      <div class="fg"><label id="l-loc">地点</label><input id="floc" placeholder="线上Zoom"></div>
+    </div>
+    <div class="r2">
+      <div class="fg"><label id="l-ev">活动标签</label><input id="fevtype" placeholder="线上讲座"></div>
+      <div class="fg"><label id="l-ct">联系/报名</label><input id="fcontact" placeholder="扫码报名"></div>
+    </div>
+  </div>
+  <!-- Speaker 1 -->
+  <div class="sbs">
+    <div class="sbh" id="s-s1">嘉宾 1</div>
+    <div style="display:flex;gap:9px;align-items:flex-start">
+      <div style="flex-shrink:0">
+        <div id="s1p" style="display:none;margin-bottom:5px"><img id="s1pv" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #7ba7c4;display:block"><button class="rmb" onclick="clr('s1')" style="font-size:8px">× 移除</button></div>
+        <label for="fs1" class="ubl" id="s1ubl" style="flex-direction:column;align-items:center;padding:7px;min-width:50px;gap:2px"><i class="ti ti-user" style="font-size:15px"></i><span style="font-size:8px" id="s1lbl">头像</span></label>
+        <input type="file" id="fs1" accept="image/*" style="display:none" onchange="up('s1',this)">
+      </div>
+      <div style="flex:1;min-width:0">
+        <div class="fg"><label id="l-name">姓名</label><input id="fs1n" placeholder="Erin Gu"></div>
+        <div class="fg"><label id="l-cred">职位与资历</label><textarea id="fs1c" placeholder="引知首席教育官&#10;哈佛大学教育学硕士" style="min-height:40px"></textarea></div>
+      </div>
+    </div>
+  </div>
+  <!-- Speaker 2 -->
+  <div class="sbs">
+    <div class="sbh" id="s-s2">嘉宾 2（选填）</div>
+    <div style="display:flex;gap:9px;align-items:flex-start">
+      <div style="flex-shrink:0">
+        <div id="s2p" style="display:none;margin-bottom:5px"><img id="s2pv" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #7ba7c4;display:block"><button class="rmb" onclick="clr('s2')" style="font-size:8px">× 移除</button></div>
+        <label for="fs2" class="ubl" id="s2ubl" style="flex-direction:column;align-items:center;padding:7px;min-width:50px;gap:2px"><i class="ti ti-user" style="font-size:15px"></i><span style="font-size:8px" id="s2lbl">头像</span></label>
+        <input type="file" id="fs2" accept="image/*" style="display:none" onchange="up('s2',this)">
+      </div>
+      <div style="flex:1;min-width:0">
+        <div class="fg"><label id="l-name2">姓名</label><input id="fs2n" placeholder="Zak Harris"></div>
+        <div class="fg"><label id="l-cred2">职位与资历</label><textarea id="fs2c" placeholder="约翰霍普金斯大学前招生官&#10;8年以上招生经验" style="min-height:40px"></textarea></div>
+      </div>
+    </div>
+  </div>
+  <!-- Extras -->
+  <div class="sbs" style="border:none">
+    <div class="sbh" id="s-ex">额外信息</div>
+    <div class="fg"><label id="l-ex">亮点/福利</label><input id="fex" placeholder="免费录取白皮书 · 限30名"></div>
+    <div style="margin-top:10px">
+      <button class="bgen" id="gbtn" onclick="genAll()">
+        <i class="ti ti-sparkles" style="font-size:13px"></i><span id="gbtnlbl">一键生成文案 + 海报</span>
+      </button>
+    </div>
+  </div>
+</div><!-- /sb -->
+
+<!-- MAIN -->
+<div class="main">
+  <div class="tabs">
+    <div class="tab active" onclick="stab('copy',this)"><i class="ti ti-writing" style="font-size:11px;vertical-align:-2px;margin-right:3px"></i><span id="tlbl1">三版文案</span></div>
+    <div class="tab" onclick="stab('flyer',this)"><i class="ti ti-photo" style="font-size:11px;vertical-align:-2px;margin-right:3px"></i><span id="tlbl2">活动海报</span></div>
+  </div>
+
+  <!-- COPY -->
+  <div id="tc-copy" class="tc active">
+    <div class="ca">
+      <div class="rc"><div class="rch"><div style="display:flex;align-items:center;gap:7px"><span style="width:19px;height:19px;border-radius:50%;border:1.5px solid #7ba7c4;display:flex;align-items:center;justify-content:center;color:#7ba7c4;font-size:8px;font-weight:700">01</span><span class="rcl" id="sl1" style="color:#7ba7c4">知识分享</span></div><div class="rca"><button onclick="rg('knowledge')" id="rg1"><i class="ti ti-refresh" style="font-size:10px"></i><span id="rgl1"> 重新生成</span></button><button onclick="cp('knowledge')"><i class="ti ti-copy" style="font-size:10px"></i><span id="cpl1"> 复制</span></button></div></div><div style="display:flex"><div class="rb" style="background:#7ba7c4"></div><div class="rbd" id="c-knowledge"><span class="ph" id="ph1">填写信息后点击生成</span></div></div></div>
+      <div class="rc"><div class="rch"><div style="display:flex;align-items:center;gap:7px"><span style="width:19px;height:19px;border-radius:50%;border:1.5px solid #c49a7b;display:flex;align-items:center;justify-content:center;color:#c49a7b;font-size:8px;font-weight:700">02</span><span class="rcl" id="sl2" style="color:#c49a7b">标题党</span></div><div class="rca"><button onclick="rg('clickbait')" id="rg2"><i class="ti ti-refresh" style="font-size:10px"></i><span id="rgl2"> 重新生成</span></button><button onclick="cp('clickbait')"><i class="ti ti-copy" style="font-size:10px"></i><span id="cpl2"> 复制</span></button></div></div><div style="display:flex"><div class="rb" style="background:#c49a7b"></div><div class="rbd" id="c-clickbait"><span class="ph" id="ph2">填写信息后点击生成</span></div></div></div>
+      <div class="rc"><div class="rch"><div style="display:flex;align-items:center;gap:7px"><span style="width:19px;height:19px;border-radius:50%;border:1.5px solid #a0b89f;display:flex;align-items:center;justify-content:center;color:#a0b89f;font-size:8px;font-weight:700">03</span><span class="rcl" id="sl3" style="color:#a0b89f">简约直接</span></div><div class="rca"><button onclick="rg('minimal')" id="rg3"><i class="ti ti-refresh" style="font-size:10px"></i><span id="rgl3"> 重新生成</span></button><button onclick="cp('minimal')"><i class="ti ti-copy" style="font-size:10px"></i><span id="cpl3"> 复制</span></button></div></div><div style="display:flex"><div class="rb" style="background:#a0b89f"></div><div class="rbd" id="c-minimal"><span class="ph" id="ph3">填写信息后点击生成</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- FLYER -->
+  <div id="tc-flyer" class="tc">
+    <div class="fa">
+      <div class="fctrl">
+        <select id="selTheme" onchange="rf()"><option value="dark" id="o-dk">深色经典</option><option value="white" id="o-wh">白色专业</option><option value="split" id="o-sp">黑白分割</option></select>
+        <select id="selPL" onchange="autoTranslate()"><option value="zh-hans">简体中文</option><option value="zh-hant">繁體中文</option><option value="en">English</option><option value="ko">한국어</option></select>
+        <button class="cb" id="etbtn" onclick="toggleEdit()"><i class="ti ti-pencil" style="font-size:11px"></i><span id="etlbl"> 编辑海报</span></button>
+        <button class="cb" onclick="dlPNG()" id="dlbtn"><i class="ti ti-download" style="font-size:11px"></i><span id="dllbl"> 下载 PNG</span></button>
+        <button class="cb" onclick="dlHTML()" style="background:#2a2a2a"><i class="ti ti-code" style="font-size:11px"></i><span id="dlhlbl"> 下载可编辑版</span></button>
+      </div>
+      <!-- Zoom bar -->
+      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e8e8e4;padding:6px 12px;width:fit-content">
+        <button onclick="zoom(-0.1)" style="background:transparent;border:1px solid #ddd;color:#555;width:24px;height:24px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">−</button>
+        <input type="range" id="zoomSlider" min="30" max="130" value="74" step="2" oninput="setZoom(this.value/100)" style="width:110px;accent-color:#7ba7c4;cursor:pointer">
+        <button onclick="zoom(0.1)" style="background:transparent;border:1px solid #ddd;color:#555;width:24px;height:24px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">+</button>
+        <span id="zoomPct" style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;min-width:34px">74%</span>
+        <div style="width:1px;height:14px;background:#eee"></div>
+        <button onclick="setZoom(0.74)" style="font-size:9px;background:transparent;border:none;color:#bbb;cursor:pointer;letter-spacing:1px;text-transform:uppercase;padding:0">重置</button>
+        <div id="translating-badge" style="display:none;align-items:center;gap:5px;margin-left:6px;background:#edf4f9;border:1px solid #cde0ed;padding:3px 9px">
+          <i class="ti ti-loader" style="font-size:11px;color:#7ba7c4;animation:spin 1s linear infinite"></i>
+          <span style="font-size:9px;color:#5a8aa8;font-weight:700;letter-spacing:1px" id="translating-txt">翻译中…</span>
+        </div>
+      </div>
+      <div id="ehbar"><i class="ti ti-hand-finger" style="font-size:13px"></i><span id="ehhint">单击选择 · 拖动移位 · 双击编辑文字 · 工具栏调整大小和重置位置</span></div>
+      <div class="fwrap"><div class="fsc" id="fsc" style="transform:scale(0.74)"><div id="flyer"></div></div></div>
+    </div>
+  </div>
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<!-- FLOAT TOOLBAR -->
+<div id="ftb">
+  <button onclick="adj(-0.12)">A-</button>
+  <span id="ftsz" style="font-size:10px;color:rgba(255,255,255,.55);min-width:30px;text-align:center">100%</span>
+  <button onclick="adj(0.12)">A+</button>
+  <div class="sp"></div>
+  <button onclick="rst()" title="重置位置">↺</button>
+  <div class="sp"></div>
+  <span class="ht" id="ftht">拖动 · 双击编辑</span>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+/* STATE */
+let LD=null,BD=null,S1=null,S2=null,uL='zh',eon=false;
+const BP={},SC=0.74;
+let sel=null,ds=null,tData=null,zoomLvl=0.74;
+
+/* i18n */
+const UI={
+  zh:{sub:'AI 文案 + 海报生成器',s_logo:'品牌 Logo',s_bg:'海报背景图',s_ev:'活动信息',s_s1:'嘉宾 1',s_s2:'嘉宾 2（选填）',s_ex:'额外信息',lupl:'上传 Logo',bupl:'上传背景图',phot:'头像',bghint:'上传后将作为海报英雄区背景',l_theme:'活动主题 *',l_kp:'核心议程（每行一条）',l_time:'日期时间',l_loc:'地点',l_ev:'活动标签',l_ct:'联系/报名',l_nm:'姓名',l_cr:'职位与资历',l_ex:'亮点/福利',gen:'一键生成文案 + 海报',t1:'三版文案',t2:'活动海报',sl1:'知识分享',sl2:'标题党',sl3:'简约直接',rg:'重新生成',cp:'复制',dl:'下载 PNG',dlh:'下载可编辑版',eon:'✎ 退出编辑',eoff:'✎ 编辑海报',odk:'深色经典',owh:'白色专业',osp:'黑白分割',ehhint:'单击选择 · 拖动移位 · 双击编辑文字 · 工具栏调整大小',ftht:'拖动 · 双击编辑',rmv:'× 移除',rpl:'更换',copied:'已复制到剪贴板',gen_:'生成中…',ph:'填写信息后点击生成'},
+  en:{sub:'AI Copy + Poster Generator',s_logo:'Brand Logo',s_bg:'Poster Background',s_ev:'Event Details',s_s1:'Speaker 1',s_s2:'Speaker 2 (Optional)',s_ex:'Extras',lupl:'Upload Logo',bupl:'Upload Background',phot:'Photo',bghint:'Fills the poster hero section background',l_theme:'Event Title *',l_kp:'Agenda (one per line)',l_time:'Date & Time',l_loc:'Location',l_ev:'Event Type Tag',l_ct:'Contact / Register',l_nm:'Name',l_cr:'Title & Credentials',l_ex:'Highlights / Perks',gen:'Generate Copy + Poster',t1:'Copywriting',t2:'Poster',sl1:'Knowledge Share',sl2:'Clickbait / Viral',sl3:'Clean & Direct',rg:'Regenerate',cp:'Copy',dl:'Download PNG',dlh:'Download Editable',eon:'✎ Exit Edit',eoff:'✎ Edit Poster',odk:'Dark Classic',owh:'White Pro',osp:'Dynamic Split',ehhint:'Click to select · Drag to move · Double-click to edit text · Toolbar to resize',ftht:'Drag · Dbl-click edit',rmv:'× Remove',rpl:'Replace',copied:'Copied to clipboard',gen_:'Generating…',ph:'Fill in details and click generate'}
+};
+const T=k=>(UI[uL]||UI.zh)[k]||k;
+
+function aUI(){
+  document.getElementById('hdsub').textContent=T('sub');
+  [['s-logo','s_logo'],['s-bg','s_bg'],['s-ev','s_ev'],['s-s1','s_s1'],['s-s2','s_s2'],['s-ex','s_ex']].forEach(([id,k])=>{const e=document.getElementById(id);if(e)e.textContent=T(k);});
+  document.getElementById('llbl').textContent=LD?T('rpl'):T('lupl');
+  document.getElementById('blbl').textContent=BD?T('rpl'):T('bupl');
+  document.getElementById('s1lbl').textContent=T('phot');
+  document.getElementById('s2lbl').textContent=T('phot');
+  document.getElementById('bghint').textContent=T('bghint');
+  [['l-theme','l_theme'],['l-kp','l_kp'],['l-time','l_time'],['l-loc','l_loc'],['l-ev','l_ev'],['l-ct','l_ct'],['l-name','l_nm'],['l-cred','l_cr'],['l-name2','l_nm'],['l-cred2','l_cr'],['l-ex','l_ex']].forEach(([id,k])=>{const e=document.getElementById(id);if(e)e.textContent=T(k);});
+  document.getElementById('gbtnlbl').textContent=eon?T('gen_'):T('gen');
+  document.getElementById('tlbl1').textContent=T('t1');
+  document.getElementById('tlbl2').textContent=T('t2');
+  document.getElementById('sl1').textContent=T('sl1');
+  document.getElementById('sl2').textContent=T('sl2');
+  document.getElementById('sl3').textContent=T('sl3');
+  ['1','2','3'].forEach(n=>{document.getElementById('rgl'+n).textContent=' '+T('rg');document.getElementById('cpl'+n).textContent=' '+T('cp');});
+  ['ph1','ph2','ph3'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=T('ph');});
+  document.getElementById('dllbl').textContent=' '+T('dl');
+  document.getElementById('dlhlbl').textContent=' '+T('dlh');
+  document.getElementById('etlbl').textContent=' '+(eon?T('eon'):T('eoff'));
+  document.getElementById('o-dk').textContent=T('odk');
+  document.getElementById('o-wh').textContent=T('owh');
+  document.getElementById('o-sp').textContent=T('osp');
+  document.getElementById('ehhint').textContent=T('ehhint');
+  document.getElementById('ftht').textContent=T('ftht');
+  document.querySelectorAll('.rmb').forEach(b=>b.textContent=T('rmv'));
+  document.querySelectorAll('.ltgl button').forEach(b=>b.classList.toggle('active',b.textContent===(uL==='zh'?'中文':'EN')));
+}
+
+function setLang(l){uL=l;aUI();}
+
+/* POSTER LABELS */
+const PL={'zh-hans':{spk:'主讲嘉宾',cov:'本场内容涵盖',reg:'立即报名'},'zh-hant':{spk:'主講嘉賓',cov:'本場內容涵蓋',reg:'立即報名'},en:{spk:'OUR SPEAKERS',cov:'THIS EVENT WILL COVER',reg:'REGISTER NOW'},ko:{spk:'발표자',cov:'이 행사에서 다룰 내용',reg:'지금 등록'}};
+const pl=k=>(PL[document.getElementById('selPL').value]||PL['zh-hans'])[k]||k;
+
+/* UPLOADS */
+function up(t,inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const d=e.target.result;
+    if(t==='logo'){LD=d;document.getElementById('lpv').src=d;document.getElementById('lp').style.display='block';document.getElementById('llbl').textContent=T('rpl');document.getElementById('hdr-logo').innerHTML=`<img src="${d}" style="height:28px;max-width:190px;object-fit:contain;display:block">`;}
+    else if(t==='bg'){BD=d;document.getElementById('bpv').src=d;document.getElementById('bp').style.display='block';document.getElementById('blbl').textContent=T('rpl');}
+    else if(t==='s1'){S1=d;document.getElementById('s1pv').src=d;document.getElementById('s1p').style.display='block';}
+    else if(t==='s2'){S2=d;document.getElementById('s2pv').src=d;document.getElementById('s2p').style.display='block';}
+    rf();
+  };r.readAsDataURL(f);
+}
+function clr(t){
+  if(t==='logo'){LD=null;document.getElementById('flogo').value='';document.getElementById('lp').style.display='none';document.getElementById('llbl').textContent=T('lupl');document.getElementById('hdr-logo').innerHTML=`<div style="display:flex;align-items:flex-end;gap:1px;line-height:1"><span style="font-size:20px;font-weight:900;color:#7ba7c4;letter-spacing:-0.5px">In</span><span style="font-size:20px;font-weight:900;color:#fff;letter-spacing:-0.5px">Genius</span><span style="font-size:10px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:2px;margin-left:4px;margin-bottom:2px">Prep</span></div>`;}
+  else if(t==='bg'){BD=null;document.getElementById('fbg').value='';document.getElementById('bp').style.display='none';document.getElementById('blbl').textContent=T('bupl');}
+  else if(t==='s1'){S1=null;document.getElementById('fs1').value='';document.getElementById('s1p').style.display='none';}
+  else if(t==='s2'){S2=null;document.getElementById('fs2').value='';document.getElementById('s2p').style.display='none';}
+  rf();
+}
+
+/* ZOOM */
+function setZoom(v){
+  zoomLvl=Math.max(0.3,Math.min(1.3,v));
+  document.getElementById('fsc').style.transform=`scale(${zoomLvl})`;
+  document.getElementById('zoomSlider').value=Math.round(zoomLvl*100);
+  document.getElementById('zoomPct').textContent=Math.round(zoomLvl*100)+'%';
+}
+function zoom(d){setZoom(zoomLvl+d);}
+
+/* AUTO-TRANSLATE */
+const LANG_NAMES={'zh-hans':'简体中文（Simplified Chinese）','zh-hant':'繁體中文（Traditional Chinese）','en':'English','ko':'한국어（Korean）'};
+async function autoTranslate(){
+  const lang=document.getElementById('selPL').value;
+  if(lang==='zh-hans'){tData=null;rf();return;}
+  const raw=gi(true);
+  const badge=document.getElementById('translating-badge');
+  const ttxt=document.getElementById('translating-txt');
+  badge.style.display='flex';
+  const transUI={'zh-hant':'翻譯中…','en':'Translating…','ko':'번역 중…'};
+  ttxt.textContent=transUI[lang]||'翻译中…';
+  try{
+    const prompt=`Translate the following event poster content into ${LANG_NAMES[lang]}. Return ONLY a valid JSON object — no markdown, no explanation — with exactly these keys: th, kp, et, ct, s1c, s2c, ex, tm, lc.
+
+Rules:
+- For kp: preserve line breaks using \\n
+- Keep speaker/people names untranslated
+- Use natural idiomatic expressions — not literal word-for-word translation
+- For Korean: use polite formal register (합쇼체) appropriate for event announcements
+- For Traditional Chinese: use Taiwan conventions
+- If a field is empty or just says "待定"/"待填写", translate that word too
+
+Content:
+th: ${raw.th}
+kp: ${raw.kp||'（空）'}
+et: ${raw.et||'线上讲座'}
+ct: ${raw.ct||'扫码报名'}
+s1c: ${raw.s1c||'（空）'}
+s2c: ${raw.s2c||'（空）'}
+ex: ${raw.ex||'（空）'}
+tm: ${raw.tm||'待定'}
+lc: ${raw.lc||'待定'}`;
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})});
+    const d=await r.json();
+    if(d.error)throw new Error(d.error.message);
+    let txt=d.content[0].text.trim().replace(/^```json?\s*/,'').replace(/\s*```$/,'').trim();
+    tData=JSON.parse(txt);
+  }catch(e){
+    console.error('Translation failed',e);tData=null;toast('翻译失败，显示原文');
+  }
+  badge.style.display='none';
+  rf();
+}
+
+/* DATA — raw=true skips tData override */
+function gi(raw=false){
+  const base={th:document.getElementById('ftheme').value.trim()||'活动标题',kp:document.getElementById('fkp').value.trim(),tm:document.getElementById('ftime').value.trim()||'待定',lc:document.getElementById('floc').value.trim()||'待定',et:document.getElementById('fevtype').value.trim()||'线上讲座',ct:document.getElementById('fcontact').value.trim()||'扫码报名',s1n:document.getElementById('fs1n').value.trim(),s1c:document.getElementById('fs1c').value.trim(),s2n:document.getElementById('fs2n').value.trim(),s2c:document.getElementById('fs2c').value.trim(),ex:document.getElementById('fex').value.trim()};
+  if(!raw&&tData){return{...base,...tData,s1n:base.s1n,s2n:base.s2n};}// keep names untranslated
+  return base;
+}
+function ini(n){if(!n)return'IG';const p=n.replace(/[^\u4e00-\u9fa5a-zA-Z\s]/g,'').trim().split(/\s+/);return p.length>=2?(p[0][0]+(p[1][0]||'')).toUpperCase():n.slice(0,2).toUpperCase();}
+function agi(kp){return kp?kp.split('\n').map(l=>l.replace(/^[•·\-\s]+/,'').trim()).filter(Boolean).slice(0,4):['深度解析名校录取逻辑','真实案例拆解复盘','前招生官现场答疑','1v1规划评估'];}
+function crl(c){return c?c.split('\n').map(l=>l.trim()).filter(Boolean):[];}
+function ltag(dk){if(LD)return`<img src="${LD}" style="height:30px;max-width:180px;object-fit:contain;display:block">`;const tc=dk?'#fff':'#0e1117';return`<div style="display:flex;align-items:center;gap:7px"><svg width="24" height="29" viewBox="0 0 30 36" fill="none"><path d="M15 1L1 7v10c0 9.5 6 17.5 14 19 8-1.5 14-9.5 14-19V7L15 1z" fill="#7ba7c4" opacity=".9"/><ellipse cx="12.5" cy="17" rx="4" ry="3.3" fill="none" stroke="${dk?'#0e1117':'#fff'}" stroke-width="1.1"/><ellipse cx="17.5" cy="17" rx="4" ry="3.3" fill="none" stroke="${dk?'#0e1117':'#fff'}" stroke-width="1.1"/><line x1="9" y1="17" x2="12" y2="17" stroke="${dk?'#0e1117':'#fff'}" stroke-width=".9"/><line x1="18" y1="17" x2="21" y2="17" stroke="${dk?'#0e1117':'#fff'}" stroke-width=".9"/><circle cx="15" cy="17" r="1.2" fill="${dk?'#0e1117':'#fff'}"/></svg><div style="font-size:16px;font-weight:900;letter-spacing:.3px"><span style="color:#7ba7c4">IN</span><span style="color:${tc}">GENIUS</span><span style="color:${tc};font-size:11px;font-weight:700"> PREP</span></div></div>`;}
+function avt(ph,nm,dk){const bg=dk?'#1e2d3d':'#dce8f0';if(ph)return`<img src="${ph}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:2.5px solid #7ba7c4;display:block">`;return`<div style="width:72px;height:72px;border-radius:50%;border:2.5px solid #7ba7c4;background:${bg};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#7ba7c4">${ini(nm)}</div>`;}
+function spkC(nm,cr,ph,dk){if(!nm)return'';const tc=dk?'#fff':'#0e1117';const cc=dk?'rgba(255,255,255,.6)':'#555';const ls=crl(cr);return`<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px">${avt(ph,nm,dk)}<div><div style="font-size:12.5px;font-weight:800;color:#7ba7c4;text-transform:uppercase;letter-spacing:.5px;line-height:1.2">${nm}</div>${ls.map(l=>`<div style="font-size:10px;color:${cc};margin-top:2px;line-height:1.35">${l}</div>`).join('')}</div></div>`;}
+function chk(){return`<svg width="17" height="17" viewBox="0 0 17 17" fill="none" style="flex-shrink:0;margin-top:2px"><circle cx="8.5" cy="8.5" r="8" fill="rgba(123,167,196,.14)" stroke="#7ba7c4" stroke-width="1.2"/><polyline points="4.5,8.5 7.5,11.5 12.5,6" stroke="#7ba7c4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;}
+function dotg(){return'background-image:radial-gradient(circle,rgba(123,167,196,0.32) 1.5px,transparent 1.5px);background-size:12px 12px';}
+function qr(){return`<svg width="58" height="58" viewBox="0 0 64 64"><rect width="64" height="64" fill="white"/><rect x="4" y="4" width="24" height="24" fill="none" stroke="#0e1117" stroke-width="2.5"/><rect x="10" y="10" width="12" height="12" fill="#0e1117"/><rect x="36" y="4" width="24" height="24" fill="none" stroke="#0e1117" stroke-width="2.5"/><rect x="42" y="10" width="12" height="12" fill="#0e1117"/><rect x="4" y="36" width="24" height="24" fill="none" stroke="#0e1117" stroke-width="2.5"/><rect x="10" y="42" width="12" height="12" fill="#0e1117"/><rect x="36" y="36" width="8" height="8" fill="#0e1117"/><rect x="48" y="36" width="8" height="8" fill="#0e1117"/><rect x="36" y="48" width="8" height="8" fill="#0e1117"/><rect x="48" y="48" width="8" height="8" fill="#0e1117"/></svg>`;}
+function blk(id,sty,cnt){const{x=0,y=0,s=1}=BP[id]||{};return`<div data-block="${id}" style="transform:translate(${x}px,${y}px) scale(${s});transform-origin:top left;${sty}">${cnt}</div>`;}
+
+/* RENDER FLYER */
+function rf(){
+  const inf=gi();const its=agi(inf.kp);const h2=!!inf.s2n;const sc=h2?'1fr 1fr':'1fr';
+  const tk=document.getElementById('selTheme').value;
+  let html='';
+
+  if(tk==='dark'){
+    const bgs=BD?`background:linear-gradient(rgba(14,17,23,.72),rgba(14,17,23,.96)),url(${BD}) center/cover;`:'';
+    html=`<div style="background:#0e1117;color:#fff;width:390px;overflow:hidden;font-family:'Helvetica Neue',Arial,sans-serif;position:relative">
+      <div style="position:absolute;top:0;left:0;width:88px;height:88px;${dotg()}"></div>
+      <div style="position:absolute;bottom:68px;right:0;width:68px;height:68px;${dotg()}"></div>
+      ${blk('logo','padding:20px 22px 0;position:relative;z-index:2',`<div style="display:flex;align-items:center;justify-content:space-between">${ltag(true)}<div style="background:#7ba7c4;color:#fff;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px">${inf.et}</div></div>`)}
+      ${blk('hero',`padding:16px 22px 22px;position:relative;z-index:2;${bgs}`,
+        `<div style="position:absolute;right:-28px;top:0;width:136px;height:136px;border-radius:50%;border:2.5px solid rgba(123,167,196,.28);background:rgba(123,167,196,.05)"></div>`+
+        `<div style="font-size:27px;font-weight:900;line-height:1.18;color:#fff;max-width:238px;position:relative">${inf.th}</div>`+
+        `<div style="width:50px;height:3px;background:#7ba7c4;margin:12px 0 12px"></div>`+
+        `<div style="display:flex;gap:18px"><div style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="13" rx="2" stroke="#7ba7c4" stroke-width="1.3"/><line x1="1" y1="6" x2="15" y2="6" stroke="#7ba7c4" stroke-width="1.3"/><line x1="5" y1="1" x2="5" y2="4" stroke="#7ba7c4" stroke-width="1.3"/><line x1="11" y1="1" x2="11" y2="4" stroke="#7ba7c4" stroke-width="1.3"/></svg><span style="font-size:13px;font-weight:700;color:#fff">${inf.tm}</span></div><div style="display:flex;align-items:flex-start;gap:6px"><svg width="11" height="14" viewBox="0 0 12 18" fill="none" style="margin-top:2px;flex-shrink:0"><path d="M6 1C3.2 1 1 3.2 1 6c0 3.5 5 11 5 11s5-7.5 5-11c0-2.8-2.2-5-5-5z" stroke="#7ba7c4" stroke-width="1.3" fill="none"/><circle cx="6" cy="6" r="2" stroke="#7ba7c4" stroke-width="1.2"/></svg><span style="font-size:12px;color:rgba(255,255,255,.8)">${inf.lc}</span></div></div>`
+      )}
+      <svg viewBox="0 0 390 28" style="display:block;width:100%;margin-top:-1px" preserveAspectRatio="none"><path d="M0 28L0 14Q130 0 260 14Q325 22 390 8L390 28Z" fill="#152130"/></svg>
+      ${blk('speakers','background:#152130;padding:14px 22px 16px',`<div style="font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#7ba7c4;margin-bottom:13px">${pl('spk')}</div><div style="display:grid;grid-template-columns:${sc};gap:13px${h2?'':';justify-items:center'}">${inf.s1n?spkC(inf.s1n,inf.s1c,S1,true):'<div style="color:rgba(255,255,255,.3);font-size:11px;font-style:italic">嘉宾待填入</div>'}${h2?spkC(inf.s2n,inf.s2c,S2,true):''}</div>`)}
+      <div style="height:1px;background:rgba(123,167,196,.1)"></div>
+      ${blk('agenda','background:#0e1117;padding:14px 22px 16px',`<div style="font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#7ba7c4;margin-bottom:11px">${pl('cov')}</div><div style="display:flex;flex-direction:column;gap:9px">${its.map(it=>`<div style="display:flex;align-items:flex-start;gap:9px">${chk()}<span style="font-size:12px;color:rgba(255,255,255,.85);line-height:1.45">${it}</span></div>`).join('')}</div>`)}
+      ${blk('footer','background:#152130;border-top:1px solid rgba(123,167,196,.15);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px',`<div><div style="background:#7ba7c4;color:#fff;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:9px 16px;display:inline-block;margin-bottom:7px">${pl('reg')}</div>${inf.ex?`<div style="font-size:10px;color:rgba(255,255,255,.4);line-height:1.4;max-width:180px">${inf.ex}</div>`:''}</div><div style="flex-shrink:0">${qr()}</div>`)}
+    </div>`;
+
+  } else if(tk==='white'){
+    const bgs=BD?`background:linear-gradient(rgba(255,255,255,.88),rgba(255,255,255,1)),url(${BD}) center/cover;`:'';
+    html=`<div style="background:#fff;color:#0e1117;width:390px;overflow:hidden;font-family:'Helvetica Neue',Arial,sans-serif;position:relative">
+      <div style="height:4px;background:#7ba7c4"></div>
+      <div style="position:absolute;top:4px;right:0;width:88px;height:88px;${dotg()}"></div>
+      ${blk('logo','padding:18px 22px 16px;position:relative',`<div style="display:flex;align-items:center;justify-content:space-between">${ltag(false)}<div style="background:#0e1117;color:#fff;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px">${inf.et}</div></div>`)}
+      ${blk('hero',`padding:0 22px 16px;${bgs}`,
+        `<div style="font-size:26px;font-weight:900;line-height:1.18;color:#0e1117;letter-spacing:-.3px">${inf.th}</div>`+
+        `<div style="width:50px;height:3px;background:#7ba7c4;margin:11px 0 11px"></div>`+
+        `<div style="background:#f4f7fa;border-left:3px solid #7ba7c4;padding:10px 13px;display:grid;grid-template-columns:1fr 1fr;gap:9px"><div><div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;margin-bottom:3px">DATE / TIME</div><div style="font-size:12.5px;font-weight:700;color:#0e1117">${inf.tm}</div></div><div><div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;margin-bottom:3px">LOCATION</div><div style="font-size:12px;font-weight:600;color:#0e1117;line-height:1.3">${inf.lc}</div></div></div>`
+      )}
+      <svg viewBox="0 0 390 22" style="display:block;width:100%" preserveAspectRatio="none"><path d="M0 22L0 11Q195 0 390 11L390 22Z" fill="#f4f7fa"/></svg>
+      ${blk('speakers','background:#f4f7fa;padding:14px 22px 16px',`<div style="display:flex;align-items:center;gap:7px;margin-bottom:13px"><div style="width:3px;height:13px;background:#7ba7c4"></div><div style="font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#0e1117">${pl('spk')}</div></div><div style="display:grid;grid-template-columns:${sc};gap:13px${h2?'':';justify-items:center'}">${inf.s1n?spkC(inf.s1n,inf.s1c,S1,false):'<div style="color:#ccc;font-size:11px;font-style:italic">嘉宾待填入</div>'}${h2?spkC(inf.s2n,inf.s2c,S2,false):''}</div>`)}
+      ${blk('agenda','background:#fff;padding:14px 22px 16px',`<div style="display:flex;align-items:center;gap:7px;margin-bottom:11px"><div style="width:3px;height:13px;background:#7ba7c4"></div><div style="font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#0e1117">${pl('cov')}</div></div><div style="display:flex;flex-direction:column;gap:9px">${its.map(it=>`<div style="display:flex;align-items:flex-start;gap:9px">${chk()}<span style="font-size:12px;color:#333;line-height:1.45">${it}</span></div>`).join('')}</div>`)}
+      ${blk('footer','background:#0e1117;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px',`<div><div style="background:#7ba7c4;color:#fff;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:9px 16px;display:inline-block;margin-bottom:7px">${pl('reg')}</div>${inf.ex?`<div style="font-size:10px;color:rgba(255,255,255,.4);line-height:1.4;max-width:180px">${inf.ex}</div>`:''}</div><div style="flex-shrink:0">${qr()}</div>`)}
+    </div>`;
+
+  } else {
+    const bgs=BD?`background:linear-gradient(rgba(14,17,23,.74),rgba(14,17,23,.96)),url(${BD}) center/cover;`:'';
+    html=`<div style="background:#fff;color:#0e1117;width:390px;overflow:hidden;font-family:'Helvetica Neue',Arial,sans-serif">
+      <div style="background:#0e1117;padding:18px 22px 24px;position:relative;overflow:hidden;${bgs}">
+        <div style="position:absolute;top:-16px;left:-16px;width:68px;height:68px;background:#7ba7c4;opacity:.12;transform:rotate(45deg)"></div>
+        <div style="position:absolute;top:10px;left:20px;width:34px;height:34px;background:#7ba7c4;opacity:.16;transform:rotate(45deg)"></div>
+        <div style="position:absolute;top:0;right:0;width:78px;height:94px;${dotg()}"></div>
+        ${blk('logo','position:relative;margin-bottom:14px',`<div style="display:flex;align-items:center;justify-content:space-between">${ltag(true)}<div style="background:#7ba7c4;color:#fff;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px">${inf.et}</div></div>`)}
+        ${blk('hero','position:relative',
+          `<div style="font-size:25px;font-weight:900;line-height:1.2;color:#fff">${inf.th}</div>`+
+          `<div style="width:50px;height:3px;background:#7ba7c4;margin:11px 0 11px"></div>`+
+          `<div style="display:flex;gap:18px"><div><div style="font-size:8px;color:rgba(255,255,255,.38);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px">DATE & TIME</div><div style="font-size:13px;font-weight:700;color:#fff">${inf.tm}</div></div><div><div style="font-size:8px;color:rgba(255,255,255,.38);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px">LOCATION</div><div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.85)">${inf.lc}</div></div></div>`
+        )}
+      </div>
+      <svg viewBox="0 0 390 26" style="display:block;width:100%;margin-top:-1px" preserveAspectRatio="none"><path d="M0 0L390 0L390 5Q195 26 0 5Z" fill="#0e1117"/></svg>
+      ${blk('speakers','background:#fff;padding:14px 22px 16px',`<div style="font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#0e1117;border-bottom:1.5px solid #0e1117;padding-bottom:6px;margin-bottom:13px">${pl('spk')}</div><div style="display:grid;grid-template-columns:${sc};gap:13px${h2?'':';justify-items:center'}">${inf.s1n?spkC(inf.s1n,inf.s1c,S1,false):'<div style="color:#ccc;font-size:11px;font-style:italic">嘉宾待填入</div>'}${h2?spkC(inf.s2n,inf.s2c,S2,false):''}</div>`)}
+      <div style="height:2px;background:#7ba7c4;margin:0 22px"></div>
+      ${blk('agenda','background:#f8f8f6;padding:14px 22px 16px',`<div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7ba7c4;margin-bottom:11px">${pl('cov')}</div><div style="display:flex;flex-direction:column;gap:9px">${its.map(it=>`<div style="display:flex;align-items:flex-start;gap:9px">${chk()}<span style="font-size:12px;color:#222;line-height:1.45">${it}</span></div>`).join('')}</div>`)}
+      <svg viewBox="0 0 390 20" style="display:block;width:100%" preserveAspectRatio="none"><path d="M0 20L0 10Q195 0 390 10L390 20Z" fill="#0e1117"/></svg>
+      ${blk('footer','background:#0e1117;padding:11px 22px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px',`<div><div style="background:#7ba7c4;color:#fff;font-size:8.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:9px 16px;display:inline-block;margin-bottom:7px">${pl('reg')}</div>${inf.ex?`<div style="font-size:10px;color:rgba(255,255,255,.4);line-height:1.4;max-width:180px">${inf.ex}</div>`:''}</div><div style="flex-shrink:0">${qr()}</div>`)}
+    </div>`;
+  }
+
+  document.getElementById('flyer').innerHTML=html;
+  iDrag();
+}
+
+/* EDIT MODE */
+function toggleEdit(){
+  eon=!eon;
+  document.getElementById('flyer').classList.toggle('eon',eon);
+  document.getElementById('etbtn').classList.toggle('on',eon);
+  document.getElementById('etlbl').textContent=' '+(eon?T('eon'):T('eoff'));
+  document.getElementById('ehbar').style.display=eon?'flex':'none';
+  if(!eon){hTB();if(sel){sel.classList.remove('sel');sel=null;}}
+}
+
+function iDrag(){
+  document.getElementById('flyer').querySelectorAll('[data-block]').forEach(el=>{
+    el.addEventListener('pointerdown',pDown);
+    el.addEventListener('dblclick',pDbl);
+    el.addEventListener('click',pClick);
+  });
+}
+
+function pClick(e){if(!eon)return;const el=e.currentTarget;selB(el);e.stopPropagation();}
+function pDbl(e){
+  if(!eon)return;
+  e.currentTarget.querySelectorAll('div,span').forEach(n=>{if(!n.querySelector('svg,img'))n.contentEditable='true';});
+  e.currentTarget.style.cursor='text';
+  e.stopPropagation();
+}
+
+function selB(el){
+  if(sel&&sel!==el){sel.classList.remove('sel');sel.querySelectorAll('[contenteditable]').forEach(e=>{e.removeAttribute('contenteditable');e.style.cursor='';});sel.style.cursor='';}
+  sel=el;el.classList.add('sel');sTB(el);
+}
+
+function sTB(el){
+  const tb=document.getElementById('ftb');
+  const r=el.getBoundingClientRect();
+  tb.style.display='flex';
+  tb.style.left=Math.max(4,r.left)+'px';
+  tb.style.top=Math.max(4,r.top-40)+'px';
+  const id=el.dataset.block;
+  document.getElementById('ftsz').textContent=Math.round(((BP[id]||{}).s||1)*100)+'%';
+}
+function hTB(){document.getElementById('ftb').style.display='none';}
+
+function adj(d){if(!sel)return;const id=sel.dataset.block;if(!BP[id])BP[id]={x:0,y:0,s:1};BP[id].s=Math.max(0.25,Math.min(3,(BP[id].s||1)+d));atr(sel,id);document.getElementById('ftsz').textContent=Math.round(BP[id].s*100)+'%';}
+function rst(){if(!sel)return;const id=sel.dataset.block;BP[id]={x:0,y:0,s:1};atr(sel,id);document.getElementById('ftsz').textContent='100%';}
+function atr(el,id){const{x=0,y=0,s=1}=BP[id]||{};el.style.transform=`translate(${x}px,${y}px) scale(${s})`;}
+
+function pDown(e){
+  if(!eon)return;
+  if(e.target.closest('[contenteditable="true"]'))return;
+  const el=e.currentTarget;const id=el.dataset.block;
+  if(!BP[id])BP[id]={x:0,y:0,s:1};
+  ds={el,id,sx:e.clientX,sy:e.clientY,tx:BP[id].x,ty:BP[id].y};
+  el.setPointerCapture(e.pointerId);el.classList.add('drg');
+  el.addEventListener('pointermove',pMove);
+  el.addEventListener('pointerup',pUp,{once:true});
+  e.preventDefault();
+}
+function pMove(e){
+  if(!ds)return;
+  BP[ds.id].x=ds.tx+(e.clientX-ds.sx)/SC;
+  BP[ds.id].y=ds.ty+(e.clientY-ds.sy)/SC;
+  atr(ds.el,ds.id);
+  if(sel===ds.el)sTB(ds.el);
+}
+function pUp(e){if(!ds)return;ds.el.classList.remove('drg');ds.el.removeEventListener('pointermove',pMove);ds=null;}
+
+/* COPY GEN */
+const SYS=`你是一位专业的华人美本升学机构宣传文案写手，深度掌握引知InGenius Prep的写作风格。
+1.知识分享风格：数据开场建立权威，问题→数据→分析→方案→活动结构，穿插A/B同学案例，信息密度高。
+2.标题党风格：标题用"炸锅/疯了/变天了"等词，开篇制造"意难平"场景，感叹号+省略号，FOMO式呼吁，数据要震撼。
+3.简约直接风格：emoji做视觉符号，信息结构化，语气如朋友分享干货，适合朋友圈转发。
+通用：中文为主穿插GPA/SAT/RD/ED等缩写；长度：知识分享300-400字，标题党250-350字，简约150-200字；直接给正文不要前缀。`;
+
+function bP(sty,inf){const m={knowledge:'知识分享风格：数据驱动、结构清晰',clickbait:'标题党风格：震撼标题、制造FOMO、戏剧化',minimal:'简约直接风格：emoji辅助、信息结构化、适合转发'};return`请为以下活动撰写【${m[sty]}】宣传文案：\n主题：${inf.th} | 时间：${inf.tm} | 地点：${inf.lc}\n嘉宾：${[inf.s1n,inf.s2n].filter(Boolean).join('、')||'引知升学专家'}\n议程：${inf.kp||'（未填写）'}\n亮点：${inf.ex||'无'}\n直接输出正文。`;}
+
+function skel(id){const ws=[72,90,58,84,68,54,78];document.getElementById('c-'+id).innerHTML=ws.map(w=>`<div class="sk" style="width:${w}%"></div>`).join('');}
+
+async function callA(sty,inf){const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:[{role:'user',content:bP(sty,inf)}]})});const d=await r.json();if(d.error)throw new Error(d.error.message);return d.content[0].text;}
+
+async function genAll(){
+  const inf=gi();const btn=document.getElementById('gbtn');
+  btn.disabled=true;document.getElementById('gbtnlbl').textContent=T('gen_');
+  document.head.insertAdjacentHTML('beforeend','<style>@keyframes spin{to{transform:rotate(360deg)}}</style>');
+  ['knowledge','clickbait','minimal'].forEach(s=>{skel(s);['rg1','rg2','rg3'].forEach(id=>document.getElementById(id).disabled=true);});
+  rf();
+  await Promise.all(['knowledge','clickbait','minimal'].map(async(s,i)=>{
+    try{document.getElementById('c-'+s).textContent=await callA(s,inf);}
+    catch(e){document.getElementById('c-'+s).textContent='生成失败：'+e.message;}
+    document.getElementById('rg'+(i+1)).disabled=false;
+  }));
+  btn.disabled=false;document.getElementById('gbtnlbl').textContent=T('gen');
+}
+
+async function rg(sty){
+  const inf=gi();const idx={knowledge:1,clickbait:2,minimal:3}[sty];
+  document.getElementById('rg'+idx).disabled=true;skel(sty);
+  try{document.getElementById('c-'+sty).textContent=await callA(sty,inf);}
+  catch(e){document.getElementById('c-'+sty).textContent='生成失败：'+e.message;}
+  document.getElementById('rg'+idx).disabled=false;
+}
+
+function cp(sty){
+  const el=document.getElementById('c-'+sty);
+  if(el.querySelector('.ph,.sk'))return;
+  navigator.clipboard.writeText(el.textContent).then(()=>toast(T('copied')));
+}
+
+/* DOWNLOAD */
+async function dlPNG(){
+  const btn=document.getElementById('dlbtn');btn.disabled=true;
+  document.getElementById('dllbl').textContent=' '+T('gen_');
+  const wasE=eon;if(eon)toggleEdit();
+  try{const c=await html2canvas(document.getElementById('flyer'),{scale:2.5,useCORS:true,backgroundColor:null,logging:false});const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='ingenius_flyer.png';a.click();}
+  catch(e){alert('下载失败，请重试');}
+  if(wasE)toggleEdit();btn.disabled=false;document.getElementById('dllbl').textContent=' '+T('dl');
+}
+
+function dlHTML(){
+  const inner=document.getElementById('flyer').innerHTML;
+  const h=`<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><title>InGenius Prep Flyer</title><style>body{margin:0;padding:30px 0;background:#f0efe9;display:flex;flex-direction:column;align-items:center;font-family:'Helvetica Neue',Arial,sans-serif}#fw{width:390px;box-shadow:0 8px 40px rgba(0,0,0,.2)}#tb{position:fixed;top:0;left:0;right:0;background:#0e1117;border-bottom:2px solid #7ba7c4;padding:8px 16px;display:flex;align-items:center;gap:8px;font-family:'Helvetica Neue',Arial,sans-serif}#tb span{color:#7ba7c4;font-size:12px;font-weight:700;letter-spacing:1px}#tb button{background:rgba(255,255,255,.1);border:none;color:#fff;padding:5px 12px;cursor:pointer;font-size:11px;font-weight:700;border-radius:2px;letter-spacing:1px}#tb button:hover{background:#7ba7c4}#sz-d{font-size:11px;color:rgba(255,255,255,.5);margin:0 4px}#tip{margin-left:auto;font-size:9px;color:rgba(255,255,255,.35);letter-spacing:.8px}[data-block]{cursor:move;transition:outline .12s}[data-block]:hover{outline:2px dashed rgba(123,167,196,.5)}[data-block].active{outline:2px solid #7ba7c4}</style></head><body>
+<div id="tb"><span>InGenius Prep Flyer</span><button onclick="sz(-2)">A-</button><span id="sz-d">100%</span><button onclick="sz(2)">A+</button><div style="width:1px;height:16px;background:rgba(255,255,255,.15);margin:0 4px"></div><button onclick="prt()">⎙ 打印</button><span id="tip">拖动移位 · 双击编辑文字</span></div>
+<div style="margin-top:52px"><div id="fw">${inner}</div></div>
+<script>
+let sel=null,ds=null,bp={},sc=1;
+document.querySelectorAll('[data-block]').forEach(el=>{
+  el.addEventListener('mousedown',e=>{if(e.target.closest('[contenteditable]'))return;const id=el.dataset.block;if(!bp[id])bp[id]={x:0,y:0};ds={el,id,sx:e.clientX,sy:e.clientY,tx:bp[id].x,ty:bp[id].y};if(sel&&sel!==el)sel.classList.remove('active');sel=el;el.classList.add('active');e.preventDefault();});
+  el.addEventListener('dblclick',e=>{el.querySelectorAll('div,span').forEach(n=>{if(!n.querySelector('svg,img'))n.contentEditable='true';});el.style.cursor='text';e.stopPropagation();});
+});
+document.addEventListener('mousemove',e=>{if(!ds)return;bp[ds.id].x=ds.tx+(e.clientX-ds.sx);bp[ds.id].y=ds.ty+(e.clientY-ds.sy);const {x=0,y=0}=bp[ds.id];ds.el.style.transform='translate('+x+'px,'+y+'px)';});
+document.addEventListener('mouseup',()=>{ds=null;});
+document.addEventListener('click',e=>{if(!e.target.closest('[data-block]')&&!e.target.closest('#tb')){if(sel)sel.classList.remove('active');sel=null;}});
+let cur=100;function sz(d){cur=Math.max(50,Math.min(200,cur+d));document.getElementById('fw').style.transform='scale('+cur/100+')';document.getElementById('fw').style.transformOrigin='top center';document.getElementById('fw').style.marginBottom=(cur-100)*3.9+'px';document.getElementById('sz-d').textContent=cur+'%';}
+function prt(){window.print();}
+<\/script></body></html>`;
+  const blob=new Blob([h],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ingenius_flyer_editable.html';a.click();
+}
+
+/* UTILS */
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
+function stab(n,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('tc-'+n).classList.add('active');if(n==='flyer')rf();}
+
+/* CLICK OUTSIDE deselect */
+document.addEventListener('click',e=>{if(!e.target.closest('[data-block]')&&!e.target.closest('#ftb')&&sel){sel.classList.remove('sel');sel.querySelectorAll('[contenteditable]').forEach(e=>{e.removeAttribute('contenteditable');e.style.cursor='';});sel.style.cursor='';sel=null;hTB();}});
+
+/* INIT */
+document.head.insertAdjacentHTML('beforeend','<style>@keyframes spin{to{transform:rotate(360deg)}}</style>');
+setZoom(0.74);
+aUI();rf();
+</script>
+</body>
+</html>
