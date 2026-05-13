@@ -1,1042 +1,945 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta charset="UTF-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-:root{
-  --blue:#077fe7;--blue-dk:#0568c0;--blue-lt:#e8f3fd;
-  --black:#000002;--dgray:#3a3a3a;--lgray:#f1f2f2;--lblue:#94b3d6;
-  --white:#fff;--border:#e2e4e8;--border-lt:#eff0f2;
-  --shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);
-  --shadow-md:0 4px 20px rgba(0,0,0,.12);
-  --r:8px;--rs:5px;--rl:12px;
-  --fh:'Poppins',sans-serif;--fb:'Lato',sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--fb);background:var(--lgray);color:var(--black);font-size:13px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--sand:#A89880;--sand-d:#8f7f69;--sand-l:#ede8e0;--sand-ll:#faf8f4;--bronze:#615545;--dark:#1D1D1D;--muted:#6a5f58;--hint:#a89e98;--bdr:#e0d8d0;--w:#fff;--r10:10px;--r16:16px}
+html{font-size:16px}
+body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',system-ui,sans-serif;background:var(--sand-ll);color:var(--dark);line-height:1.6;max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:80px}
+h1{font-size:26px;font-weight:500;line-height:1.3}
+h2{font-size:20px;font-weight:500}
+h3{font-size:17px;font-weight:500}
+p{font-size:15px;color:var(--muted);line-height:1.7}
+a{color:var(--sand);text-decoration:none}
 
-/* HEADER */
-.hdr{background:var(--black);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:50px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3);gap:12px}
-.logo-txt{font-family:var(--fb);display:flex;align-items:flex-end;gap:0;line-height:1}
-.logo-txt .in{color:var(--blue);font-size:19px;font-weight:900;letter-spacing:-.5px}
-.logo-txt .gn{color:#fff;font-size:19px;font-weight:900;letter-spacing:-.5px}
-.logo-txt .pp{color:rgba(255,255,255,.5);font-size:9.5px;font-weight:700;letter-spacing:2.5px;margin-left:6px;margin-bottom:2px;font-family:var(--fb)}
-.hdr-sub{color:rgba(255,255,255,.28);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;font-family:var(--fh);white-space:nowrap}
-.hdr-right{display:flex;align-items:center;gap:8px}
-.icon-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.6);width:34px;height:34px;cursor:pointer;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;transition:all .17s;flex-shrink:0}
-.icon-btn:hover{background:var(--blue);border-color:var(--blue);color:#fff}
-.lib-btn{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);padding:6px 13px;border-radius:var(--rs);cursor:pointer;font-family:var(--fh);font-size:9.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:all .17s;white-space:nowrap}
-.lib-btn:hover{background:var(--blue);border-color:var(--blue);color:#fff}
-.lib-count{background:var(--blue);color:#fff;font-size:8px;font-weight:700;border-radius:9px;padding:1px 7px}
-.lang-tog{display:flex;border:1px solid rgba(255,255,255,.15);border-radius:var(--rs);overflow:hidden}
-.lang-tog button{background:transparent;color:rgba(255,255,255,.45);border:none;padding:5px 11px;font-size:10px;font-weight:700;letter-spacing:.8px;cursor:pointer;font-family:var(--fh);transition:all .15s}
-.lang-tog button.active{background:var(--blue);color:#fff}
+nav{background:var(--sand);padding:0 16px;position:sticky;top:0;z-index:200}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-name{font-size:15px;letter-spacing:.06em;color:#fff;font-family:Georgia,serif}
+.nav-right{display:flex;align-items:center;gap:8px}
+.lang-switch{display:flex;background:rgba(255,255,255,.15);border-radius:20px;padding:3px;gap:2px}
+.lang-btn{border:none;background:transparent;color:rgba(255,255,255,.7);font-size:12px;font-weight:600;padding:4px 10px;border-radius:16px;cursor:pointer;font-family:inherit;letter-spacing:.04em;transition:.15s}
+.lang-btn.active{background:#fff;color:var(--bronze)}
+.nav-book{background:var(--dark);color:#fff;border:none;padding:8px 14px;border-radius:var(--r10);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit}
 
-/* LAYOUT */
-.layout{display:grid;grid-template-columns:306px 1fr;height:calc(100vh - 50px);overflow:hidden;transition:grid-template-columns .28s cubic-bezier(.4,0,.2,1)}
-.layout.sb-off{grid-template-columns:0px 1fr}
+.hero{background:var(--sand);padding:36px 20px 32px;text-align:center}
+.hero h1{color:#fff;margin-bottom:8px;font-family:Georgia,serif}
+.hero-sub{color:rgba(255,255,255,.7);font-size:13px;margin-bottom:6px;letter-spacing:.08em;text-transform:uppercase}
+.hero-slogan{color:rgba(255,255,255,.5);font-size:14px;font-style:italic;font-family:Georgia,serif;margin-bottom:22px}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:22px}
+.pill{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:13px;padding:6px 14px;border-radius:20px}
+.hero-btn{background:#fff;color:var(--bronze);border:none;padding:14px 32px;border-radius:var(--r16);font-size:16px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;max-width:280px}
 
-/* SIDEBAR */
-.sb{background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;transition:opacity .22s ease;min-width:0}
-.layout.sb-off .sb{opacity:0;pointer-events:none}
-.sb::-webkit-scrollbar{width:4px}.sb::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.sbs{padding:12px 16px;border-bottom:1px solid var(--border-lt);flex-shrink:0}
-.sbh{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--lblue);margin-bottom:9px;display:flex;align-items:center;gap:6px}
-.sbh::before{content:'';display:block;width:10px;height:2px;background:var(--blue);border-radius:1px;flex-shrink:0}
-.fg{margin-bottom:8px}
-.fg label{display:block;font-family:var(--fh);font-size:9px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#aaa;margin-bottom:3px}
-.fg input,.fg textarea,.fg select{width:100%;border:1.5px solid var(--border);border-radius:var(--rs);padding:6px 10px;font-size:12px;font-family:var(--fb);color:var(--black);background:var(--lgray);outline:none;transition:all .15s}
-.fg input:focus,.fg textarea:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(7,127,231,.1)}
-.fg textarea{resize:vertical;min-height:52px}
-.r2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ubl{display:inline-flex;align-items:center;gap:5px;border:1.5px dashed var(--border);padding:6px 10px;cursor:pointer;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;border-radius:var(--rs);font-family:var(--fh);transition:all .15s}
-.ubl:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-lt)}
-.rmb{font-size:9px;color:#ccc;background:none;border:none;cursor:pointer;padding:0;letter-spacing:.8px;font-family:var(--fh)}.rmb:hover{color:#e74c3c}
-.bgen{width:100%;background:var(--blue);color:#fff;border:none;padding:11px;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;border-radius:var(--r);font-family:var(--fh);display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 2px 8px rgba(7,127,231,.35);transition:all .2s}
-.bgen:hover{background:var(--blue-dk);transform:translateY(-1px);box-shadow:0 4px 16px rgba(7,127,231,.4)}
-.bgen:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.badd{width:100%;background:transparent;border:1.5px dashed var(--border);color:#bbb;padding:7px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:var(--rs);font-family:var(--fh);display:flex;align-items:center;justify-content:center;gap:5px;margin-top:6px;transition:all .15s}
-.badd:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-lt)}
-.spk-card{border:1.5px solid var(--border-lt);padding:10px;margin-bottom:8px;position:relative;background:var(--lgray);border-radius:var(--r)}
+.strip{background:var(--w);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+.strip-in{display:grid;grid-template-columns:1fr 1fr;padding:0}
+.si{padding:16px;text-align:center;border-right:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+.si:nth-child(2n){border-right:none}
+.si:nth-child(3),.si:nth-child(4){border-bottom:none}
+.si-icon{font-size:20px;margin-bottom:6px}
+.si-cn{font-size:14px;font-weight:500;margin-bottom:2px}
+.si-en{font-size:12px;color:var(--hint);font-family:Georgia,serif}
 
-/* MAIN */
-.main{display:flex;flex-direction:column;overflow:hidden}
-.tabs{background:var(--white);border-bottom:1px solid var(--border);display:flex;flex-shrink:0;padding:0 20px}
-.tab{padding:13px 16px;font-family:var(--fh);font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;color:#bbb;border-bottom:2.5px solid transparent;transition:all .15s;display:flex;align-items:center;gap:6px}
-.tab:hover{color:var(--dgray)}.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
-.tc{display:none;flex:1;overflow:auto}.tc.active{display:flex;flex-direction:column}
+.sec{padding:28px 16px}
+.sec-tag{font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--sand);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.sec-tag::before{content:'';width:16px;height:1.5px;background:var(--sand);display:block}
 
-/* COPY CARDS */
-.ca{padding:16px;display:flex;flex-direction:column;gap:12px}
-.rc{background:var(--white);border:1.5px solid var(--border);border-radius:var(--rl);overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .2s}.rc:hover{box-shadow:var(--shadow-md)}
-.rch{padding:11px 15px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border-lt)}
-.rc-num{width:21px;height:21px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;font-family:var(--fh);flex-shrink:0}
-.rcl{font-family:var(--fh);font-size:9.5px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase}
-.rca{display:flex;gap:5px}
-.rca button{background:transparent;border:1.5px solid var(--border);color:#aaa;padding:4px 9px;font-size:8px;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;border-radius:var(--rs);font-family:var(--fh);font-weight:600;display:flex;align-items:center;gap:3px;transition:all .15s}
-.rca button:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-lt)}
-.rca button.editing{border-color:var(--blue);color:var(--blue);background:var(--blue-lt)}
-.rca button:disabled{opacity:.25;cursor:not-allowed}
-.rc-stripe{height:3px;flex-shrink:0}
-.rbd{padding:15px;font-size:12.5px;line-height:1.9;color:var(--dgray);white-space:pre-wrap;word-break:break-word;min-height:80px;font-family:var(--fb);outline:none}
-.rbd[contenteditable="true"]{background:var(--blue-lt);border-radius:0 0 var(--rl) var(--rl);cursor:text}
-.sk{background:var(--lgray);animation:pulse 1.3s ease-in-out infinite;height:12px;margin-bottom:9px;border-radius:4px}
-@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
-.ph{color:#ccc;font-size:11.5px;font-style:italic}
+.book-wrap{background:var(--sand-l);border-top:1px solid var(--bdr)}
+.prog{display:flex;align-items:center;padding:0 4px;gap:0;margin-bottom:24px}
+.prog-step{text-align:center;flex-shrink:0}
+.pd{width:26px;height:26px;border-radius:50%;border:2px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--hint);margin:0 auto 4px}
+.pd.done{background:var(--sand);border-color:var(--sand);color:#fff}
+.pd.act{border-color:var(--sand);color:var(--bronze)}
+.pl{font-size:11px;color:var(--hint)}
+.pl.act{color:var(--bronze);font-weight:600}
+.p-line{flex:1;height:2px;background:var(--bdr);margin:0 4px;margin-bottom:20px}
+.p-line.done{background:var(--sand)}
 
-/* GDOC */
-.gdoc-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);padding:10px 15px;flex-shrink:0;box-shadow:var(--shadow)}
-.gdoc-fw{display:none;flex-direction:column;border:1.5px solid #4285F4;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-md)}
+.type-box{background:var(--w);border-radius:var(--r16);padding:18px;margin-bottom:16px;border:1px solid var(--bdr)}
+.type-opts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.type-opt{border:2px solid var(--bdr);border-radius:var(--r10);padding:12px 8px;cursor:pointer;text-align:center;background:var(--sand-ll)}
+.type-opt.sel{border-color:var(--sand);background:var(--sand-l)}
+.to-emoji{font-size:22px;margin-bottom:4px}
+.to-cn{font-size:14px;font-weight:600;color:var(--dark);margin-bottom:2px}
+.to-badge{font-size:12px;color:var(--bronze);font-weight:500}
 
-/* POSTER TAB */
-.fa{padding:14px;display:flex;flex-direction:column;gap:10px}
-.panel{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 15px;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.cb{background:var(--black);color:#fff;border:none;padding:7px 13px;font-size:9px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;cursor:pointer;border-radius:var(--rs);font-family:var(--fh);display:flex;align-items:center;gap:5px;transition:all .18s;white-space:nowrap}
-.cb:hover{background:var(--blue);transform:translateY(-1px);box-shadow:0 3px 10px rgba(7,127,231,.3)}
-.cb:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
-.cb.regen{background:var(--dgray)}.cb.regen:hover{background:var(--blue)}
-.cb.on{background:var(--blue)}
-.cb-green{background:#1a6b3a!important}.cb-green:hover{background:var(--blue)!important}
-select.ctrl{border:1.5px solid var(--border);padding:6px 10px;font-size:11px;font-family:var(--fh);background:var(--lgray);color:var(--black);border-radius:var(--rs);outline:none;cursor:pointer;font-weight:600;transition:border-color .15s}
-select.ctrl:focus{border-color:var(--blue)}
-.fmt-pills{display:flex;gap:5px;flex-wrap:wrap}
-.fp{border:1.5px solid var(--border);padding:5px 11px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:var(--rs);font-family:var(--fh);color:#aaa;background:var(--lgray);transition:all .15s;white-space:nowrap;user-select:none}
-.fp:hover,.fp.active{border-color:var(--blue);color:var(--blue);background:var(--blue-lt)}
-.zoom-bar{display:flex;align-items:center;gap:7px;background:var(--white);border:1.5px solid var(--border);padding:7px 13px;border-radius:var(--r);box-shadow:var(--shadow)}
-.zoom-bar button{background:transparent;border:1.5px solid var(--border);color:var(--dgray);width:26px;height:26px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;border-radius:var(--rs);transition:all .15s}
-.zoom-bar button:hover{border-color:var(--blue);color:var(--blue)}
-.ehbar{background:var(--blue-lt);border:1.5px solid rgba(7,127,231,.25);padding:8px 14px;font-size:10px;color:var(--blue);display:none;align-items:center;gap:7px;border-radius:var(--r);font-family:var(--fh);font-weight:600}
-.fwrap{display:flex;justify-content:center;padding-bottom:24px}
-.fsc{transform-origin:top center;display:inline-block;filter:drop-shadow(0 8px 32px rgba(0,0,0,.18))}
-#flyer.eon [data-block]{outline:2px dashed rgba(7,127,231,.3);cursor:grab;border-radius:3px}
-#flyer.eon [data-block]:hover{outline:2px dashed var(--blue)}
-#flyer.eon [data-block].sel{outline:2px solid var(--blue)}
+.book-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.book-card{background:var(--w);border:2px solid var(--bdr);border-radius:var(--r16);padding:14px 12px;cursor:pointer;position:relative;text-align:center;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.book-card.sel{border-color:var(--sand);background:var(--sand-l)}
+.book-card.sel::after{content:'✓';position:absolute;top:8px;right:12px;color:var(--bronze);font-size:14px;font-weight:700}
+.bc-emoji{font-size:24px;margin-bottom:6px}
+.bc-cn{font-size:14px;font-weight:600;margin-bottom:2px}
+.bc-en{font-size:11px;color:var(--hint);font-family:Georgia,serif;margin-bottom:4px}
+.bc-orig{font-size:12px;color:var(--hint);text-decoration:line-through}
+.bc-price{font-size:20px;color:var(--bronze)}
+.bc-tag{font-size:11px;color:var(--bronze);background:var(--sand-l);padding:2px 8px;border-radius:10px;margin-top:3px;display:inline-block}
+.bc-dur{font-size:11px;color:var(--hint);margin-top:4px}
 
-/* FLOAT TOOLBAR */
-#ftb{position:fixed;z-index:9999;background:var(--black);border:1px solid rgba(7,127,231,.4);padding:5px 9px;display:none;align-items:center;gap:5px;box-shadow:0 8px 30px rgba(0,0,0,.4);border-radius:var(--rs)}
-#ftb button{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);padding:4px 9px;font-size:10px;cursor:pointer;font-family:var(--fh);font-weight:700;border-radius:3px;transition:all .15s}
-#ftb button:hover{background:var(--blue);border-color:var(--blue);color:#fff}
-#ftb .sp{width:1px;height:14px;background:rgba(255,255,255,.15)}
+.date-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:20px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.date-scroll::-webkit-scrollbar{display:none}
+.date-btn{flex-shrink:0;width:60px;text-align:center;background:var(--w);border:2px solid var(--bdr);border-radius:var(--r10);padding:10px 4px;cursor:pointer}
+.date-btn.sel{background:var(--sand);border-color:var(--sand);color:#fff}
+.date-btn.sel .ds{color:rgba(255,255,255,.8)}
+.dc{font-size:12px;color:var(--muted);display:block;margin-bottom:3px;font-weight:500}
+.dn{font-size:20px;font-weight:600;display:block;margin-bottom:3px}
+.ds{font-size:11px;color:var(--sand);display:block;font-weight:500}
 
-/* LIBRARY MODAL */
-#lib-modal{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center}
-.mbox{background:#fff;width:min(700px,96vw);max-height:90vh;display:flex;flex-direction:column;border-radius:var(--rl);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.3)}
-.mhd{background:var(--black);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.mclose{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);width:30px;height:30px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;border-radius:var(--rs);transition:all .15s}
-.mclose:hover{background:var(--blue);color:#fff}
-.mform{padding:18px 22px;border-bottom:1px solid var(--border-lt);flex-shrink:0;background:var(--lgray)}
-.mlist{flex:1;overflow-y:auto;padding:16px 22px}
-.lib-card{border:1.5px solid var(--border);padding:13px 15px;margin-bottom:10px;position:relative;background:#fff;border-radius:var(--r);transition:all .15s;box-shadow:var(--shadow)}
-.lib-card:hover{border-color:var(--blue)}
-.lib-tag{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:9px;display:inline-block;margin-bottom:6px;font-family:var(--fh)}
-.lib-tag.knowledge{background:#e3f2fd;color:#1565c0}
-.lib-tag.clickbait{background:#fce4ec;color:#b71c1c}
-.lib-tag.minimal{background:#e8f5e9;color:#2e7d32}
-.lib-tag.all{background:var(--lgray);color:var(--dgray)}
-.lib-prev{font-size:11px;color:#888;line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.lib-acts{position:absolute;top:11px;right:12px;display:flex;gap:5px}
-.lib-acts button{background:transparent;border:1.5px solid var(--border);color:#ccc;padding:3px 9px;font-size:8.5px;cursor:pointer;border-radius:var(--rs);font-family:var(--fh);font-weight:700;transition:all .15s}
-.lib-acts button:hover{border-color:var(--blue);color:var(--blue)}
-.lib-acts .del:hover{border-color:#e74c3c;color:#e74c3c}
+.time-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.time-btn{padding:14px;border:2px solid var(--bdr);background:var(--w);border-radius:var(--r10);cursor:pointer;font-size:16px;font-weight:500;font-family:inherit;text-align:center}
+.time-btn.sel{background:var(--sand);border-color:var(--sand);color:#fff}
 
-/* TOAST */
-.toast{position:fixed;bottom:20px;right:20px;background:var(--black);color:#fff;padding:10px 18px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9999;border-left:3px solid var(--blue);border-radius:var(--rs);font-family:var(--fh);font-weight:700;box-shadow:var(--shadow-md)}
-.toast.show{opacity:1}
-@keyframes spin{to{transform:rotate(360deg)}}
+.form-box{background:var(--w);border-radius:var(--r16);padding:18px;border:1px solid var(--bdr);margin-bottom:14px}
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.flbl{font-size:13px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px}
+input[type=text],input[type=email],input[type=tel],textarea{font-family:inherit;font-size:16px;border:2px solid var(--bdr);border-radius:var(--r10);padding:13px 15px;width:100%;color:var(--dark);background:var(--w);outline:none;resize:none;-webkit-appearance:none}
+input:focus,textarea:focus{border-color:var(--sand)}
+
+.card{background:var(--w);border:1px solid var(--bdr);border-radius:var(--r16);overflow:hidden}
+.review-row{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:1px solid var(--bdr);gap:12px}
+.review-row:last-child{border-bottom:none}
+.rk{font-size:13px;color:var(--hint);flex-shrink:0}
+.rv{font-size:15px;color:var(--dark);text-align:right;font-weight:500}
+
+.notice{background:var(--w);border-radius:var(--r10);padding:14px 16px;font-size:14px;color:var(--muted);line-height:1.75;border:1px solid var(--bdr);margin-bottom:16px}
+
+.btn-main{width:100%;padding:16px;background:var(--sand);color:#fff;border:none;border-radius:var(--r16);font-size:17px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:.02em;display:block}
+.btn-main:disabled{opacity:.35;cursor:not-allowed}
+.btn-back{background:var(--sand-l);color:var(--bronze);border:none;padding:12px 20px;border-radius:var(--r10);font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;margin-bottom:16px;display:inline-block}
+
+.gcal-bar{background:var(--sand);border-radius:var(--r16);padding:18px;margin-bottom:14px}
+.gcal-btn{background:#fff;color:var(--bronze);border:none;padding:13px;border-radius:var(--r10);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}
+
+.ref-card{background:var(--sand-l);border:1.5px solid var(--sand);border-radius:var(--r16);padding:20px;text-align:center;margin-bottom:14px}
+.ref-num{font-size:30px;font-weight:700;color:var(--bronze);letter-spacing:.12em;font-family:Georgia,serif}
+
+.contact-row{display:flex;align-items:center;gap:14px;padding:16px;border-bottom:1px solid var(--bdr)}
+.contact-row:last-child{border-bottom:none}
+.c-icon{font-size:22px;flex-shrink:0}
+.c-label{font-size:12px;color:var(--hint);margin-bottom:2px}
+.c-val{font-size:16px;font-weight:600;color:var(--bronze)}
+
+.info-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--bdr)}
+.info-row:last-child{border-bottom:none}
+.i-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.i-label{font-size:14px;font-weight:600;color:var(--dark);margin-bottom:2px}
+.i-val{font-size:13px;color:var(--muted);line-height:1.6}
+
+.ac-row{display:flex;gap:14px;padding:16px;border-bottom:1px solid var(--bdr);align-items:flex-start}
+.ac-row:last-child{border-bottom:none}
+.ac-ic{width:40px;height:40px;border-radius:50%;background:var(--sand-l);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ac-title{font-size:15px;font-weight:600;margin-bottom:3px}
+.ac-text{font-size:13px;color:var(--muted);line-height:1.6}
+
+.hours-row{display:flex;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--bdr);font-size:14px}
+.hours-row:last-child{border-bottom:none}
+.hours-closed{color:var(--sand)}
+.maps-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--sand-l);border:1.5px solid var(--bdr);border-radius:var(--r10);padding:13px;color:var(--bronze);font-size:15px;font-weight:500;text-decoration:none;margin-top:12px}
+
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--w);border-top:1px solid var(--bdr);display:flex;z-index:300;padding:0}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px;cursor:pointer;color:var(--hint);font-size:11px;gap:3px;border:none;background:none;font-family:inherit}
+.bn-item.active,.bn-item:hover{color:var(--sand)}
+.bn-icon{font-size:20px}
+
+footer{background:var(--dark);padding:24px 20px;text-align:center}
+footer .f-logo{color:var(--sand);font-size:15px;font-family:Georgia,serif;letter-spacing:.1em;margin-bottom:6px}
+footer .f-info{color:rgba(255,255,255,.4);font-size:12px;line-height:1.9}
+footer a{color:var(--sand)}
+.step{display:none}.step.active{display:block}
+.hidden{display:none}
 </style>
-</head>
-<body>
 
-<!-- HEADER -->
-<div class="hdr">
-  <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1">
-    <div id="hdr-logo-inner">
-      <div class="logo-txt"><span class="in">In</span><span class="gn">Genius</span><span class="pp">Prep</span></div>
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+        <rect width="100" height="100" rx="10" fill="rgba(255,255,255,0.15)"/>
+        <rect x="6" y="6" width="88" height="88" rx="6" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        <ellipse cx="37" cy="26" rx="7" ry="14" fill="none" stroke="white" stroke-width="2.5"/>
+        <ellipse cx="63" cy="22" rx="7" ry="14" fill="none" stroke="white" stroke-width="2.5"/>
+        <text x="50" y="72" font-size="38" font-family="Georgia,serif" fill="white" text-anchor="middle" letter-spacing="-2">BB</text>
+        <path d="M22 74 Q28 80 34 74" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M52 74 Q58 80 64 74" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="nav-name">BUNNYBEAUTY</span>
     </div>
-    <span class="hdr-sub" id="hdsub">AI Copy + Poster</span>
+    <div class="nav-right">
+      <div class="lang-switch">
+        <button class="lang-btn active" id="btn-cn" onclick="setLang('cn')">中文</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="nav-book" id="nav-book-btn"></button>
+    </div>
   </div>
-  <div class="hdr-right">
-    <button class="icon-btn" id="sb-tog" onclick="toggleSb()" title="Toggle sidebar">
-      <i class="ti ti-layout-sidebar-left-collapse" id="sb-icon" style="font-size:16px"></i>
-    </button>
-    <button class="lib-btn" onclick="openLibModal()">
-      <i class="ti ti-books" style="font-size:14px"></i>
-      <span id="lib-hdr-lbl">Style Library</span>
-      <span class="lib-count" id="lib-count">0</span>
-    </button>
-    <div class="lang-tog">
-      <button class="active" onclick="setLang('en')">EN</button>
-      <button onclick="setLang('zh')">中文</button>
-    </div>
+</nav>
+
+<div class="hero">
+  <svg width="80" height="80" viewBox="0 0 100 100" fill="none" style="margin-bottom:16px">
+    <rect width="100" height="100" rx="14" fill="rgba(255,255,255,0.12)"/>
+    <rect x="5" y="5" width="90" height="90" rx="10" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+    <ellipse cx="37" cy="26" rx="7" ry="14" fill="none" stroke="white" stroke-width="2.5"/>
+    <ellipse cx="63" cy="22" rx="7" ry="14" fill="none" stroke="white" stroke-width="2.5"/>
+    <text x="50" y="72" font-size="38" font-family="Georgia,serif" fill="white" text-anchor="middle" letter-spacing="-2">BB</text>
+    <path d="M22 74 Q28 80 34 74" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M52 74 Q58 80 64 74" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <text x="50" y="92" font-size="7.5" font-family="Georgia,serif" fill="rgba(255,255,255,0.75)" text-anchor="middle" letter-spacing="3">BUNNYBEAUTY STUDIO</text>
+  </svg>
+  <h1 id="hero-h1"></h1>
+  <div class="hero-sub">Private Lash Studio · Richmond BC</div>
+  <div class="hero-slogan">Timeless Beauty. Artfully Crafted.</div>
+  <div class="hero-pills" id="hero-pills"></div>
+  <button class="hero-btn" id="hero-book-btn"></button>
+</div>
+
+<div class="strip">
+  <div class="strip-in" id="strip-in"></div>
+</div>
+
+<!-- WEEKLY STATS -->
+<div id="stats-sec" style="background:var(--sand);padding:16px 20px">
+  <div style="max-width:480px;margin:0 auto">
+    <div id="weekly-stats" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center"></div>
   </div>
 </div>
 
-<div class="layout" id="layout">
-<!-- SIDEBAR -->
-<div class="sb">
-  <div class="sbs">
-    <div class="sbh" id="s-logo">Brand Logo</div>
-    <div id="lp" style="display:none;margin-bottom:7px"><img id="lpv" style="max-height:30px;max-width:190px;object-fit:contain;display:block;border-radius:4px"><button class="rmb" onclick="clrA('logo')">× Remove</button></div>
-    <label for="flogo" class="ubl" id="lubl"><i class="ti ti-upload" style="font-size:12px"></i><span id="llbl">Upload Logo</span></label>
-    <input type="file" id="flogo" accept="image/*" style="display:none" onchange="upA('logo',this)">
-  </div>
-  <div class="sbs">
-    <div class="sbh" id="s-bg">Poster Background</div>
-    <div style="font-size:10px;color:#bbb;margin-bottom:7px" id="bghint">Hero section background image</div>
-    <div id="bp" style="display:none;margin-bottom:7px"><img id="bpv" style="max-height:36px;max-width:200px;object-fit:cover;border-radius:var(--rs);border:1.5px solid var(--border);display:block"><button class="rmb" onclick="clrA('bg')">× Remove</button></div>
-    <label for="fbg" class="ubl" id="bubl"><i class="ti ti-photo" style="font-size:12px"></i><span id="blbl">Upload Background</span></label>
-    <input type="file" id="fbg" accept="image/*" style="display:none" onchange="upA('bg',this)">
-  </div>
-  <div class="sbs">
-    <div class="sbh" id="s-ev">Event Details</div>
-    <div class="fg"><label id="l-th">Event Title *</label><input id="ftheme" placeholder="2026 Admissions Strategy Seminar"></div>
-    <div class="fg"><label id="l-kp">Agenda (one per line)</label><textarea id="fkp" placeholder="• Inside the Admissions Office&#10;• Four Factors to Stand Out&#10;• Admissions Trends & Data&#10;• Real Case Studies"></textarea></div>
-    <div class="r2">
-      <div class="fg"><label id="l-tm">Date & Time</label><input id="ftime" placeholder="May 18 · 4pm PST"></div>
-      <div class="fg"><label id="l-lc">Location</label><input id="floc" placeholder="Zoom Webinar"></div>
-    </div>
-    <div class="r2">
-      <div class="fg"><label id="l-et">Event Type</label><input id="fevtype" placeholder="Free Webinar"></div>
-      <div class="fg"><label id="l-ct">Register</label><input id="fcontact" placeholder="Scan QR to register"></div>
-    </div>
-  </div>
-  <div class="sbs">
-    <div class="sbh" id="s-spk">Speakers</div>
-    <div id="spk-list"></div>
-    <button class="badd" id="addSpkBtn" onclick="addSpk()"><i class="ti ti-plus" style="font-size:12px"></i><span id="addSpkLbl">Add Speaker</span></button>
-  </div>
-  <div class="sbs" style="border:none">
-    <div class="sbh" id="s-ex">Extras</div>
-    <div class="fg"><label id="l-ex">Highlights / Perks</label><input id="fex" placeholder="Free guide · Limited to 30 seats"></div>
-    <div style="margin-top:11px">
-      <button class="bgen" id="gbtn" onclick="genAll()">
-        <i class="ti ti-sparkles" style="font-size:14px"></i><span id="gbtnlbl">Generate Copy + Poster</span>
-      </button>
-    </div>
-  </div>
-</div>
+<!-- BOOKING -->
+<div class="book-wrap" id="book-sec">
+<div class="sec">
+  <div class="sec-tag" id="book-tag"></div>
+  <h2 id="book-h2" style="margin-bottom:20px"></h2>
+  <div class="prog" id="prog-bar"></div>
 
-<!-- MAIN -->
-<div class="main">
-  <div class="tabs">
-    <div class="tab active" onclick="stab('copy',this)"><i class="ti ti-writing" style="font-size:13px"></i><span id="tlbl1">WeChat</span></div>
-    <div class="tab" onclick="stab('sms',this)"><i class="ti ti-message" style="font-size:13px"></i><span>SMS</span></div>
-    <div class="tab" onclick="stab('emailtab',this)"><i class="ti ti-mail" style="font-size:13px"></i><span>Email</span></div>
-    <div class="tab" onclick="stab('flyer',this)"><i class="ti ti-photo" style="font-size:13px"></i><span id="tlbl2">Poster</span></div>
+  <div id="step1" class="step active">
+    <div class="type-box">
+      <h3 style="font-size:16px;margin-bottom:4px" id="type-title"></h3>
+      <p style="font-size:13px;color:var(--hint)" id="type-sub"></p>
+      <div class="type-opts">
+        <div class="type-opt" id="to-new"><div class="to-emoji">🎉</div><div class="to-cn" id="to-new-label"></div><div class="to-badge" id="to-new-badge"></div></div>
+        <div class="type-opt" id="to-ret"><div class="to-emoji">💛</div><div class="to-cn" id="to-ret-label"></div><div class="to-badge" id="to-ret-badge"></div></div>
+        <div class="type-opt" id="to-ref"><div class="to-emoji">✿</div><div class="to-cn" id="to-ref-label"></div><div class="to-badge">$30–50</div></div>
+      </div>
+    </div>
+    <h3 style="margin-bottom:12px" id="style-title"></h3>
+    <div class="book-grid" id="sp-grid"></div>
+    <button class="btn-main" id="btn1" disabled></button>
   </div>
 
-  <!-- COPY TAB: WeChat only -->
-  <div id="tc-copy" class="tc active">
-    <div style="padding:14px 16px 0">
-      <div class="gdoc-bar">
-        <div style="display:flex;align-items:center;gap:9px">
-          <svg width="17" height="17" viewBox="0 0 48 48"><rect width="48" height="48" rx="4" fill="#4285F4"/><rect x="12" y="8" width="24" height="32" rx="2" fill="white"/><rect x="16" y="16" width="16" height="2" rx="1" fill="#4285F4"/><rect x="16" y="22" width="16" height="2" rx="1" fill="#4285F4"/><rect x="16" y="28" width="10" height="2" rx="1" fill="#4285F4"/></svg>
-          <span style="font-size:11px;color:var(--dgray);font-weight:600;font-family:var(--fh)" id="gdoc-status">Export all versions to Google Docs for live editing</span>
-        </div>
-        <div style="display:flex;gap:7px;align-items:center">
-          <button id="gdoc-btn" onclick="exportToGdoc()" style="background:#4285F4;color:#fff;border:none;padding:7px 14px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:var(--rs);font-family:var(--fh);display:flex;align-items:center;gap:6px;transition:background .18s" onmouseover="this.style.background='#3367D6'" onmouseout="this.style.background='#4285F4'">
-            <i class="ti ti-brand-google-drive" style="font-size:13px"></i><span id="gdoc-btn-lbl">Export to Google Docs</span>
-          </button>
-          <a id="gdoc-open-link" href="#" target="_blank" style="display:none;background:#34A853;color:#fff;padding:7px 14px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;text-decoration:none;border-radius:var(--rs);font-family:var(--fh);align-items:center;gap:5px">
-            <i class="ti ti-external-link" style="font-size:12px"></i>Open Doc
-          </a>
-        </div>
-      </div>
+  <div id="step2" class="step">
+    <button class="btn-back" id="back1"></button>
+    <h3 style="margin-bottom:6px" id="date-title"></h3>
+    <p style="font-size:13px;color:var(--hint);margin-bottom:14px" id="date-sub"></p>
+    <div class="date-scroll" id="date-grid"></div>
+    <div id="time-sec" class="hidden">
+      <h3 style="margin-bottom:12px" id="time-title"></h3>
+      <div class="time-grid" id="time-grid"></div>
     </div>
-    <div id="gdoc-fw" class="gdoc-fw" style="margin:10px 16px 0">
-      <div style="background:var(--lgray);border-bottom:1px solid var(--border);padding:7px 14px;display:flex;align-items:center;justify-content:space-between">
-        <div style="display:flex;align-items:center;gap:8px">
-          <svg width="13" height="13" viewBox="0 0 48 48"><rect width="48" height="48" rx="4" fill="#4285F4"/><rect x="12" y="8" width="24" height="32" rx="2" fill="white"/><rect x="16" y="16" width="16" height="2" rx="1" fill="#4285F4"/><rect x="16" y="22" width="16" height="2" rx="1" fill="#4285F4"/><rect x="16" y="28" width="10" height="2" rx="1" fill="#4285F4"/></svg>
-          <span style="font-size:11px;font-weight:700;color:var(--black);font-family:var(--fh)" id="gdoc-doc-name">Google Doc</span>
-          <span style="font-size:8.5px;color:#34A853;font-weight:700;background:#e8f5e9;padding:2px 8px;border-radius:9px;font-family:var(--fh)">● LIVE</span>
-        </div>
-        <button onclick="closeGdocFrame()" style="border:1.5px solid var(--border);background:transparent;color:#888;padding:4px 12px;font-size:9px;cursor:pointer;font-family:var(--fh);font-weight:700;border-radius:var(--rs);letter-spacing:1px;text-transform:uppercase">Close</button>
-      </div>
-      <iframe id="gdoc-iframe" src="" style="width:100%;height:440px;border:none" allow="clipboard-read; clipboard-write"></iframe>
-    </div>
-    <div class="ca">
-      <div class="rc">
-        <div class="rch">
-          <div style="display:flex;align-items:center;gap:8px"><div class="rc-num" style="color:var(--blue);border-color:var(--blue)">01</div><span class="rcl" id="sl1" style="color:var(--blue)">Knowledge Share</span></div>
-          <div class="rca">
-            <button onclick="editCopy('knowledge')" id="ebtn-knowledge"><i class="ti ti-pencil" style="font-size:11px"></i><span id="elbl-knowledge"> Edit</span></button>
-            <button onclick="rg('knowledge')" id="rg1"><i class="ti ti-refresh" style="font-size:11px"></i><span id="rgl1"> Regenerate</span></button>
-            <button onclick="cpT('knowledge')"><i class="ti ti-copy" style="font-size:11px"></i><span id="cpl1"> Copy</span></button>
-          </div>
-        </div>
-        <div class="rc-stripe" style="background:var(--blue)"></div>
-        <div class="rbd" id="c-knowledge"><span class="ph" id="ph1">Fill in event details and click generate</span></div>
-      </div>
-      <div class="rc">
-        <div class="rch">
-          <div style="display:flex;align-items:center;gap:8px"><div class="rc-num" style="color:#e05c2a;border-color:#e05c2a">02</div><span class="rcl" id="sl2" style="color:#e05c2a">Clickbait / Viral</span></div>
-          <div class="rca">
-            <button onclick="editCopy('clickbait')" id="ebtn-clickbait"><i class="ti ti-pencil" style="font-size:11px"></i><span id="elbl-clickbait"> Edit</span></button>
-            <button onclick="rg('clickbait')" id="rg2"><i class="ti ti-refresh" style="font-size:11px"></i><span id="rgl2"> Regenerate</span></button>
-            <button onclick="cpT('clickbait')"><i class="ti ti-copy" style="font-size:11px"></i><span id="cpl2"> Copy</span></button>
-          </div>
-        </div>
-        <div class="rc-stripe" style="background:#e05c2a"></div>
-        <div class="rbd" id="c-clickbait"><span class="ph" id="ph2">Fill in event details and click generate</span></div>
-      </div>
-      <div class="rc">
-        <div class="rch">
-          <div style="display:flex;align-items:center;gap:8px"><div class="rc-num" style="color:#2e7d32;border-color:#2e7d32">03</div><span class="rcl" id="sl3" style="color:#2e7d32">Clean & Direct</span></div>
-          <div class="rca">
-            <button onclick="editCopy('minimal')" id="ebtn-minimal"><i class="ti ti-pencil" style="font-size:11px"></i><span id="elbl-minimal"> Edit</span></button>
-            <button onclick="rg('minimal')" id="rg3"><i class="ti ti-refresh" style="font-size:11px"></i><span id="rgl3"> Regenerate</span></button>
-            <button onclick="cpT('minimal')"><i class="ti ti-copy" style="font-size:11px"></i><span id="cpl3"> Copy</span></button>
-          </div>
-        </div>
-        <div class="rc-stripe" style="background:#2e7d32"></div>
-        <div class="rbd" id="c-minimal"><span class="ph" id="ph3">Fill in event details and click generate</span></div>
-      </div>
-    </div>
+    <button class="btn-main" id="btn2" disabled></button>
   </div>
 
-  <!-- SMS TAB -->
-  <div id="tc-sms" class="tc">
-    <div class="ca">
-      <div style="background:var(--blue-lt);border:1.5px solid rgba(7,127,231,.2);border-radius:var(--r);padding:12px 16px;font-size:11px;color:var(--blue);font-family:var(--fh);display:flex;align-items:center;gap:8px">
-        <i class="ti ti-info-circle" style="font-size:15px;flex-shrink:0"></i>
-        Max 160 characters · includes date/time, topic, and registration link · short and direct
-      </div>
-      <div class="rc">
-        <div class="rch">
-          <div style="display:flex;align-items:center;gap:8px">
-            <div class="rc-num" style="color:#8b5cf6;border-color:#8b5cf6"><i class="ti ti-message" style="font-size:10px"></i></div>
-            <span class="rcl" style="color:#8b5cf6">SMS / Text Message</span>
-          </div>
-          <div class="rca">
-            <button onclick="editCopy('sms')" id="ebtn-sms"><i class="ti ti-pencil" style="font-size:11px"></i><span id="elbl-sms"> Edit</span></button>
-            <button onclick="rg('sms')" id="rg-sms"><i class="ti ti-refresh" style="font-size:11px"></i> Regenerate</button>
-            <button onclick="cpT('sms')"><i class="ti ti-copy" style="font-size:11px"></i> Copy</button>
-          </div>
-        </div>
-        <div class="rc-stripe" style="background:#8b5cf6"></div>
-        <div class="rbd" id="c-sms" style="min-height:60px"><span class="ph">Fill in event details and click generate</span></div>
-      </div>
-      <!-- char counter -->
-      <div id="sms-counter" style="font-size:11px;color:#bbb;font-family:var(--fh);text-align:right;margin-top:-8px;padding-right:4px"></div>
+  <div id="step3" class="step">
+    <button class="btn-back" id="back2"></button>
+    <h3 style="margin-bottom:14px" id="info-title"></h3>
+    <div class="form-box">
+      <div class="field"><span class="flbl" id="lbl-name"></span><input type="text" id="f-name" placeholder=""></div>
+      <div class="field"><span class="flbl" id="lbl-phone"></span><input type="tel" id="f-phone" placeholder="(604) 000-0000"></div>
+      <div class="field"><span class="flbl" id="lbl-email"></span><input type="email" id="f-email" placeholder="your@email.com"></div>
+      <div class="field" style="margin-bottom:0"><span class="flbl" id="lbl-notes"></span><textarea id="f-notes" rows="3" placeholder=""></textarea></div>
     </div>
+    <button class="btn-main" id="btn3" disabled></button>
   </div>
 
-  <!-- EMAIL TAB -->
-  <div id="tc-emailtab" class="tc">
-    <div class="ca">
-      <div style="background:var(--blue-lt);border:1.5px solid rgba(7,127,231,.2);border-radius:var(--r);padding:12px 16px;font-size:11px;color:var(--blue);font-family:var(--fh);display:flex;align-items:center;gap:8px">
-        <i class="ti ti-info-circle" style="font-size:15px;flex-shrink:0"></i>
-        Subject line + 150–250 word body · warm greeting → why attend → speaker → clear CTA
-      </div>
-      <div class="rc">
-        <div class="rch">
-          <div style="display:flex;align-items:center;gap:8px">
-            <div class="rc-num" style="color:#0891b2;border-color:#0891b2"><i class="ti ti-mail" style="font-size:10px"></i></div>
-            <span class="rcl" style="color:#0891b2">Email Promotion</span>
-          </div>
-          <div class="rca">
-            <button onclick="editCopy('email')" id="ebtn-email"><i class="ti ti-pencil" style="font-size:11px"></i><span id="elbl-email"> Edit</span></button>
-            <button onclick="rg('email')" id="rg-email"><i class="ti ti-refresh" style="font-size:11px"></i> Regenerate</button>
-            <button onclick="cpT('email')"><i class="ti ti-copy" style="font-size:11px"></i> Copy</button>
-          </div>
-        </div>
-        <div class="rc-stripe" style="background:#0891b2"></div>
-        <div class="rbd" id="c-email"><span class="ph">Fill in event details and click generate</span></div>
-      </div>
-    </div>
+  <div id="step4" class="step">
+    <button class="btn-back" id="back3"></button>
+    <h3 style="margin-bottom:14px" id="review-title"></h3>
+    <div class="card" style="margin-bottom:14px" id="review-card"></div>
+    <div class="notice" id="cancel-notice"></div>
+    <button class="btn-main" id="btn-confirm"></button>
   </div>
 
-  <!-- POSTER TAB -->
-  <div id="tc-flyer" class="tc">
-    <div class="fa">
-      <!-- Controls row 1: theme/lang/actions -->
-      <div class="panel">
-        <select class="ctrl" id="selTheme" onchange="pv=0;rf()"><option value="dark" id="o-dk">Dark Classic</option><option value="white" id="o-wh">White Pro</option><option value="split" id="o-sp">Dynamic Split</option></select>
-        <select class="ctrl" id="selPL" onchange="autoTranslate()"><option value="zh-hans">简体中文</option><option value="zh-hant">繁體中文</option><option value="en">English</option><option value="ko">한국어</option></select>
-        <div style="width:1px;height:20px;background:var(--border)"></div>
-        <button class="cb regen" onclick="regenStyle()"><i class="ti ti-refresh" style="font-size:12px"></i><span id="rgslbl"> New Style</span></button>
-        <button class="cb" id="etbtn" onclick="toggleEdit()"><i class="ti ti-pencil" style="font-size:12px"></i><span id="etlbl"> Edit</span></button>
-        <button class="cb" onclick="dlPNG()" id="dlbtn"><i class="ti ti-download" style="font-size:12px"></i><span id="dllbl"> PNG</span></button>
-        <button class="cb cb-green" onclick="dlPPTX()" id="pptxbtn">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h2a2 2 0 0 0 0-4H9v6"/></svg>
-          <span id="pptxlbl"> Canva (.pptx)</span>
-        </button>
-        <button class="cb" onclick="dlHTML()" style="background:var(--dgray)"><i class="ti ti-code" style="font-size:12px"></i><span> HTML</span></button>
-      </div>
-
-      <!-- Controls row 2: format + zoom -->
-      <div class="panel" style="justify-content:space-between">
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <div>
-            <div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;font-family:var(--fh);margin-bottom:5px">FORMAT</div>
-            <div class="fmt-pills">
-              <span class="fp active" id="fp-standard" onclick="setFmt('standard')">Portrait</span>
-              <span class="fp" id="fp-square" onclick="setFmt('square')">1:1 Square</span>
-              <span class="fp" id="fp-vertical" onclick="setFmt('vertical')">9:16 Vertical</span>
-              <span class="fp" id="fp-horizontal" onclick="setFmt('horizontal')">1.91:1 Wide</span>
-            </div>
-          </div>
-          <div style="width:1px;height:36px;background:var(--border)"></div>
-          <div>
-            <div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;font-family:var(--fh);margin-bottom:5px">RESOLUTION</div>
-            <select class="ctrl" id="dlRes" style="padding:4px 9px;font-size:10px">
-              <option value="1080">1080 px</option>
-              <option value="1500">1500 px</option>
-              <option value="2160">2160 px (4K)</option>
-            </select>
-          </div>
-        </div>
-        <!-- Zoom -->
-        <div class="zoom-bar">
-          <button onclick="zoom(-0.1)">−</button>
-          <input type="range" id="zslider" min="25" max="130" value="74" step="2" oninput="setZoom(this.value/100)" style="width:100px;accent-color:var(--blue);cursor:pointer">
-          <button onclick="zoom(0.1)">+</button>
-          <span id="zpct" style="font-size:10px;font-weight:700;color:#aaa;letter-spacing:1px;min-width:36px;font-family:var(--fh)">74%</span>
-          <div style="width:1px;height:14px;background:var(--border)"></div>
-          <button onclick="setZoom(0.74)" style="font-size:9px;background:transparent;border:none;color:#bbb;cursor:pointer;letter-spacing:1px;text-transform:uppercase;padding:0;font-family:var(--fh)" id="zrst">Reset</button>
-          <div id="tbadge" style="display:none;align-items:center;gap:5px;margin-left:5px;background:var(--blue-lt);border:1px solid rgba(7,127,231,.25);padding:3px 9px;border-radius:var(--rs)">
-            <i class="ti ti-loader" style="font-size:11px;color:var(--blue);animation:spin 1s linear infinite"></i>
-            <span style="font-size:9px;color:var(--blue);font-weight:700;letter-spacing:1px;font-family:var(--fh)" id="tbadgetxt">Translating…</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="ehbar" id="ehbar"><i class="ti ti-hand-finger" style="font-size:14px"></i><span>Click to select · Drag to move · Double-click to edit text · Toolbar to resize</span></div>
-      <div class="fwrap"><div class="fsc" id="fsc" style="transform:scale(0.74)"><div id="flyer"></div></div></div>
+  <div id="step5" class="step">
+    <div style="text-align:center;padding:24px 0 20px">
+      <div style="width:72px;height:72px;border-radius:50%;background:var(--sand-l);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 14px">✿</div>
+      <div style="font-size:24px;color:var(--bronze);margin-bottom:6px;font-weight:500" id="conf-title"></div>
+      <div style="font-size:14px;color:var(--hint);font-family:Georgia,serif" id="conf-sub"></div>
+    </div>
+    <div class="ref-card">
+      <div style="font-size:12px;color:var(--hint);margin-bottom:6px;letter-spacing:.06em" id="ref-label"></div>
+      <div class="ref-num" id="ref-display"></div>
+      <div style="font-size:12px;color:var(--hint);margin-top:6px" id="ref-sub"></div>
+    </div>
+    <div class="gcal-bar">
+      <div style="color:#fff;font-size:16px;font-weight:600;margin-bottom:4px" id="gcal-title"></div>
+      <div style="color:rgba(255,255,255,.75);font-size:13px" id="gcal-sub"></div>
+      <button class="gcal-btn" id="gcal-btn">📅 Add to Google Calendar</button>
+      <input type="hidden" id="gcal-url">
+    </div>
+    <div class="card" style="margin-bottom:14px" id="conf-sum"></div>
+    <div class="card" style="margin-bottom:14px">
+      <div style="padding:14px 16px;border-bottom:1px solid var(--bdr)"><h3 style="font-size:16px" id="contact-title"></h3></div>
+      <div class="contact-row"><span class="c-icon">📱</span><div><div class="c-label" id="phone-label"></div><a href="tel:+12369967087" class="c-val">(236) 996-7087</a></div></div>
+      <div class="contact-row"><span class="c-icon">💬</span><div><div class="c-label" id="wechat-label"></div><div class="c-val">LanLovesLife</div></div></div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <div style="padding:14px 16px;border-bottom:1px solid var(--bdr)"><h3 style="font-size:16px" id="directions-title"></h3></div>
+      <div id="loc-conf"></div>
+    </div>
+    <div class="card">
+      <div style="padding:14px 16px;border-bottom:1px solid var(--bdr)"><h3 style="font-size:16px" id="aftercare-remind-title"></h3></div>
+      <div id="ac-mini"></div>
+      <div style="padding:14px 16px"><a id="ac-link" style="color:var(--sand);font-size:14px;cursor:pointer"></a></div>
     </div>
   </div>
 </div>
 </div>
 
-<div id="ftb">
-  <button onclick="adj(-0.12)">A−</button>
-  <span id="ftsz" style="font-size:10px;color:rgba(255,255,255,.5);min-width:32px;text-align:center;font-family:var(--fh)">100%</span>
-  <button onclick="adj(0.12)">A+</button>
-  <div class="sp"></div>
-  <button onclick="rst()">↺</button>
-  <div class="sp"></div>
-  <span style="font-size:9px;color:rgba(255,255,255,.3);font-family:var(--fh)">Drag · Dbl-click</span>
-</div>
-
-<!-- LIBRARY MODAL -->
-<div id="lib-modal">
-  <div class="mbox">
-    <div class="mhd">
-      <div>
-        <div class="logo-txt" style="margin-bottom:3px"><span class="in">In</span><span class="gn">Genius</span><span class="pp">Prep</span></div>
-        <div style="font-size:9px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;font-family:var(--fh)" id="ml-title">Style Library — Reference Articles</div>
-      </div>
-      <button class="mclose" onclick="closeLibModal()">×</button>
-    </div>
-    <div class="mform">
-      <div style="font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--lblue);margin-bottom:10px">+ Add New Reference Article</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-        <div><label style="font-family:var(--fh);font-size:9px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#aaa;display:block;margin-bottom:4px">Article Label</label>
-        <input id="lib-label" style="width:100%;border:1.5px solid var(--border);border-radius:var(--rs);padding:7px 10px;font-size:12px;font-family:var(--fb);outline:none;transition:border-color .15s" placeholder="e.g. 2026 RD Results" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></div>
-        <div><label style="font-family:var(--fh);font-size:9px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#aaa;display:block;margin-bottom:4px">Style Tag</label>
-        <select id="lib-tag" style="width:100%;border:1.5px solid var(--border);border-radius:var(--rs);padding:7px 10px;font-size:12px;font-family:var(--fb);outline:none;background:#fff;cursor:pointer">
-          <option value="knowledge">Knowledge Share</option><option value="clickbait">Clickbait / Viral</option><option value="minimal">Clean & Direct</option><option value="all">General Reference</option>
-        </select></div>
-      </div>
-      <textarea id="lib-content" style="width:100%;border:1.5px solid var(--border);border-radius:var(--rs);padding:10px;font-size:12px;font-family:var(--fb);outline:none;resize:vertical;min-height:120px;max-height:220px;line-height:1.8;transition:border-color .15s" placeholder="Paste the full article text here…" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></textarea>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">
-        <div style="font-size:10px;color:#bbb;font-family:var(--fh)">Characters: <span id="lib-chars" style="font-weight:700;color:var(--blue)">0</span></div>
-        <button onclick="saveLibArticle()" style="background:var(--blue);color:#fff;border:none;padding:8px 20px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:var(--rs);font-family:var(--fh);display:flex;align-items:center;gap:7px;transition:background .18s" onmouseover="this.style.background='var(--blue-dk)'" onmouseout="this.style.background='var(--blue)'">
-          <i class="ti ti-device-floppy" style="font-size:13px"></i>Save to Library
-        </button>
-      </div>
-    </div>
-    <div class="mlist">
-      <div style="font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
-        <span>Saved Articles</span>
-        <span id="lib-modal-count" style="background:var(--blue);color:#fff;font-size:8px;padding:1px 8px;border-radius:9px">0</span>
-      </div>
-      <div id="lib-modal-list"></div>
-      <div id="lib-empty" style="text-align:center;padding:36px 0;color:#ccc;font-size:12px;font-style:italic">No articles yet. Add your first reference above.</div>
+<!-- MANAGE -->
+<div id="manage-sec" style="border-top:1px solid var(--bdr);background:var(--w)">
+<div class="sec">
+  <div class="sec-tag" id="manage-tag"></div>
+  <h2 style="margin-bottom:6px" id="manage-h2"></h2>
+  <p style="margin-bottom:20px;font-size:14px" id="manage-sub"></p>
+  <div class="form-box" style="margin-bottom:14px">
+    <div class="field" style="margin-bottom:0">
+      <span class="flbl" id="manage-lbl"></span>
+      <input type="text" id="manage-ref" style="text-transform:uppercase;letter-spacing:.08em;font-size:20px;text-align:center" placeholder="e.g. BB-A3K7">
     </div>
   </div>
+  <button class="btn-main" id="lookup-btn"></button>
+  <div id="manage-result" class="hidden" style="margin-top:16px"></div>
+</div>
 </div>
 
-<div class="toast" id="toast"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundled.js"></script>
+<!-- LOCATION -->
+<div id="loc-sec" style="background:var(--w);border-top:1px solid var(--bdr)">
+<div class="sec">
+  <div class="sec-tag" id="loc-tag"></div>
+  <h2 style="margin-bottom:16px" id="loc-h2"></h2>
+  <div class="card">
+    <div class="info-row"><span class="i-icon">📌</span><div><div class="i-label">Bunny Beauty Studio</div><div class="i-val">7151 No. 5 Rd, Richmond, BC</div></div></div>
+    <div class="info-row"><span class="i-icon">📞</span><div><div class="i-label" id="loc-phone-label"></div><a href="tel:+12369967087" style="color:var(--sand);font-size:14px">(236) 996-7087</a></div></div>
+    <div class="info-row"><span class="i-icon">💬</span><div><div class="i-label" id="loc-wechat-label"></div><div class="i-val">LanLovesLife</div></div></div>
+  </div>
+  <a href="https://maps.google.com/?q=7151+No+5+Rd+Richmond+BC" target="_blank" class="maps-btn" id="maps-btn-text"></a>
+  <div class="card" style="margin-top:14px" id="hours-card"></div>
+  <h3 style="margin:24px 0 14px" id="parking-title"></h3>
+  <div class="card" id="park-card"></div>
+  <div style="background:var(--sand-l);border-radius:var(--r16);padding:16px;margin-top:12px;border:1px solid var(--bdr)">
+    <div style="font-size:13px;font-weight:600;color:var(--bronze);margin-bottom:10px" id="photo-title"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px" id="photo-grid"></div>
+    <div style="background:var(--w);border-radius:10px;padding:12px;font-size:13px;color:var(--bronze);line-height:1.7" id="parking-tip"></div>
+  </div>
+</div>
+</div>
+
+<!-- AFTERCARE -->
+<div id="aftercare-sec" style="border-top:1px solid var(--bdr);background:var(--sand-ll)">
+<div class="sec">
+  <div class="sec-tag" id="care-tag"></div>
+  <h2 style="margin-bottom:16px" id="care-h2"></h2>
+  <div class="card" id="ac-full"></div>
+</div>
+</div>
+
+<footer>
+  <div class="f-logo">✿ BUNNYBEAUTY STUDIO</div>
+  <div class="f-info">7151 No. 5 Rd, Richmond, BC<br><a href="tel:+12369967087">(236) 996-7087</a> · WeChat: LanLovesLife<br><span style="font-style:italic">Timeless Beauty. Artfully Crafted.</span></div>
+</footer>
+
+<div class="bottom-nav">
+  <button class="bn-item active" id="bn-book"><span class="bn-icon">📅</span><span id="bn-book-lbl"></span></button>
+  <button class="bn-item" id="bn-manage"><span class="bn-icon">🔄</span><span id="bn-manage-lbl"></span></button>
+  <button class="bn-item" id="bn-loc"><span class="bn-icon">📍</span><span id="bn-loc-lbl"></span></button>
+  <button class="bn-item" id="bn-care"><span class="bn-icon">💧</span><span id="bn-care-lbl"></span></button>
+</div>
+
 <script>
-/* ── STATE ── */
-let uL='en',LD=null,BD=null,eon=false,sbOpen=true;
-let spks=[{n:'',c:'',p:null}];
-let BP={},sel=null,ds=null,tData=null,zoomLvl=0.74,pv=0,styleIdx=0;
-let libArticles=[],flyerFmt='standard';
+var GCAL_URL='https://script.google.com/macros/s/AKfycbzuQ7sVTeyyhKeZ9leVX_GKv3m_HsS1yWYxb9LcSdfc0URW6b09k6RsWSi7kQYg3TgL/exec';
 
-const FMTS={
-  standard:{w:390,h:null,exportW:1080,exportH:1920,label:'Portrait'},
-  square:{w:390,h:390,exportW:1080,exportH:1080,label:'1:1 Square'},
-  vertical:{w:390,h:693,exportW:1080,exportH:1920,label:'9:16 Vertical'},
-  horizontal:{w:660,h:346,exportW:1200,exportH:628,label:'1.91:1 Wide'},
+/* ============ TRANSLATIONS ============ */
+var T={
+  cn:{
+    navBook:'立即预约',
+    heroH1:'新中式美睫',
+    pills:['✔ 款式多样','✔ 贴合眼型','✔ 灵动自然','✔ 精致不夸张','🕒 1.5–2h'],
+    heroBtn:'立即预约 →',
+    strip:[{cn:'私人工作室',en:'Private Studio'},{cn:'定制眼型',en:'Custom Lash Map'},{cn:'优质山茶花毛',en:'Premium Camellia'},{cn:'在线预约',en:'Easy Booking'}],
+    bookTag:'在线预约',bookH2:'预约你的时间',
+    typeTitle:'你是新客还是老客？',typeSub:'新客半价 · 老客8折 · 补睫5折',
+    toNew:'新客',toNewBadge:'半价',toRet:'老客',toRetBadge:'8折',toRef:'补睫',
+    styleTitle:'选择款式',
+    btn1:'下一步：选择时间 →',back1:'← 返回',
+    dateTitle:'选择日期',dateSub:'左右滑动查看更多日期',
+    timeTitle:'选择时间',
+    btn2:'下一步：填写信息 →',
+    infoTitle:'填写信息',back2:'← 返回',
+    lblName:'姓名 *',lblPhone:'电话 (选填)',lblEmail:'邮箱 (选填)',lblNotes:'备注 (选填)',
+    namePH:'您的姓名',notesPH:'过敏史 / 目前眼睫情况 / 期望效果...',
+    btn3:'查看预约详情 →',
+    reviewTitle:'确认预约信息',back3:'← 修改',
+    cancelNotice:'⚠️ 请提前 3天 取消或改期，3天内请直接联系我们。',
+    btnConfirm:'确认预约 ✓ Confirm',
+    confTitle:'预约成功！🎉',confSub:'We\'ll see you soon ✿',
+    refLabel:'预约编号',refSub:'请保存此编号，取消/修改时需要',
+    gcalTitle:'📅 添加到你的日历',gcalSub:'地址、电话、停车指引已自动填入',
+    contactTitle:'联系我们',phoneLabel:'电话 / 短信',wechatLabel:'微信',
+    directionsTitle:'📍 到店指引',aftercareRemind:'💧 护理提醒',acLink:'查看完整护理指南 →',
+    manageTag:'管理预约',manageH2:'取消 / 修改预约',
+    manageSub:'提前 3天以上 可自助取消，3天内请直接联系。',
+    manageLbl:'输入预约编号',lookupBtn:'查询我的预约 →',
+    locTag:'位置',locH2:'工作室地址',locPhoneLabel:'电话 / 短信',locWechatLabel:'微信',
+    mapsBtn:'🗺 在 Google Maps 中打开',parkingTitle:'🅿️ 停车 & 到达',
+    photoTitle:'📸 入口参考图',
+    photos:[{bg:'#6a8a5a',icon:'🌳',label:'① 入口大门',desc:'7151石柱'},{bg:'#8a9a7a',icon:'🅿️',label:'② 停车场',desc:'进门右侧'},{bg:'#7a8a9a',icon:'🏠',label:'③ 内院',desc:'一楼迎接'}],
+    parkingTip:'⚠️ 入口隐秘请减速，留意左侧石柱 7151 门牌\n进门右侧停车 → 步行至内院 → 一楼迎接 → 上二楼',
+    careTag:'护理',careH2:'爱护你的美睫',
+    progSteps:['款式','时间','信息','确认'],
+    bnBook:'预约',bnManage:'管理',bnLoc:'位置',bnCare:'护理',
+    days:['日','一','二','三','四','五','六'],
+    spotsLeft:'位',
+    rk:{style:'款式',type:'类型',date:'日期',time:'时间',duration:'时长',price:'价格',name:'姓名',phone:'电话',email:'邮箱',notes:'备注'},
+    ctypes:{new:'新客 🎉',refill:'补睫 ✿',returning:'老客 💛'},
+    refillDur:'60–75 min',
+    lookupLoading:'查询中...',lookupNotFound:'❌ 未找到编号',lookupCancelled:'此预约已取消 ✓',
+    daysLeft:'距预约还有',daysLeftUnit:'天，可以自助取消 ✓',
+    daysLeftFew:'距预约仅剩',daysLeftFewUnit:'天，请直接联系取消',
+    doCancel:'确认取消此预约',cancelLoading:'取消中...',cancelDone:'预约已取消',
+    hours:['周一 Mon','12:00 PM – 9:00 PM','周二 Tue','12:00 PM – 9:00 PM','周三 Wed','9:00 AM – 9:00 PM','周四 Thu','10:00 AM / 1:00 PM onwards','周五–周六 Fri–Sat','9:00 AM – 9:00 PM','周日 Sun','9:00 AM – 6:00 PM'],
+    parking:[
+      {i:'🔍',label:'⚠️ 入口隐秘请注意',val:'沿No.5 Rd行驶，留意两侧茂密大树夹道入口，门牌 7151 在左侧石柱，容易错过请减速'},
+      {i:'🅿️',label:'停车位置',val:'进入大门后靠右手边停车，有足够空间'},
+      {i:'🚶',label:'步行指引',val:'停车后往内院走，我在一楼迎接，带您上二楼工作室'},
+      {i:'🚌',label:'405 公交车站',val:'门口即有405路公交车站，非常方便'},
+      {i:'📲',label:'到达后发短信',val:'(236) 996-7087 — 我会出来接您'}
+    ],
+    ac:[
+      {i:'💧',title:'8小时内避水避蒸汽',text:'避开水、蒸汽、桑拿，让胶水充分固化。8小时后可正常洗脸，避免大量水冲眼部。'},
+      {i:'🚫',title:'避免油性产品',text:'油脂溶解胶水，更换无油洁面及卸妆产品，检查所有护肤品标签。'},
+      {i:'🤲',title:'不要揉眼睛',text:'揉眼造成过早脱落，如有不适请联系我们。'},
+      {i:'🌙',title:'尽量仰睡',text:'侧睡压变睫毛形状，建议使用真丝枕套减少摩擦。'},
+      {i:'✿',title:'每天梳理睫毛',text:'每天早晨用螺旋刷从根部轻轻梳理，保持蓬松感。'},
+      {i:'💄',title:'不需要刷睫毛膏',text:'接睫后无需睫毛膏，使用会使睫毛结块影响效果。'},
+      {i:'🧴',title:'每周清洁两次',text:'用专用泡沫清洁睫毛，清洁度决定持久度。'},
+      {i:'📅',title:'2周内来补睫',text:'建议在2周内回来补睫，保持饱满效果。超过2周可能需要重新接全套。'}
+    ]
+  },
+  en:{
+    navBook:'Book Now',
+    heroH1:'Lash Extensions',
+    pills:['✔ Various styles','✔ Custom fit','✔ Natural look','✔ Subtle glam','🕒 1.5–2 hrs'],
+    heroBtn:'Book an Appointment →',
+    strip:[{cn:'Private Studio',en:'Private Studio'},{cn:'Custom Lash Map',en:'Custom Lash Map'},{cn:'Premium Camellia',en:'Premium Camellia'},{cn:'Easy Booking',en:'Easy Booking'}],
+    bookTag:'Online Booking',bookH2:'Reserve Your Spot',
+    typeTitle:'Are you a new or returning client?',typeSub:'New clients: 50% off · Returning: 20% off · Refill: 50% off',
+    toNew:'New Client',toNewBadge:'50% off',toRet:'Returning',toRetBadge:'20% off',toRef:'Refill',
+    styleTitle:'Choose your style',
+    btn1:'Next: Choose a Time →',back1:'← Back',
+    dateTitle:'Pick a date',dateSub:'Swipe to see more dates',
+    timeTitle:'Available times',
+    btn2:'Next: Your Info →',
+    infoTitle:'Your Information',back2:'← Back',
+    lblName:'Full Name *',lblPhone:'Phone (optional)',lblEmail:'Email (optional)',lblNotes:'Notes (optional)',
+    namePH:'Your name',notesPH:'Allergies / current lashes / desired look...',
+    btn3:'Review Booking →',
+    reviewTitle:'Review & Confirm',back3:'← Edit',
+    cancelNotice:'⚠️ Please cancel or reschedule at least 3 days in advance. Within 3 days, please contact us directly.',
+    btnConfirm:'Confirm Booking ✓',
+    confTitle:'You\'re all booked! 🎉',confSub:'We can\'t wait to see you ✿',
+    refLabel:'Booking Reference',refSub:'Save this — you\'ll need it to cancel or reschedule',
+    gcalTitle:'📅 Add to Your Calendar',gcalSub:'Address, phone & directions are pre-filled',
+    contactTitle:'Contact Us',phoneLabel:'Phone / Text',wechatLabel:'WeChat',
+    directionsTitle:'📍 Getting Here',aftercareRemind:'💧 Aftercare Reminders',acLink:'View full aftercare guide →',
+    manageTag:'Manage Booking',manageH2:'Cancel / Reschedule',
+    manageSub:'Self-cancel up to 3 days before your appointment. Within 3 days, please reach out directly.',
+    manageLbl:'Enter your booking reference',lookupBtn:'Look Up My Booking →',
+    locTag:'Location',locH2:'Studio Address',locPhoneLabel:'Phone / Text',locWechatLabel:'WeChat',
+    mapsBtn:'🗺 Open in Google Maps',parkingTitle:'🅿️ Parking & Arrival',
+    photoTitle:'📸 Entrance Guide',
+    photos:[{bg:'#6a8a5a',icon:'🌳',label:'① Entrance',desc:'7151 pillar'},{bg:'#8a9a7a',icon:'🅿️',label:'② Parking',desc:'Right side inside gate'},{bg:'#7a8a9a',icon:'🏠',label:'③ Courtyard',desc:'Meet you on 1st floor'}],
+    parkingTip:'⚠️ The entrance is easy to miss — slow down and look for the 7151 pillar on your left\nPark on the right → walk to the inner courtyard → I\'ll meet you on the 1st floor → up to 2nd floor studio',
+    careTag:'Aftercare',careH2:'Keep Your Lashes Gorgeous',
+    progSteps:['Style','Time','Info','Review'],
+    bnBook:'Book',bnManage:'Manage',bnLoc:'Location',bnCare:'Aftercare',
+    days:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+    spotsLeft:'',
+    rk:{style:'Style',type:'Client type',date:'Date',time:'Time',duration:'Duration',price:'Price',name:'Name',phone:'Phone',email:'Email',notes:'Notes'},
+    ctypes:{new:'New Client 🎉',refill:'Refill ✿',returning:'Returning 💛'},
+    refillDur:'60–75 min',
+    lookupLoading:'Looking up...',lookupNotFound:'❌ Booking not found',lookupCancelled:'This booking has been cancelled ✓',
+    daysLeft:'Your appointment is in',daysLeftUnit:'days — you can self-cancel ✓',
+    daysLeftFew:'Only',daysLeftFewUnit:'days until your appointment. Please contact us to cancel.',
+    doCancel:'Cancel This Appointment',cancelLoading:'Cancelling...',cancelDone:'Booking Cancelled',
+    hours:['Mon','12:00 PM – 9:00 PM','Tue','12:00 PM – 9:00 PM','Wed','9:00 AM – 9:00 PM','Thu','10:00 AM / 1:00 PM onwards','Fri–Sat','9:00 AM – 9:00 PM','Sun','9:00 AM – 6:00 PM'],
+    parking:[
+      {i:'🔍',label:'⚠️ Easy-to-miss entrance',val:'Drive along No. 5 Rd and watch for a tree-lined driveway — the 7151 gate pillar is on the left. Slow down, it\'s easy to miss!'},
+      {i:'🅿️',label:'Parking',val:'Park on the right side after entering the gate — plenty of space'},
+      {i:'🚶',label:'Directions',val:'Walk toward the inner courtyard. I\'ll meet you on the 1st floor and take you up to the 2nd floor studio'},
+      {i:'🚌',label:'Bus Stop — Route 405',val:'Bus stop right at the front door'},
+      {i:'📲',label:'Text on arrival',val:'(236) 996-7087 — I\'ll come out to meet you'}
+    ],
+    ac:[
+      {i:'💧',title:'Stay dry for 8 hours',text:'Avoid water, steam, saunas, and heavy sweating. After 8 hours you can wash your face normally, but avoid direct water pressure on your lashes.'},
+      {i:'🚫',title:'Go oil-free',text:'Oil breaks down lash adhesive. Switch to oil-free cleansers and makeup removers, and check all your skincare labels.'},
+      {i:'🤲',title:'No rubbing or picking',text:'Rubbing your eyes causes premature shedding. If anything feels irritating, reach out and we\'ll sort it out.'},
+      {i:'🌙',title:'Sleep on your back',text:'Side sleeping bends and crushes your lashes. A silk pillowcase helps reduce friction if you\'re a side sleeper.'},
+      {i:'✿',title:'Brush daily',text:'Use the spoolie we give you every morning, brushing from mid-shaft to tip to keep your lashes fanned and fluffy.'},
+      {i:'💄',title:'Skip the mascara',text:'You won\'t need it — and mascara clumps fans together and is really hard to remove without pulling lashes off.'},
+      {i:'🧴',title:'Cleanse twice a week',text:'Use a lash-safe foam cleanser to remove oils and buildup. Clean lashes always last longer.'},
+      {i:'📅',title:'Come back within 2 weeks',text:'We recommend returning within 2 weeks for a fill to keep your set looking full. After 2 weeks you may need a new full set.'}
+    ]
+  }
 };
 
-/* ── I18N ── */
-const UI={
-  en:{sub:'AI Copy + Poster',s_logo:'Brand Logo',s_bg:'Poster Background',s_ev:'Event Details',s_spk:'Speakers',s_ex:'Extras',lupl:'Upload Logo',bupl:'Upload Background',bghint:'Hero section background image',l_th:'Event Title *',l_kp:'Agenda (one per line)',l_tm:'Date & Time',l_lc:'Location',l_et:'Event Type',l_ct:'Register',l_nm:'Name',l_cr:'Title & Credentials',l_ex:'Highlights / Perks',gen:'Generate Copy + Poster',t1:'Copywriting',t2:'Poster',sl1:'Knowledge Share',sl2:'Clickbait / Viral',sl3:'Clean & Direct',rg:'Regenerate',cp:'Copy',lib:'Style Library',adds:'Add Speaker',copied:'Copied!',gen_:'Generating…',ph:'Fill in event details and click generate'},
-  zh:{sub:'AI 文案 + 海报',s_logo:'品牌 Logo',s_bg:'海报背景图',s_ev:'活动信息',s_spk:'嘉宾',s_ex:'额外信息',lupl:'上传 Logo',bupl:'上传背景图',bghint:'上传后作为英雄区背景',l_th:'活动主题 *',l_kp:'核心议程（每行一条）',l_tm:'日期时间',l_lc:'地点',l_et:'活动标签',l_ct:'联系/报名',l_nm:'姓名',l_cr:'职位与资历',l_ex:'亮点/福利',gen:'一键生成文案 + 海报',t1:'三版文案',t2:'活动海报',sl1:'知识分享',sl2:'标题党',sl3:'简约直接',rg:'重新生成',cp:'复制',lib:'素材库',adds:'添加嘉宾',copied:'已复制',gen_:'生成中…',ph:'填写信息后点击生成'}
+/* ============ DATA ============ */
+var STYLES=[
+  {id:1,emoji:'🌿',cn:'自然穿插单根',en:'Natural Classic',sub_cn:'清爽日常',sub_en:'Clean & effortless',price:60,newP:40,retP:48,refP:30,dur:120},
+  {id:2,emoji:'🧚',cn:'仙子款',en:'Fairy Style',sub_cn:'轻薄灵动',sub_en:'Light & wispy',price:80,newP:40,retP:64,refP:40,dur:120},
+  {id:3,emoji:'📖',cn:'大/小漫画款',en:'Manga Style',sub_cn:'自然放大眼',sub_en:'Doe-eyed & defined',price:80,newP:40,retP:64,refP:40,dur:120},
+  {id:4,emoji:'😈',cn:'小恶魔款',en:'Little Devil',sub_cn:'妩媚有神',sub_en:'Sultry & dramatic',price:100,newP:50,retP:80,refP:50,dur:120},
+  {id:5,emoji:'🦊',cn:'泰式/狐系浓密款',en:'Thai/Fox Dense',sub_cn:'上扬飞扬',sub_en:'Lifted & voluminous',price:100,newP:50,retP:80,refP:50,dur:120},
+  {id:6,emoji:'🤍',cn:'其他/暂未确定',en:'Other/Undecided',sub_cn:'预约后沟通',sub_en:'We\'ll figure it out together',price:60,priceLabel:'$60+',newP:40,retP:48,refP:30,dur:120}
+];
+
+var CFG={
+  address:'7151 No. 5 Rd, Richmond, BC',
+  schedule:{
+    0:['09:00','12:00','13:00','14:00','16:00','17:00','18:00'],
+    1:['12:00','13:00','14:00','16:00','17:00','18:00','19:00','21:00'],
+    2:['12:00','13:00','14:00','16:00','17:00','18:00','19:00','21:00'],
+    3:['09:00','13:00','14:00','16:00','17:00','18:00','19:00','21:00'],
+    4:['10:00','13:00','14:00','16:00','17:00','18:00'],
+    5:['09:00','12:00','13:00','14:00','16:00','17:00','18:00'],
+    6:['09:00','12:00','13:00','14:00','16:00','17:00','18:00']
+  }
 };
-const T=k=>(UI[uL]||UI.en)[k]||k;
 
-function aUI(){
-  document.getElementById('hdsub').textContent=T('sub');
-  document.getElementById('lib-hdr-lbl').textContent=T('lib');
-  [['s-logo','s_logo'],['s-bg','s_bg'],['s-ev','s_ev'],['s-spk','s_spk'],['s-ex','s_ex']].forEach(([id,k])=>{const e=document.getElementById(id);if(e)e.childNodes[0].textContent=T(k)+' ';});
-  document.getElementById('llbl').textContent=LD?'Replace':T('lupl');
-  document.getElementById('blbl').textContent=BD?'Replace':T('bupl');
-  document.getElementById('bghint').textContent=T('bghint');
-  [['l-th','l_th'],['l-kp','l_kp'],['l-tm','l_tm'],['l-lc','l_lc'],['l-et','l_et'],['l-ct','l_ct'],['l-ex','l_ex']].forEach(([id,k])=>{const e=document.getElementById(id);if(e)e.textContent=T(k);});
-  document.getElementById('gbtnlbl').textContent=T('gen');
-  document.getElementById('tlbl1').textContent=T('t1');document.getElementById('tlbl2').textContent=T('t2');
-  document.getElementById('sl1').textContent=T('sl1');document.getElementById('sl2').textContent=T('sl2');document.getElementById('sl3').textContent=T('sl3');
-  [1,2,3].forEach(n=>{document.getElementById('rgl'+n).textContent=' '+T('rg');document.getElementById('cpl'+n).textContent=' '+T('cp');});
-  ['ph1','ph2','ph3'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=T('ph');});
-  document.getElementById('addSpkLbl').textContent=T('adds');
-  document.querySelectorAll('.lang-tog button').forEach(b=>b.classList.toggle('active',(b.textContent==='EN'&&uL==='en')||(b.textContent==='中文'&&uL==='zh')));
-  renderSpkSidebar();
+/* ============ STATE ============ */
+var lang='cn';
+var S={step:1,ctype:'',svc:null,date:null,time:null,name:'',phone:'',email:'',notes:''};
+var BOOKED={};
+var busyPeriods=[];
+var busyLoaded=false;
+var gcalUrlStr='';
+
+/* ============ HELPERS ============ */
+function el(id){return document.getElementById(id);}
+function pad(n){return String(n).padStart(2,'0');}
+function t(key){return T[lang][key]||T.cn[key]||'';}
+function fmtKey(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function fmtDate(d){
+  if(lang==='en')return d.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  return d.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 }
-function setLang(l){uL=l;aUI();}
-
-/* ── SIDEBAR COLLAPSE ── */
-function toggleSb(){
-  sbOpen=!sbOpen;
-  document.getElementById('layout').classList.toggle('sb-off',!sbOpen);
-  document.getElementById('sb-icon').className=sbOpen?'ti ti-layout-sidebar-left-collapse':'ti ti-layout-sidebar-left-expand';
-  setTimeout(()=>{if(document.getElementById('tc-flyer').classList.contains('active'))rf();},300);
+function fmtShort(d){
+  if(lang==='en')return d.toLocaleDateString('en-US',{month:'short',day:'numeric',weekday:'short'});
+  return d.toLocaleDateString('zh-CN',{month:'short',day:'numeric',weekday:'short'});
 }
-
-/* ── COPY EDIT ── */
-function editCopy(sty){
-  const el=document.getElementById('c-'+sty);
-  const btn=document.getElementById('ebtn-'+sty);
-  const lbl=document.getElementById('elbl-'+sty);
-  const isEdit=el.contentEditable==='true';
-  // Clear placeholder spans first
-  if(!isEdit){const ph=el.querySelector('.ph');if(ph)ph.remove();}
-  el.contentEditable=isEdit?'false':'true';
-  btn.classList.toggle('editing',!isEdit);
-  lbl.textContent=isEdit?' Edit':' Done';
-  if(!isEdit){el.focus();try{const r=document.createRange();r.selectNodeContents(el);r.collapse(false);const s=window.getSelection();s.removeAllRanges();s.addRange(r);}catch(e){}}
+function fmtTime(t){
+  var parts=t.split(':'),h=parseInt(parts[0]),m=parts[1],ap=h>=12?'PM':'AM',h12=h===0?12:h>12?h-12:h;
+  return h12+':'+m+' '+ap;
 }
-
-/* ── POSTER FORMAT ── */
-function setFmt(fmt){
-  flyerFmt=fmt;
-  document.querySelectorAll('.fp').forEach(p=>p.classList.remove('active'));
-  const fp=document.getElementById('fp-'+fmt);if(fp)fp.classList.add('active');
-  rf();
+function gcalFmt(dt){return dt.getFullYear()+pad(dt.getMonth()+1)+pad(dt.getDate())+'T'+pad(dt.getHours())+pad(dt.getMinutes())+'00';}
+function scrollSec(id){var e=el(id);if(!e)return;var y=e.getBoundingClientRect().top+window.pageYOffset-60;window.scrollTo({top:Math.max(0,y),behavior:'smooth'});}
+function genId(){return 'BB-'+(Date.now().toString(36).toUpperCase().slice(-4))+(Math.random().toString(36).toUpperCase().slice(-2));}
+function getPrice(svc,ctype){
+  var orig=svc.priceLabel||'$'+svc.price;
+  if(ctype==='new')return{label:'$'+svc.newP,orig:orig,tag:t('toNewBadge')};
+  if(ctype==='returning')return{label:'$'+svc.retP,orig:orig,tag:t('toRetBadge')};
+  if(ctype==='refill')return{label:'$'+svc.refP,orig:orig,tag:lang==='cn'?'补睫价':'Refill rate'};
+  return{label:orig,orig:'',tag:''};
 }
-
-/* ── POSTER LABELS ── */
-const PL={'zh-hans':{spk:'主讲嘉宾',cov:'本场内容涵盖',reg:'立即报名'},'zh-hant':{spk:'主講嘉賓',cov:'本場內容涵蓋',reg:'立即報名'},en:{spk:'OUR SPEAKERS',cov:'THIS EVENT WILL COVER',reg:'REGISTER NOW'},ko:{spk:'발표자',cov:'이 행사에서 다룰 내용',reg:'지금 등록'}};
-const pl=k=>(PL[document.getElementById('selPL').value]||PL['en'])[k];
-
-/* ── SPEAKERS ── */
-function escH(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function renderSpkSidebar(){
-  const cont=document.getElementById('spk-list');
-  cont.innerHTML=spks.map((s,i)=>`
-    <div class="spk-card">
-      ${spks.length>1?`<button onclick="rmSpk(${i})" style="position:absolute;top:8px;right:8px;background:none;border:none;color:#ccc;cursor:pointer;font-size:14px;padding:0;transition:color .15s" onmouseover="this.style.color='#e74c3c'" onmouseout="this.style.color='#ccc'">×</button>`:''}
-      <div style="font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:1.5px;color:var(--lblue);margin-bottom:7px;text-transform:uppercase">Speaker ${i+1}</div>
-      <div style="display:flex;gap:9px;align-items:flex-start">
-        <div style="flex-shrink:0;text-align:center">
-          ${s.p?`<img src="${s.p}" style="width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid var(--blue);display:block;cursor:pointer" onclick="document.getElementById('fsp${i}').click()">`:
-          `<div style="width:46px;height:46px;border-radius:50%;background:var(--lgray);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s" onclick="document.getElementById('fsp${i}').click()" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--border)'"><i class="ti ti-user" style="font-size:17px;color:#ccc"></i></div>`}
-          <input type="file" id="fsp${i}" accept="image/*" style="display:none" onchange="upSpkP(${i},this)">
-          <div style="font-size:8px;color:#bbb;margin-top:3px;cursor:pointer;font-family:var(--fh)" onclick="document.getElementById('fsp${i}').click()">${s.p?'Change':'+ Photo'}</div>
-        </div>
-        <div style="flex:1;min-width:0">
-          <div class="fg" style="margin-bottom:6px"><label style="font-family:var(--fh);font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#aaa;display:block;margin-bottom:3px">${T('l_nm')}</label><input style="width:100%;border:1.5px solid var(--border);border-radius:var(--rs);padding:5px 9px;font-size:12px;font-family:var(--fb);color:var(--black);background:var(--lgray);outline:none;transition:border-color .15s" value="${escH(s.n)}" placeholder="Speaker Name" oninput="spks[${i}].n=this.value" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></div>
-          <div class="fg"><label style="font-family:var(--fh);font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#aaa;display:block;margin-bottom:3px">${T('l_cr')}</label><textarea style="width:100%;border:1.5px solid var(--border);border-radius:var(--rs);padding:5px 9px;font-size:12px;font-family:var(--fb);color:var(--black);background:var(--lgray);outline:none;resize:vertical;min-height:38px;transition:border-color .15s" placeholder="Title&#10;Credentials" oninput="spks[${i}].c=this.value" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">${escH(s.c)}</textarea></div>
-        </div>
-      </div>
-    </div>`).join('');
-  document.getElementById('addSpkBtn').style.display=spks.length>=4?'none':'flex';
+function isBiWed(date){if(date.getDay()!==3)return false;var ref=new Date(2026,4,13),diff=Math.round((date-ref)/86400000);return diff>=0&&diff%14===0;}
+function getSlots(date){return(CFG.schedule[date.getDay()]||[]).filter(function(t){return!(isBiWed(date)&&t==='12:00');});}
+function localConflict(date,t2){
+  var key=fmtKey(date),booked=BOOKED[key]||[];
+  var h=parseInt(t2.split(':')[0]),m=parseInt(t2.split(':')[1]),reqS=h*60+m,reqE=reqS+150;
+  return booked.some(function(bt){var bh=parseInt(bt.split(':')[0]),bm=parseInt(bt.split(':')[1]),bS=bh*60+bm,bE=bS+150;return reqS<bE&&reqE>bS;});
 }
-function addSpk(){if(spks.length>=4)return;spks.push({n:'',c:'',p:null});renderSpkSidebar();}
-function rmSpk(i){if(spks.length<=1)return;spks.splice(i,1);renderSpkSidebar();}
-function upSpkP(i,inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{spks[i].p=e.target.result;renderSpkSidebar();rf();};r.readAsDataURL(f);}
-
-/* ── UPLOADS ── */
-function upA(t,inp){
-  const f=inp.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=e=>{
-    const d=e.target.result;
-    if(t==='logo'){LD=d;document.getElementById('lpv').src=d;document.getElementById('lp').style.display='block';document.getElementById('llbl').textContent='Replace';document.getElementById('hdr-logo-inner').innerHTML=`<img src="${d}" style="height:26px;max-width:180px;object-fit:contain;display:block">`;}
-    else if(t==='bg'){BD=d;document.getElementById('bpv').src=d;document.getElementById('bp').style.display='block';document.getElementById('blbl').textContent='Replace';}
-    rf();
-  };r.readAsDataURL(f);
+function calConflict(date,t2){
+  if(!busyPeriods.length)return false;
+  var h=parseInt(t2.split(':')[0]),m=parseInt(t2.split(':')[1]);
+  var ss=new Date(date.getFullYear(),date.getMonth(),date.getDate(),h,m,0);
+  var se=new Date(ss.getTime()+150*60000);
+  return busyPeriods.some(function(b){return ss<b.e&&se>b.s;});
 }
-function clrA(t){
-  if(t==='logo'){LD=null;document.getElementById('flogo').value='';document.getElementById('lp').style.display='none';document.getElementById('llbl').textContent=T('lupl');document.getElementById('hdr-logo-inner').innerHTML=`<div class="logo-txt"><span class="in">In</span><span class="gn">Genius</span><span class="pp">Prep</span></div>`;}
-  else if(t==='bg'){BD=null;document.getElementById('fbg').value='';document.getElementById('bp').style.display='none';document.getElementById('blbl').textContent=T('bupl');}
-  rf();
-}
+function storeSet(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch(e){}}
+function storeGet(key){try{var v=localStorage.getItem(key);return v?JSON.parse(v):null;}catch(e){return null;}}
 
-/* ── DATA ── */
-function gi(raw=false){
-  const b={th:document.getElementById('ftheme').value.trim()||'Event Title',kp:document.getElementById('fkp').value.trim(),tm:document.getElementById('ftime').value.trim()||'TBD',lc:document.getElementById('floc').value.trim()||'TBD',et:document.getElementById('fevtype').value.trim()||'Free Webinar',ct:document.getElementById('fcontact').value.trim()||'Scan QR',ex:document.getElementById('fex').value.trim(),spks:spks.map(s=>({n:s.n,c:s.c,p:s.p}))};
-  if(!raw&&tData)return{...b,...tData,spks:b.spks.map((s,i)=>({n:s.n,c:(tData['s'+i+'c'])||s.c,p:s.p}))};
-  return b;
-}
-
-/* ── HELPERS ── */
-function ini(n){if(!n)return'IG';const p=n.replace(/[^\u4e00-\u9fa5a-zA-Z\s]/g,'').trim().split(/\s+/);return p.length>=2?(p[0][0]+(p[1][0]||'')).toUpperCase():n.slice(0,2).toUpperCase();}
-function agi(kp){return kp?kp.split('\n').map(l=>l.replace(/^[•·\-\s]+/,'').trim()).filter(Boolean).slice(0,4):['Inside the Admissions Office','Four Factors to Stand Out','Admissions Trends & Data','Real Case Studies'];}
-function crl(c){return c?c.split('\n').map(l=>l.trim()).filter(Boolean):[];}
-
-function ltag(dk){
-  if(LD)return`<img src="${LD}" style="height:28px;max-width:170px;object-fit:contain;display:block">`;
-  const tc=dk?'#ffffff':'#000002';
-  return`<div style="display:flex;align-items:flex-end;gap:0;line-height:1;font-family:'Lato',sans-serif"><span style="font-size:17px;font-weight:900;color:#077fe7;letter-spacing:-.5px">In</span><span style="font-size:17px;font-weight:900;color:${tc};letter-spacing:-.5px">Genius</span><span style="font-size:9px;font-weight:700;color:${tc};opacity:.65;letter-spacing:2.5px;margin-left:6px;margin-bottom:1.5px;font-family:'Lato',sans-serif">Prep</span></div>`;
-}
-function avt(ph,nm,sz,dk){
-  if(ph)return`<img src="${ph}" style="width:${sz}px;height:${sz}px;border-radius:50%;object-fit:cover;border:2.5px solid #077fe7;display:block">`;
-  const bg=dk?'#1a2a3a':'#dce8f0';
-  return`<div style="width:${sz}px;height:${sz}px;border-radius:50%;border:2.5px solid #077fe7;background:${bg};display:flex;align-items:center;justify-content:center;font-size:${sz*.28}px;font-weight:900;color:#077fe7;font-family:'Lato',sans-serif">${ini(nm)}</div>`;
-}
-function spkC(sp,sz,dk){
-  if(!sp.n)return'';
-  const cc=dk?'rgba(255,255,255,.62)':'#555';const ls=crl(sp.c);
-  return`<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px">${avt(sp.p,sp.n,sz,dk)}<div><div style="font-size:${sz<68?11:12.5}px;font-weight:900;color:#077fe7;text-transform:uppercase;letter-spacing:.5px;line-height:1.2;font-family:'Lato',sans-serif">${sp.n}</div>${ls.map(l=>`<div style="font-size:${sz<68?9:10}px;color:${cc};margin-top:2px;line-height:1.35;font-family:'Lato',sans-serif">${l}</div>`).join('')}</div></div>`;
-}
-function chk(){return`<svg width="17" height="17" viewBox="0 0 17 17" fill="none" style="flex-shrink:0;margin-top:2px"><circle cx="8.5" cy="8.5" r="8" fill="rgba(7,127,231,.12)" stroke="#077fe7" stroke-width="1.3"/><polyline points="4.5,8.5 7.5,11.5 12.5,6" stroke="#077fe7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;}
-function dotg(){return'background-image:radial-gradient(circle,rgba(7,127,231,0.18) 1.5px,transparent 1.5px);background-size:12px 12px';}
-function qr(){return`<svg width="58" height="58" viewBox="0 0 64 64"><rect width="64" height="64" fill="white"/><rect x="4" y="4" width="24" height="24" fill="none" stroke="#000002" stroke-width="2.5"/><rect x="10" y="10" width="12" height="12" fill="#000002"/><rect x="36" y="4" width="24" height="24" fill="none" stroke="#000002" stroke-width="2.5"/><rect x="42" y="10" width="12" height="12" fill="#000002"/><rect x="4" y="36" width="24" height="24" fill="none" stroke="#000002" stroke-width="2.5"/><rect x="10" y="42" width="12" height="12" fill="#000002"/><rect x="36" y="36" width="8" height="8" fill="#000002"/><rect x="48" y="36" width="8" height="8" fill="#000002"/><rect x="36" y="48" width="8" height="8" fill="#000002"/><rect x="48" y="48" width="8" height="8" fill="#000002"/></svg>`;}
-function blk(id,sty,cnt){const{x=0,y=0,s=1}=BP[id]||{};return`<div data-block="${id}" style="transform:translate(${x}px,${y}px) scale(${s});transform-origin:top left;${sty}">${cnt}</div>`;}
-
-/* ── RENDER FLYER ── */
-function rf(){
-  const fmt=FMTS[flyerFmt]||FMTS.standard;
-  const FW=fmt.w, FH=fmt.h;
-  if(flyerFmt==='horizontal'){rfH();return;}
-  const clip=FH?`height:${FH}px;`:'';
-  const inf=gi();const its=agi(inf.kp);const ns=inf.spks.filter(s=>s.n);
-  const cnt=ns.length||1;const theme=document.getElementById('selTheme').value;
-  const ts=[26,32,23][pv];const avSz=[70,78,62][pv];
-  const sc=cnt>1?`repeat(${Math.min(cnt,2)},1fr)`:'1fr';
-  const noSpkD=`<div style="color:rgba(255,255,255,.3);font-size:11px;font-style:italic;font-family:'Lato',sans-serif">No speakers added</div>`;
-  const noSpkW=`<div style="color:#ccc;font-size:11px;font-style:italic;font-family:'Lato',sans-serif">No speakers added</div>`;
-  let html='';
-
-  if(theme==='dark'){
-    const bgs=BD?`background:linear-gradient(rgba(0,0,2,.72),rgba(0,0,2,.97)),url(${BD}) center/cover;`:'';
-    html=`<div style="background:#000002;width:${FW}px;${clip}overflow:hidden;font-family:'Lato',sans-serif;position:relative">
-      <div style="position:absolute;top:0;left:0;width:90px;height:90px;${dotg()}"></div>
-      <div style="position:absolute;bottom:64px;right:0;width:70px;height:70px;${dotg()}"></div>
-      ${blk('logo','padding:18px 22px 0;position:relative;z-index:2',`<div style="display:flex;align-items:center;justify-content:space-between">${ltag(true)}<div style="background:#077fe7;color:#fff;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 11px;font-family:'Lato',sans-serif">${inf.et}</div></div>`)}
-      ${blk('hero',`padding:14px 22px ${pv===1?28:22}px;position:relative;z-index:2;${bgs}`,
-        `<div style="position:absolute;right:-28px;top:0;width:${pv===1?158:138}px;height:${pv===1?158:138}px;border-radius:50%;border:2px solid rgba(7,127,231,.2);background:rgba(7,127,231,.04)"></div>`+
-        `<div style="font-size:${ts}px;font-weight:900;line-height:1.18;color:#fff;max-width:245px;position:relative;letter-spacing:-.3px;font-family:'Poppins',sans-serif">${inf.th}</div>`+
-        `<div style="width:${pv===1?60:48}px;height:${pv===1?4:3}px;background:#077fe7;margin:${pv===1?16:12}px 0;border-radius:2px"></div>`+
-        `<div style="display:flex;gap:18px;position:relative"><div style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="13" rx="2" stroke="#077fe7" stroke-width="1.3"/><line x1="1" y1="6" x2="15" y2="6" stroke="#077fe7" stroke-width="1.3"/><line x1="5" y1="1" x2="5" y2="4" stroke="#077fe7" stroke-width="1.3"/><line x1="11" y1="1" x2="11" y2="4" stroke="#077fe7" stroke-width="1.3"/></svg><span style="font-size:13px;font-weight:700;color:#fff">${inf.tm}</span></div><div style="display:flex;align-items:flex-start;gap:6px"><svg width="11" height="14" viewBox="0 0 12 18" fill="none" style="margin-top:2px;flex-shrink:0"><path d="M6 1C3.2 1 1 3.2 1 6c0 3.5 5 11 5 11s5-7.5 5-11c0-2.8-2.2-5-5-5z" stroke="#077fe7" stroke-width="1.3" fill="none"/><circle cx="6" cy="6" r="2" stroke="#077fe7" stroke-width="1.2"/></svg><span style="font-size:12px;color:rgba(255,255,255,.8)">${inf.lc}</span></div></div>`
-      )}
-      <svg viewBox="0 0 ${FW} 26" style="display:block;width:100%" preserveAspectRatio="none"><path d="M0 26L0 13Q${FW*.33} 0 ${FW*.67} 13Q${FW*.83} 21 ${FW} 7L${FW} 26Z" fill="#0d1a2a"/></svg>
-      ${blk('speakers','background:#0d1a2a;padding:14px 22px 16px',
-        `<div style="font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#077fe7;margin-bottom:13px;font-family:'Lato',sans-serif">${pl('spk')}</div>`+
-        `<div style="display:grid;grid-template-columns:${sc};gap:13px${cnt===1?';justify-items:center':''}">${ns.length?ns.map(s=>spkC(s,cnt>2?avSz-10:avSz,true)).join(''):noSpkD}</div>`
-      )}
-      <div style="height:1px;background:rgba(7,127,231,.12)"></div>
-      ${blk('agenda','background:#000002;padding:14px 22px 16px',
-        `<div style="font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#077fe7;margin-bottom:11px;font-family:'Lato',sans-serif">${pl('cov')}</div>`+
-        `<div style="display:${pv===1?'grid;grid-template-columns:1fr 1fr;':'flex;flex-direction:column;'}gap:9px">${its.map(it=>`<div style="display:flex;align-items:flex-start;gap:9px">${chk()}<span style="font-size:12px;color:rgba(255,255,255,.85);line-height:1.5">${it}</span></div>`).join('')}</div>`
-      )}
-      ${blk('footer','background:#0d1a2a;border-top:1px solid rgba(7,127,231,.15);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px',
-        `<div><div style="background:#077fe7;color:#fff;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:9px 18px;display:inline-block;margin-bottom:7px;font-family:'Lato',sans-serif">${pl('reg')}</div>${inf.ex?`<div style="font-size:10px;color:rgba(255,255,255,.4);line-height:1.5;max-width:180px">${inf.ex}</div>`:''}</div><div style="flex-shrink:0">${qr()}</div>`
-      )}
-    </div>`;
-
-  } else if(theme==='white'){
-    const bgs=BD?`background:linear-gradient(rgba(241,242,242,.9),rgba(241,242,242,1)),url(${BD}) center/cover;`:'';
-    html=`<div style="background:#fff;width:${FW}px;${clip}overflow:hidden;font-family:'Lato',sans-serif;position:relative">
-      <div style="height:${pv===2?2:4}px;background:${pv===2?'#000002':'#077fe7'}"></div>
-      <div style="position:absolute;top:4px;right:0;width:90px;height:90px;${dotg()}"></div>
-      ${blk('logo','padding:18px 22px 14px;position:relative',`<div style="display:flex;align-items:center;justify-content:space-between">${ltag(false)}<div style="background:#000002;color:#fff;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 11px;font-family:'Lato',sans-serif">${inf.et}</div></div>`)}
-      ${blk('hero',`padding:0 22px 16px;${bgs}`,
-        pv===2
-          ?`<div style="border-left:4px solid #077fe7;padding-left:14px;margin-bottom:14px"><div style="font-size:${ts}px;font-weight:900;line-height:1.18;color:#000002;font-family:'Poppins',sans-serif">${inf.th}</div></div>`
-          :`<div style="font-size:${ts}px;font-weight:900;line-height:1.18;color:#000002;letter-spacing:-.3px;font-family:'Poppins',sans-serif">${inf.th}</div>`+
-          `<div style="width:48px;height:3px;background:#077fe7;margin:11px 0;border-radius:2px"></div>`+
-          `<div style="background:#f1f2f2;border-left:3px solid #077fe7;padding:10px 13px;display:grid;grid-template-columns:1fr 1fr;gap:9px"><div><div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#94b3d6;margin-bottom:3px;font-family:'Lato',sans-serif">DATE / TIME</div><div style="font-size:${pv===1?14:12.5}px;font-weight:700;color:#000002">${inf.tm}</div></div><div><div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#94b3d6;margin-bottom:3px;font-family:'Lato',sans-serif">LOCATION</div><div style="font-size:12px;font-weight:600;color:#000002;line-height:1.3">${inf.lc}</div></div></div>`
-      )}
-      <svg viewBox="0 0 ${FW} 22" style="display:block;width:100%" preserveAspectRatio="none"><path d="M0 22L0 11Q${FW/2} 0 ${FW} 11L${FW} 22Z" fill="#f1f2f2"/></svg>
-      ${blk('speakers','background:#f1f2f2;padding:14px 22px 16px',
-        `<div style="display:flex;align-items:center;gap:8px;margin-bottom:13px"><div style="width:3px;height:14px;background:#077fe7;border-radius:2px"></div><div style="font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#000002;font-family:'Lato',sans-serif">${pl('spk')}</div></div>`+
-        `<div style="display:grid;grid-template-columns:${sc};gap:13px${cnt===1?';justify-items:center':''}">${ns.length?ns.map(s=>spkC(s,cnt>2?avSz-10:avSz,false)).join(''):noSpkW}</div>`
-      )}
-      ${blk('agenda','background:#fff;padding:14px 22px 16px',
-        `<div style="display:flex;align-items:center;gap:8px;margin-bottom:11px"><div style="width:3px;height:14px;background:#077fe7;border-radius:2px"></div><div style="font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#000002;font-family:'Lato',sans-serif">${pl('cov')}</div></div>`+
-        `<div style="display:${pv===1?'grid;grid-template-columns:1fr 1fr;':'flex;flex-direction:column;'}gap:9px">${its.map(it=>`<div style="display:flex;align-items:flex-start;gap:9px">${chk()}<span style="font-size:12px;color:#3a3a3a;line-height:1.5">${it}</span></div>`).join('')}</div>`
-      )}
-      ${blk('footer','background:#000002;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px',
-        `<div><div style="background:#077fe7;color:#fff;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:9px 18px;display:inline-block;margin-bottom:7px;font-family:'Lato',sans-serif">${pl('reg')}</div>${inf.ex?`<div style="font-size:10px;color:rgba(255,255,255,.4);line-height:1.5;max-width:180px">${inf.ex}</div>`:''}</div><div style="flex-shrink:0">${qr()}</div>`
-      )}
-    </div>`;
-
-  } else {
-    const bgs=BD?`background:linear-gradient(rgba(0,0,2,.73),rgba(0,0,2,.97)),url(${BD}) center/cover;`:'';
-    html=`<div style="background:#fff;width:${FW}px;${clip}overflow:hidden;font-family:'Lato',sans-serif">
-      <div style="background:#000002;padding:18px 22px 24px;position:relative;overflow:hidden;${bgs}">
-        <div style="position:absolute;top:-16px;left:-16px;width:70px;height:70px;background:#077fe7;opacity:.1;transform:rotate(45deg)"></div>
-        ${pv!==2?`<div style="position:absolute;top:10px;left:20px;width:36px;height:36px;background:#077fe7;opacity:.15;transform:rotate(45deg)"></div>`:''}
-        <div style="position:absolute;top:0;right:0;width:80px;height:96px;${dotg()}"></div>
-        ${blk('logo','position:relative;margin-bottom:14px',`<div style="display:flex;align-items:center;justify-content:space-between">${ltag(true)}<div style="background:#077fe7;color:#fff;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 11px;font-family:'Lato',sans-serif">${inf.et}</div></div>`)}
-        ${blk('hero','position:relative',
-          `<div style="font-size:${ts}px;font-weight:900;line-height:1.2;color:#fff;letter-spacing:${pv===1?'-.4px':'0'};font-family:'Poppins',sans-serif">${inf.th}</div>`+
-          `<div style="width:${pv===1?60:48}px;height:${pv===1?4:3}px;background:#077fe7;margin:${pv===1?14:11}px 0;border-radius:2px"></div>`+
-          `<div style="display:flex;gap:18px"><div><div style="font-size:8px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;font-family:'Lato',sans-serif">DATE & TIME</div><div style="font-size:13px;font-weight:700;color:#fff">${inf.tm}</div></div><div><div style="font-size:8px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;font-family:'Lato',sans-serif">LOCATION</div><div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.85)">${inf.lc}</div></div></div>`
-        )}
-      </div>
-      <svg viewBox="0 0 ${FW} 24" style="display:block;width:100%;margin-top:-1px" preserveAspectRatio="none"><path d="M0 0L${FW} 0L${FW} 5Q${FW/2} 24 0 5Z" fill="#000002"/></svg>
-      ${blk('speakers',`background:${pv===2?'#f1f2f2':'#fff'};padding:14px 22px 16px`,
-        `<div style="font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#000002;border-bottom:${pv===2?'2px solid #077fe7':'1.5px solid #000002'};padding-bottom:7px;margin-bottom:13px;font-family:'Lato',sans-serif">${pl('spk')}</div>`+
-        `<div style="display:grid;grid-template-columns:${sc};gap:13px${cnt===1?';justify-items:center':''}">${ns.length?ns.map(s=>spkC(s,cnt>2?avSz-10:avSz,false)).join(''):noSpkW}</div>`
-      )}
-      <div style="height:2.5px;background:#077fe7;margin:0 22px;border-radius:2px"></div>
-      ${blk('agenda',`background:${pv===2?'#fff':'#f1f2f2'};padding:14px 22px 16px`,
-        `<div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#077fe7;margin-bottom:11px;font-family:'Lato',sans-serif">${pl('cov')}</div>`+
-        `<div style="display:${pv===1?'grid;grid-template-columns:1fr 1fr;':'flex;flex-direction:column;'}gap:9px">${its.map(it=>`<div style="display:flex;align-items:flex-start;gap:9px">${chk()}<span style="font-size:12px;color:#3a3a3a;line-height:1.5">${it}</span></div>`).join('')}</div>`
-      )}
-      <svg viewBox="0 0 ${FW} 20" style="display:block;width:100%" preserveAspectRatio="none"><path d="M0 20L0 10Q${FW/2} 0 ${FW} 10L${FW} 20Z" fill="#000002"/></svg>
-      ${blk('footer','background:#000002;padding:11px 22px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px',
-        `<div><div style="background:#077fe7;color:#fff;font-size:8.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:9px 18px;display:inline-block;margin-bottom:7px;font-family:'Lato',sans-serif">${pl('reg')}</div>${inf.ex?`<div style="font-size:10px;color:rgba(255,255,255,.4);line-height:1.5;max-width:180px">${inf.ex}</div>`:''}</div><div style="flex-shrink:0">${qr()}</div>`
-      )}
-    </div>`;
-  }
-  document.getElementById('flyer').innerHTML=html;
-  if(eon)iDrag();
-}
-
-/* ── HORIZONTAL LAYOUT ── */
-function rfH(){
-  const inf=gi();const its=agi(inf.kp);const ns=inf.spks.filter(s=>s.n);
-  const theme=document.getElementById('selTheme').value;
-  const isDark=theme!=='white';
-  const BG=isDark?'#000002':'#ffffff', BG2=isDark?'#0d1a2a':'#f1f2f2', TEXT=isDark?'#ffffff':'#000002';
-  const noSpk=`<div style="color:${isDark?'rgba(255,255,255,.3)':'#ccc'};font-size:11px;font-style:italic">No speakers added</div>`;
-
-  const html=`<div style="background:${BG};width:660px;height:346px;overflow:hidden;font-family:'Lato',sans-serif;display:flex">
-    <div style="width:270px;flex-shrink:0;background:#000002;padding:22px 22px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden">
-      ${BD?`<div style="position:absolute;inset:0;background:linear-gradient(rgba(0,0,2,.76),rgba(0,0,2,.97)),url(${BD}) center/cover"></div>`:''}
-      <div style="position:absolute;top:0;right:0;width:70px;height:70px;${dotg()};z-index:0"></div>
-      ${blk('logo','position:relative;z-index:1',`<div style="margin-bottom:4px">${ltag(true)}</div><div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.38);font-family:'Lato',sans-serif">${inf.et}</div>`)}
-      ${blk('hero','position:relative;z-index:1',
-        `<div style="font-size:21px;font-weight:900;line-height:1.18;color:#fff;font-family:'Poppins',sans-serif;margin-bottom:10px">${inf.th}</div>`+
-        `<div style="width:40px;height:3px;background:#077fe7;border-radius:2px;margin-bottom:10px"></div>`+
-        `<div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:5px">📅 ${inf.tm}</div>`+
-        `<div style="font-size:11px;color:rgba(255,255,255,.7)">📍 ${inf.lc}</div>`
-      )}
-      ${blk('footer_h','position:relative;z-index:1',
-        `<div style="background:#077fe7;color:#fff;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 14px;display:inline-block;font-family:'Lato',sans-serif">${pl('reg')}</div>`+
-        (inf.ex?`<div style="font-size:9px;color:rgba(255,255,255,.35);margin-top:5px">${inf.ex}</div>`:'')
-      )}
-    </div>
-    <div style="flex:1;background:${BG2};display:flex;flex-direction:column">
-      ${blk('speakers_h',`padding:18px 18px 12px;border-bottom:1px solid ${isDark?'rgba(7,127,231,.15)':'rgba(0,0,0,.08)'}`,
-        `<div style="font-size:7.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#077fe7;margin-bottom:11px;font-family:'Lato',sans-serif">${pl('spk')}</div>`+
-        `<div style="display:flex;gap:14px;flex-wrap:wrap">${ns.length?ns.map(s=>{const ls=crl(s.c);return`<div style="display:flex;align-items:center;gap:9px">${avt(s.p,s.n,42,isDark)}<div><div style="font-size:11px;font-weight:900;color:#077fe7;text-transform:uppercase;letter-spacing:.3px;font-family:'Lato',sans-serif">${s.n}</div>${ls.slice(0,2).map(l=>`<div style="font-size:9px;color:${isDark?'rgba(255,255,255,.55)':'#555'}">${l}</div>`).join('')}</div></div>`;}).join(''):noSpk}</div>`
-      )}
-      ${blk('agenda_h',`padding:14px 18px;flex:1;background:${isDark?'#000002':'#fff'}`,
-        `<div style="font-size:7.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#077fe7;margin-bottom:10px;font-family:'Lato',sans-serif">${pl('cov')}</div>`+
-        `<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">${its.map(it=>`<div style="display:flex;align-items:flex-start;gap:7px">${chk()}<span style="font-size:10.5px;color:${isDark?'rgba(255,255,255,.85)':'#3a3a3a'};line-height:1.4">${it}</span></div>`).join('')}</div>`
-      )}
-    </div>
-  </div>`;
-  document.getElementById('flyer').innerHTML=html;
-  if(eon)iDrag();
-}
-
-/* ── STYLE REGEN ── */
-const STYLES=[{t:'dark',p:0},{t:'white',p:0},{t:'split',p:0},{t:'dark',p:1},{t:'white',p:1},{t:'split',p:1},{t:'dark',p:2},{t:'white',p:2},{t:'split',p:2}];
-function regenStyle(){let n;do{n=Math.floor(Math.random()*STYLES.length);}while(n===styleIdx&&STYLES.length>1);styleIdx=n;document.getElementById('selTheme').value=STYLES[n].t;pv=STYLES[n].p;rf();}
-
-/* ── ZOOM ── */
-function setZoom(v){zoomLvl=Math.max(.25,Math.min(1.3,v));document.getElementById('fsc').style.transform=`scale(${zoomLvl})`;document.getElementById('zslider').value=Math.round(zoomLvl*100);document.getElementById('zpct').textContent=Math.round(zoomLvl*100)+'%';}
-function zoom(d){setZoom(zoomLvl+d);}
-
-/* ── EDIT MODE ── */
-function toggleEdit(){eon=!eon;document.getElementById('flyer').classList.toggle('eon',eon);document.getElementById('etbtn').classList.toggle('on',eon);document.getElementById('etlbl').textContent=' '+(eon?'Exit Edit':'Edit');document.getElementById('ehbar').style.display=eon?'flex':'none';if(eon)iDrag();else{hTB();if(sel){sel.classList.remove('sel');sel=null;}}}
-function iDrag(){document.getElementById('flyer').querySelectorAll('[data-block]').forEach(el=>{el.removeEventListener('pointerdown',pDown);el.removeEventListener('dblclick',pDbl);el.removeEventListener('click',pCk);el.addEventListener('pointerdown',pDown);el.addEventListener('dblclick',pDbl);el.addEventListener('click',pCk);});}
-function pCk(e){if(!eon)return;selB(e.currentTarget);e.stopPropagation();}
-function pDbl(e){if(!eon)return;e.currentTarget.querySelectorAll('div,span').forEach(n=>{if(!n.querySelector('svg,img'))n.contentEditable='true';});e.currentTarget.style.cursor='text';e.stopPropagation();}
-function selB(el){if(sel&&sel!==el){sel.classList.remove('sel');sel.querySelectorAll('[contenteditable]').forEach(e=>{e.removeAttribute('contenteditable');e.style.cursor='';});sel.style.cursor='';}sel=el;el.classList.add('sel');sTB(el);}
-function sTB(el){const tb=document.getElementById('ftb');const r=el.getBoundingClientRect();tb.style.display='flex';tb.style.left=Math.max(4,r.left)+'px';tb.style.top=Math.max(4,r.top-44)+'px';document.getElementById('ftsz').textContent=Math.round(((BP[el.dataset.block]||{}).s||1)*100)+'%';}
-function hTB(){document.getElementById('ftb').style.display='none';}
-function adj(d){if(!sel)return;const id=sel.dataset.block;if(!BP[id])BP[id]={x:0,y:0,s:1};BP[id].s=Math.max(.25,Math.min(3,(BP[id].s||1)+d));atr(sel,id);document.getElementById('ftsz').textContent=Math.round(BP[id].s*100)+'%';}
-function rst(){if(!sel)return;const id=sel.dataset.block;BP[id]={x:0,y:0,s:1};atr(sel,id);document.getElementById('ftsz').textContent='100%';}
-function atr(el,id){const{x=0,y=0,s=1}=BP[id]||{};el.style.transform=`translate(${x}px,${y}px) scale(${s})`;}
-function pDown(e){if(!eon||e.target.closest('[contenteditable="true"]'))return;const el=e.currentTarget,id=el.dataset.block;if(!BP[id])BP[id]={x:0,y:0,s:1};ds={el,id,sx:e.clientX,sy:e.clientY,tx:BP[id].x,ty:BP[id].y};el.setPointerCapture(e.pointerId);el.classList.add('drg');el.addEventListener('pointermove',pMv);el.addEventListener('pointerup',pUp,{once:true});e.preventDefault();}
-function pMv(e){if(!ds)return;BP[ds.id].x=ds.tx+(e.clientX-ds.sx)/zoomLvl;BP[ds.id].y=ds.ty+(e.clientY-ds.sy)/zoomLvl;atr(ds.el,ds.id);if(sel===ds.el)sTB(ds.el);}
-function pUp(){if(!ds)return;ds.el.classList.remove('drg');ds.el.removeEventListener('pointermove',pMv);ds=null;}
-document.addEventListener('click',e=>{if(!e.target.closest('[data-block]')&&!e.target.closest('#ftb')&&sel){sel.classList.remove('sel');sel.querySelectorAll('[contenteditable]').forEach(el=>{el.removeAttribute('contenteditable');el.style.cursor='';});sel.style.cursor='';sel=null;hTB();}});
-
-/* ── TRANSLATE ── */
-const LANG_N={'zh-hans':'Simplified Chinese','zh-hant':'Traditional Chinese (Taiwan)','en':'English','ko':'Korean'};
-async function autoTranslate(){
-  const lang=document.getElementById('selPL').value;
-  if(lang==='zh-hans'){tData=null;rf();return;}
-  document.getElementById('tbadgetxt').textContent={'zh-hant':'翻譯中…','en':'Translating…','ko':'번역 중…'}[lang]||'Translating…';
-  document.getElementById('tbadge').style.display='flex';
-  try{
-    const raw=gi(true);const sc2=raw.spks.map((s,i)=>`s${i}c: ${s.c||'(empty)'}`).join('\n');
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`Translate event poster content into ${LANG_N[lang]}. Return ONLY valid JSON with keys: th, kp, et, ct, ex, tm, lc, s0c, s1c, s2c, s3c. Preserve \\n in kp/credentials. Keep speaker names untranslated. Use natural idioms. Korean: 합쇼체. Traditional Chinese: Taiwan conventions.\n\nth: ${raw.th}\nkp: ${raw.kp||'(empty)'}\net: ${raw.et}\nct: ${raw.ct}\nex: ${raw.ex||'(empty)'}\ntm: ${raw.tm}\nlc: ${raw.lc}\n${sc2}`}]})});
-    const d=await r.json();if(d.error)throw new Error(d.error.message);
-    tData=JSON.parse(d.content[0].text.trim().replace(/^```json?\s*/,'').replace(/\s*```$/,''));
-  }catch(e){tData=null;toast('Translation failed');}
-  document.getElementById('tbadge').style.display='none';rf();
-}
-
-/* ── LIBRARY ── */
-async function loadLib(){try{const r=await window.storage.get('igprep-lib6');if(r&&r.value)libArticles=JSON.parse(r.value);}catch(e){libArticles=[];}document.getElementById('lib-count').textContent=libArticles.length;}
-async function saveLib(){try{await window.storage.set('igprep-lib6',JSON.stringify(libArticles));}catch(e){}}
-function renderLibModal(){
-  const list=document.getElementById('lib-modal-list');const empty=document.getElementById('lib-empty');
-  document.getElementById('lib-modal-count').textContent=libArticles.length;
-  if(!libArticles.length){list.innerHTML='';empty.style.display='block';return;}
-  empty.style.display='none';
-  const tagN={knowledge:'Knowledge Share',clickbait:'Clickbait / Viral',minimal:'Clean & Direct',all:'General Reference'};
-  list.innerHTML=libArticles.map((a,i)=>`<div class="lib-card"><div class="lib-tag ${a.tag}">${tagN[a.tag]||a.tag}</div><div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:4px;padding-right:90px;font-family:var(--fh)">${a.label||'Untitled'}</div><div style="font-size:10px;color:#bbb;margin-bottom:6px;font-family:var(--fh)">${a.chars.toLocaleString()} chars · ${a.date}</div><div class="lib-prev">${a.content.slice(0,200)}…</div><div class="lib-acts"><button onclick="window.open('','_blank').document.write('<pre style=\\'font-family:sans-serif;padding:24px;max-width:700px;line-height:1.8\\'>${a.content.slice(0,2000).replace(/'/g,"\\'")}</pre>')">Preview</button><button class="del" onclick="removeLibArticle(${i})">Delete</button></div></div>`).join('');
-}
-function openLibModal(){renderLibModal();document.getElementById('lib-modal').style.display='flex';document.getElementById('lib-content').value='';document.getElementById('lib-label').value='';document.getElementById('lib-chars').textContent='0';}
-function closeLibModal(){document.getElementById('lib-modal').style.display='none';}
-document.getElementById('lib-content').addEventListener('input',function(){document.getElementById('lib-chars').textContent=this.value.length.toLocaleString();});
-async function saveLibArticle(){
-  const content=document.getElementById('lib-content').value.trim();
-  if(!content){toast('Please paste article content first');return;}
-  libArticles.unshift({id:Date.now(),label:document.getElementById('lib-label').value.trim()||'Untitled',tag:document.getElementById('lib-tag').value,content,chars:content.length,date:new Date().toLocaleDateString()});
-  await saveLib();document.getElementById('lib-count').textContent=libArticles.length;document.getElementById('lib-content').value='';document.getElementById('lib-label').value='';document.getElementById('lib-chars').textContent='0';renderLibModal();toast('Saved to library ✓');
-}
-async function removeLibArticle(i){libArticles.splice(i,1);await saveLib();document.getElementById('lib-count').textContent=libArticles.length;renderLibModal();}
-document.getElementById('lib-modal').addEventListener('click',e=>{if(e.target===document.getElementById('lib-modal'))closeLibModal();});
-
-function buildStyleCtx(sty){
-  const rel=libArticles.filter(a=>a.tag===sty||a.tag==='all').slice(0,3);
-  const extra=libArticles.filter(a=>a.tag!==sty&&a.tag!=='all').slice(0,1);
-  const all=[...rel,...extra].slice(0,3);
-  if(!all.length)return'';
-  return`\n\n=== STYLE REFERENCE ARTICLES — learn tone, sentence patterns, rhythm ===\n`+all.map((a,i)=>`\n--- Reference ${i+1}: "${a.label}" ---\n${a.content.slice(0,1800)}`).join('\n')+`\n=== END ===\n\nWrite in the voice of these references naturally.`;
-}
-
-/* ── COPY GENERATION ── */
-const SYS=`You are a professional bilingual copywriter for InGenius Prep, a top college admissions consulting firm.
-1. Knowledge Share: Open with data/statistics. Structure: Problem→Data→Analysis→Solution→CTA. Include case studies. Authoritative but warm.
-2. Clickbait/Viral: Dramatic headline. Heartbreaking opening scenario. Exclamation marks, FOMO, scary stats. Strong CTA.
-3. Clean & Direct: Emoji bullets. Structured: Time/Location/Speaker/Agenda clearly laid out. Friendly, shareable.
-Match language of input (Chinese input→Chinese output). Length: Knowledge 300-400w, Clickbait 250-350w, Clean 150-200w. Body text only.`;
-
-function bP(sty,inf){
-  const sp=inf.spks.filter(s=>s.n).map(s=>`${s.n}${s.c?` (${s.c.split('\n')[0]})`:''}` ).join(', ')||'InGenius Prep Expert';
-  const link=inf.ct||'[registration link]';
-
-  if(sty==='sms'){
-    return`Write a SHORT SMS/text message to promote this event. Requirements:
-- Max 160 characters total (strictly enforced)
-- Include: event topic, date/time, and registration link
-- Punchy, direct, no fluff
-- If Chinese input → Chinese output
-- Format: just the SMS text, nothing else
-
-Event: ${inf.th}
-Date/Time: ${inf.tm}
-Location: ${inf.lc}
-Register: ${link}`;
-  }
-
-  if(sty==='email'){
-    return`Write a promotional email for this event. Requirements:
-- Start with: Subject: [compelling subject line]
-- Then a blank line
-- Then the email body (150-250 words)
-- Structure: warm greeting → what the event is → why attend (2-3 bullet points) → speaker credibility → clear CTA with date/time/link
-- Tone: professional but conversational, not salesy
-- If Chinese input → Chinese output
-
-Event: ${inf.th}
-Date/Time: ${inf.tm}
-Location: ${inf.lc}
-Speaker(s): ${sp}
-Agenda: ${inf.kp||'n/a'}
-Perks: ${inf.ex||'none'}
-Register: ${link}${buildStyleCtx('all')}`;
-  }
-
-  const m={knowledge:'Knowledge Share: data-driven, structured, authoritative, warm',clickbait:'Clickbait/Viral: dramatic, FOMO, emotional, strong CTA',minimal:'Clean & Direct: emoji bullets, concise, shareable'};
-  return`Write a [${m[sty]}] promotional post:${buildStyleCtx(sty)}\n\nEvent: ${inf.th}\nTime: ${inf.tm} | Location: ${inf.lc}\nSpeakers: ${sp}\nAgenda: ${inf.kp||'n/a'}\nPerks: ${inf.ex||'none'}\nRegister: ${link}\n\nOutput body text only.`;
-}
-function skel(id){const ws=[72,90,58,84,68,54,78];document.getElementById('c-'+id).innerHTML=ws.map(w=>`<div class="sk" style="width:${w}%"></div>`).join('');}
-async function callA(sty,inf,att=0){
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:[{role:'user',content:bP(sty,inf)}]})});
-    if(!r.ok)throw new Error(`HTTP ${r.status}`);
-    const d=await r.json();if(d.error)throw new Error(d.error.message);
-    return d.content[0].text;
-  }catch(e){if(att<2){await new Promise(res=>setTimeout(res,800*(att+1)));return callA(sty,inf,att+1);}throw e;}
-}
-async function genAll(){
-  const inf=gi(true);const btn=document.getElementById('gbtn');
-  btn.disabled=true;document.getElementById('gbtnlbl').textContent=T('gen_');
-  btn.querySelector('i').style.animation='spin 1s linear infinite';
-  const sts=['sms','email','knowledge','clickbait','minimal'];
-  sts.forEach((s,i)=>{
-    const el=document.getElementById('c-'+s);el.contentEditable='false';
-    const eb=document.getElementById('ebtn-'+s);if(eb)eb.classList.remove('editing');
-    const elbl=document.getElementById('elbl-'+s);if(elbl)elbl.textContent=' Edit';
-    skel(s);
-    const rgid=s==='knowledge'?'rg1':s==='clickbait'?'rg2':s==='minimal'?'rg3':'rg-'+s;
-    const rgel=document.getElementById(rgid);if(rgel)rgel.disabled=true;
+/* ============ GCAL ============ */
+function gcalReq(params){
+  return new Promise(function(resolve){
+    try{
+      var cb='bb_'+Date.now(),script;
+      window[cb]=function(data){delete window[cb];if(script&&script.parentNode)script.parentNode.removeChild(script);resolve(data);};
+      script=document.createElement('script');
+      script.onerror=function(){delete window[cb];resolve({});};
+      params.callback=cb;
+      var qs=Object.keys(params).map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(params[k]);}).join('&');
+      script.src=GCAL_URL+'?'+qs;
+      document.head.appendChild(script);
+      setTimeout(function(){if(window[cb]){delete window[cb];resolve({});}},8000);
+    }catch(ex){resolve({});}
   });
-  rf();
-  await Promise.all(sts.map(async(s)=>{
-    try{document.getElementById('c-'+s).textContent=await callA(s,inf);if(s==='sms')updateSmsCounter();}
-    catch(e){document.getElementById('c-'+s).innerHTML=`<span style="color:#e05c2a;font-size:12px">⚠ ${e.message||'Network error — please retry'}</span>`;}
-    const rgid=s==='knowledge'?'rg1':s==='clickbait'?'rg2':s==='minimal'?'rg3':'rg-'+s;
-    const rgel=document.getElementById(rgid);if(rgel)rgel.disabled=false;
-  }));
-  btn.disabled=false;btn.querySelector('i').style.animation='';document.getElementById('gbtnlbl').textContent=T('gen');
 }
-async function rg(sty){
-  const inf=gi(true);
-  const rgid=sty==='knowledge'?'rg1':sty==='clickbait'?'rg2':sty==='minimal'?'rg3':'rg-'+sty;
-  const rgel=document.getElementById(rgid);if(rgel)rgel.disabled=true;
-  skel(sty);
-  try{document.getElementById('c-'+sty).textContent=await callA(sty,inf);}
-  catch(e){document.getElementById('c-'+sty).innerHTML=`<span style="color:#e05c2a;font-size:12px">⚠ ${e.message}</span>`;}
-  if(rgel)rgel.disabled=false;
-}
-function cpT(sty){
-  const el=document.getElementById('c-'+sty);
-  if(el.querySelector('.ph,.sk'))return;
-  // Get text content, respecting any edits
-  navigator.clipboard.writeText(el.innerText||el.textContent).then(()=>toast(T('copied')));
+function fetchBusy(){
+  return new Promise(function(resolve){
+    try{
+      var s=new Date(),e=new Date();e.setDate(s.getDate()+50);
+      var cb='bb_busy_'+Date.now(),script;
+      window[cb]=function(data){
+        if(data.busy)busyPeriods=data.busy.map(function(b){return{s:new Date(b.start),e:new Date(b.end)};});
+        busyLoaded=true;
+        delete window[cb];if(script&&script.parentNode)script.parentNode.removeChild(script);resolve();
+      };
+      script=document.createElement('script');
+      script.onerror=function(){busyLoaded=true;delete window[cb];resolve();};
+      script.src=GCAL_URL+'?action=busy&start='+encodeURIComponent(s.toISOString())+'&end='+encodeURIComponent(e.toISOString())+'&callback='+cb;
+      document.head.appendChild(script);
+      setTimeout(function(){if(window[cb]){busyLoaded=true;delete window[cb];resolve();}},5000);
+    }catch(ex){busyLoaded=true;resolve();}
+  });
 }
 
-/* ── GOOGLE DOCS ── */
-async function exportToGdoc(){
-  const k=document.getElementById('c-knowledge').innerText,cb=document.getElementById('c-clickbait').innerText,mn=document.getElementById('c-minimal').innerText,inf=gi(true);
-  if(![k,cb,mn].some(t=>t&&!t.includes('Fill in')&&!t.includes('填写')&&!t.includes('⚠'))){toast('Generate copy first');return;}
-  const btn=document.getElementById('gdoc-btn');btn.disabled=true;document.getElementById('gdoc-btn-lbl').textContent='Creating…';
-  const docTitle=`${inf.th} — InGenius Prep Copy`;
-  const content=`InGenius Prep — Copywriting Versions\nEvent: ${inf.th}\nDate: ${inf.tm} | Location: ${inf.lc}\nGenerated: ${new Date().toLocaleString()}\n\n${'━'.repeat(44)}\n01 · KNOWLEDGE SHARE\n${'━'.repeat(44)}\n\n${k||'(not generated)'}\n\n\n${'━'.repeat(44)}\n02 · CLICKBAIT / VIRAL\n${'━'.repeat(44)}\n\n${cb||'(not generated)'}\n\n\n${'━'.repeat(44)}\n03 · CLEAN & DIRECT\n${'━'.repeat(44)}\n\n${mn||'(not generated)'}`;
-  try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1024,mcp_servers:[{type:'url',url:'https://drivemcp.googleapis.com/mcp/v1',name:'google-drive'}],messages:[{role:'user',content:`Create a new Google Doc with title "${docTitle}" and this exact content:\n${content}\n\nReturn ONLY JSON: {"fileId":"...","link":"..."}`}]})});
-    if(!resp.ok)throw new Error(`HTTP ${resp.status}`);
-    const data=await resp.json();let fileId=null,fileLink=null;
-    for(const blk of data.content||[]){
-      const raw=blk.type==='mcp_tool_result'?(blk.content?.[0]?.text||''):blk.text||'';
-      const idM=raw.match(/"id"\s*:\s*"([a-zA-Z0-9_-]{25,})"/)||raw.match(/id['":\s]+([a-zA-Z0-9_-]{25,})/);
-      const lnM=raw.match(/https:\/\/docs\.google\.com\/[^\s"']+/)||raw.match(/https:\/\/drive\.google\.com\/[^\s"']+/);
-      if(idM)fileId=fileId||idM[1];if(lnM)fileLink=fileLink||lnM[0].replace(/['")\]]+$/,'');
-      const jM=raw.match(/\{[^}]+\}/s);if(jM){try{const j=JSON.parse(jM[0]);fileId=fileId||j.fileId||j.id;fileLink=fileLink||j.link||j.url;}catch(e){}}
-    }
-    if(fileId&&!fileLink)fileLink=`https://docs.google.com/document/d/${fileId}/edit`;
-    if(fileLink){
-      document.getElementById('gdoc-iframe').src=fileLink+'?rm=minimal';
-      const fw=document.getElementById('gdoc-fw');fw.style.display='flex';fw.style.flexDirection='column';
-      document.getElementById('gdoc-doc-name').textContent=docTitle;
-      const ol=document.getElementById('gdoc-open-link');ol.href=fileLink;ol.style.display='inline-flex';
-      document.getElementById('gdoc-status').textContent=`✓ Doc created: ${docTitle}`;
-      fw.scrollIntoView({behavior:'smooth',block:'start'});toast('Google Doc created ✓');
-    } else throw new Error('Could not get doc link');
-  }catch(e){document.getElementById('gdoc-status').innerHTML=`<span style="color:#e05c2a">⚠ ${e.message}</span>`;toast('Export failed');}
-  btn.disabled=false;document.getElementById('gdoc-btn-lbl').textContent='Export to Google Docs';
-}
-function closeGdocFrame(){document.getElementById('gdoc-fw').style.display='none';document.getElementById('gdoc-iframe').src='';}
-
-/* ── DOWNLOAD PNG ── */
-async function dlPNG(){
-  const btn=document.getElementById('dlbtn');btn.disabled=true;document.getElementById('dllbl').textContent=' …';
-  const wasE=eon;if(eon)toggleEdit();
-  try{
-    const FW=FMTS[flyerFmt]?.w||390;
-    const targetPx=parseInt(document.getElementById('dlRes')?.value)||1080;
-    const scale=targetPx/FW;
-    const c=await html2canvas(document.getElementById('flyer'),{scale,useCORS:true,backgroundColor:null,logging:false,width:FW});
-    const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='ingenius_flyer.png';a.click();
-  }catch(e){alert('Download failed');}
-  if(wasE)toggleEdit();btn.disabled=false;document.getElementById('dllbl').textContent=' PNG';
+/* ============ LANGUAGE ============ */
+function setLang(l){
+  lang=l;
+  el('btn-cn').classList.toggle('active',l==='cn');
+  el('btn-en').classList.toggle('active',l==='en');
+  document.documentElement.lang=l==='cn'?'zh':'en';
+  applyLang();
+  renderWeeklyStats();
+  renderBookCards();
+  renderProg();
+  if(S.date)renderTimes();
+  renderStaticBlocks();
 }
 
-/* ── PPTX ── */
-async function dlPPTX(){
-  const btn=document.getElementById('pptxbtn');btn.disabled=true;document.getElementById('pptxlbl').textContent=' Building…';
-  const inf=gi();const its=agi(inf.kp);const ns=inf.spks.filter(s=>s.n);
-  const theme=document.getElementById('selTheme').value,isDark=theme!=='white';
-  const W=5.4,H=9.6;const pres=new PptxGenJS();pres.defineLayout({name:'POSTER',width:W,height:H});pres.layout='POSTER';
-  const sl=pres.addSlide();
-  const BG=isDark?'000002':'FFFFFF',BG2=isDark?'0d1a2a':'f1f2f2',BLUE='077fe7',WHITE='FFFFFF',TEXT=isDark?'FFFFFF':'000002';
-  sl.addShape(pres.ShapeType.rect,{x:0,y:0,w:W,h:H,fill:{color:BG}});
-  sl.addShape(pres.ShapeType.rect,{x:0,y:0,w:W,h:0.04,fill:{color:BLUE}});
-  if(LD){try{sl.addImage({data:LD,x:0.22,y:0.22,w:1.4,h:0.38,sizing:{type:'contain',w:1.4,h:0.38}});}catch(e){sl.addText([{text:'In',options:{color:BLUE,bold:true,fontSize:15,fontFace:'Lato'}},{text:'Genius',options:{color:TEXT,bold:true,fontSize:15,fontFace:'Lato'}},{text:'  PREP',options:{color:isDark?'888888':'999999',bold:true,fontSize:9,fontFace:'Lato'}}],{x:0.22,y:0.26,w:1.8,h:0.3});}}
-  else sl.addText([{text:'In',options:{color:BLUE,bold:true,fontSize:15,fontFace:'Lato'}},{text:'Genius',options:{color:TEXT,bold:true,fontSize:15,fontFace:'Lato'}},{text:'  PREP',options:{color:isDark?'888888':'999999',bold:true,fontSize:9,fontFace:'Lato'}}],{x:0.22,y:0.26,w:1.8,h:0.3});
-  sl.addShape(pres.ShapeType.rect,{x:W-1.2,y:0.26,w:0.98,h:0.28,fill:{color:isDark?BLUE:'000002'}});
-  sl.addText(inf.et.toUpperCase(),{x:W-1.2,y:0.26,w:0.98,h:0.28,fontSize:7,bold:true,color:WHITE,align:'center',valign:'middle',charSpacing:1.5});
-  const heroY=1.0;if(BD){try{sl.addImage({data:BD,x:0,y:heroY,w:W,h:2.0,sizing:{type:'cover',w:W,h:2.0}});}catch(e){}sl.addShape(pres.ShapeType.rect,{x:0,y:heroY,w:W,h:2.0,fill:{color:BG,transparency:isDark?25:10}});}
-  sl.addText(inf.th,{x:0.22,y:heroY+0.18,w:W-0.44,h:1.1,fontSize:22,bold:true,color:isDark?WHITE:'000002',fontFace:'Poppins',breakLine:true,lineSpacingMultiple:1.15});
-  sl.addShape(pres.ShapeType.rect,{x:0.22,y:heroY+1.38,w:0.52,h:0.04,fill:{color:BLUE}});
-  sl.addText('📅  '+inf.tm,{x:0.22,y:heroY+1.52,w:W*.52,h:0.28,fontSize:11,bold:true,color:isDark?WHITE:'000002',fontFace:'Lato'});
-  sl.addText('📍  '+inf.lc,{x:0.22,y:heroY+1.8,w:W-0.44,h:0.26,fontSize:10,color:isDark?'cccccc':'000002',fontFace:'Lato'});
-  const wavY=heroY+2.1;sl.addShape(pres.ShapeType.rect,{x:0,y:wavY,w:W,h:0.06,fill:{color:BG2}});
-  const spkH=ns.length>0?(ns.length>2?2.4:1.9):0.5,spkY=wavY+0.06;
-  sl.addShape(pres.ShapeType.rect,{x:0,y:spkY,w:W,h:spkH,fill:{color:BG2}});
-  sl.addShape(pres.ShapeType.rect,{x:0.22,y:spkY+0.14,w:0.04,h:0.16,fill:{color:BLUE}});
-  sl.addText(pl('spk'),{x:0.32,y:spkY+0.14,w:2,h:0.2,fontSize:7.5,bold:true,color:isDark?BLUE:'000002',charSpacing:2,fontFace:'Lato'});
-  if(ns.length){const cols=Math.min(ns.length,2),colW=(W-0.44)/cols;ns.forEach((s,i)=>{const cx=0.22+(i%2)*colW,cy=spkY+0.44+Math.floor(i/2)*1.1,r=0.32;if(s.p){try{sl.addImage({data:s.p,x:cx+colW/2-r,y:cy,w:r*2,h:r*2,rounding:true});}catch(e){sl.addShape(pres.ShapeType.ellipse,{x:cx+colW/2-r,y:cy,w:r*2,h:r*2,fill:{color:'1a2a3a'}});sl.addText(ini(s.n),{x:cx+colW/2-r,y:cy,w:r*2,h:r*2,fontSize:r*38,bold:true,color:BLUE,align:'center',valign:'middle',fontFace:'Lato'});}}else{sl.addShape(pres.ShapeType.ellipse,{x:cx+colW/2-r,y:cy,w:r*2,h:r*2,fill:{color:'1a2a3a'}});sl.addText(ini(s.n),{x:cx+colW/2-r,y:cy,w:r*2,h:r*2,fontSize:r*38,bold:true,color:BLUE,align:'center',valign:'middle',fontFace:'Lato'});}sl.addShape(pres.ShapeType.ellipse,{x:cx+colW/2-r-0.03,y:cy-0.03,w:(r+0.03)*2,h:(r+0.03)*2,line:{color:BLUE,width:1.5},fill:{type:'none'}});sl.addText(s.n.toUpperCase(),{x:cx,y:cy+r*2+0.08,w:colW,h:0.22,fontSize:10,bold:true,color:BLUE,align:'center',fontFace:'Lato'});const cr=crl(s.c).slice(0,3);if(cr.length)sl.addText(cr.join('\n'),{x:cx,y:cy+r*2+0.32,w:colW,h:0.5,fontSize:8.5,color:isDark?'aaaaaa':'555555',align:'center',lineSpacingMultiple:1.3,breakLine:true,fontFace:'Lato'});});}
-  const agY=spkY+spkH+0.04,agH=its.length*0.42+0.5;
-  sl.addShape(pres.ShapeType.rect,{x:0,y:agY,w:W,h:agH,fill:{color:isDark?'000002':'FFFFFF'}});
-  sl.addShape(pres.ShapeType.rect,{x:0.22,y:agY+0.14,w:0.04,h:0.16,fill:{color:BLUE}});
-  sl.addText(pl('cov'),{x:0.32,y:agY+0.14,w:W-0.54,h:0.2,fontSize:7.5,bold:true,color:isDark?BLUE:'000002',charSpacing:2,fontFace:'Lato'});
-  its.forEach((it,i)=>{const iy=agY+0.44+i*0.42;sl.addShape(pres.ShapeType.ellipse,{x:0.22,y:iy+0.03,w:0.18,h:0.18,fill:{color:BLUE,transparency:85},line:{color:BLUE,width:1}});sl.addText('✓',{x:0.22,y:iy+0.03,w:0.18,h:0.18,fontSize:7.5,bold:true,color:BLUE,align:'center',valign:'middle'});sl.addText(it,{x:0.48,y:iy,w:W-0.7,h:0.28,fontSize:11,color:isDark?'dddddd':'3a3a3a',valign:'middle',fontFace:'Lato'});});
-  const ftY=agY+agH;sl.addShape(pres.ShapeType.rect,{x:0,y:ftY,w:W,h:Math.max(H-ftY,.9),fill:{color:BG2}});sl.addShape(pres.ShapeType.rect,{x:0,y:ftY,w:W,h:0.03,fill:{color:BLUE}});
-  sl.addShape(pres.ShapeType.rect,{x:0.22,y:ftY+0.2,w:1.5,h:0.36,fill:{color:BLUE}});sl.addText(pl('reg'),{x:0.22,y:ftY+0.2,w:1.5,h:0.36,fontSize:8,bold:true,color:WHITE,align:'center',valign:'middle',charSpacing:2,fontFace:'Lato'});
-  if(inf.ex)sl.addText(inf.ex,{x:0.22,y:ftY+0.64,w:W-1.5,h:0.3,fontSize:9,color:isDark?'888888':'777777',fontFace:'Lato'});
-  sl.addShape(pres.ShapeType.rect,{x:W-0.98,y:ftY+0.18,w:0.76,h:0.76,fill:{color:WHITE}});sl.addText('QR Code',{x:W-0.98,y:ftY+0.18,w:0.76,h:0.76,fontSize:9,color:'aaaaaa',align:'center',valign:'middle',italic:true});
-  sl.addNotes('Import into Canva: canva.com → Create a design → Import file.');
-  await pres.writeFile({fileName:'ingenius_flyer.pptx'});
-  btn.disabled=false;document.getElementById('pptxlbl').textContent=' Canva (.pptx)';toast('PPTX ready — import to Canva ✓');
+function applyLang(){
+  var L=T[lang];
+  el('nav-book-btn').textContent=L.navBook;
+  el('hero-h1').textContent=L.heroH1;
+  el('hero-pills').innerHTML=L.pills.map(function(p){return'<span class="pill">'+p+'</span>';}).join('');
+  el('hero-book-btn').textContent=L.heroBtn;
+  // Strip
+  el('strip-in').innerHTML=L.strip.map(function(s,i){
+    var icons=['🌿','✿','💎','📅'];
+    return'<div class="si"><div class="si-icon">'+icons[i]+'</div><div class="si-cn">'+s.cn+'</div><div class="si-en">'+s.en+'</div></div>';
+  }).join('');
+  // Booking
+  el('book-tag').textContent=L.bookTag;el('book-h2').textContent=L.bookH2;
+  el('type-title').textContent=L.typeTitle;el('type-sub').textContent=L.typeSub;
+  el('to-new-label').textContent=L.toNew;el('to-new-badge').textContent=L.toNewBadge;
+  el('to-ret-label').textContent=L.toRet;el('to-ret-badge').textContent=L.toRetBadge;
+  el('to-ref-label').textContent=L.toRef;
+  el('style-title').textContent=L.styleTitle;
+  el('btn1').textContent=L.btn1;el('back1').textContent=L.back1;
+  el('date-title').textContent=L.dateTitle;el('date-sub').textContent=L.dateSub;
+  el('btn2').textContent=L.btn2;el('back2').textContent=L.back2;
+  el('info-title').textContent=L.infoTitle;
+  el('lbl-name').textContent=L.lblName;el('lbl-phone').textContent=L.lblPhone;
+  el('lbl-email').textContent=L.lblEmail;el('lbl-notes').textContent=L.lblNotes;
+  el('f-name').placeholder=L.namePH;el('f-notes').placeholder=L.notesPH;
+  el('btn3').textContent=L.btn3;el('back3').textContent=L.back3;
+  el('review-title').textContent=L.reviewTitle;
+  el('cancel-notice').textContent=L.cancelNotice;
+  el('btn-confirm').textContent=L.btnConfirm;
+  el('conf-title').textContent=L.confTitle;el('conf-sub').textContent=L.confSub;
+  el('ref-label').textContent=L.refLabel;el('ref-sub').textContent=L.refSub;
+  el('gcal-title').textContent=L.gcalTitle;el('gcal-sub').textContent=L.gcalSub;
+  el('contact-title').textContent=L.contactTitle;
+  el('phone-label').textContent=L.phoneLabel;el('wechat-label').textContent=L.wechatLabel;
+  el('directions-title').textContent=L.directionsTitle;
+  el('aftercare-remind-title').textContent=L.aftercareRemind;
+  el('ac-link').textContent=L.acLink;
+  // Manage
+  el('manage-tag').textContent=L.manageTag;el('manage-h2').textContent=L.manageH2;
+  el('manage-sub').textContent=L.manageSub;
+  el('manage-lbl').textContent=L.manageLbl;el('lookup-btn').textContent=L.lookupBtn;
+  // Location
+  el('loc-tag').textContent=L.locTag;el('loc-h2').textContent=L.locH2;
+  el('loc-phone-label').textContent=L.locPhoneLabel;el('loc-wechat-label').textContent=L.locWechatLabel;
+  el('maps-btn-text').textContent=L.mapsBtn;
+  el('parking-title').textContent=L.parkingTitle;
+  el('photo-title').textContent=L.photoTitle;
+  el('photo-grid').innerHTML=L.photos.map(function(p){return'<div style="background:'+p.bg+';border-radius:10px;padding:12px 8px;text-align:center"><div style="font-size:22px;margin-bottom:5px">'+p.icon+'</div><div style="font-size:10px;color:#fff;font-weight:600">'+p.label+'</div><div style="font-size:9px;color:rgba(255,255,255,.8)">'+p.desc+'</div></div>';}).join('');
+  el('parking-tip').textContent=L.parkingTip;
+  // Aftercare
+  el('care-tag').textContent=L.careTag;el('care-h2').textContent=L.careH2;
+  // Bottom nav
+  el('bn-book-lbl').textContent=L.bnBook;el('bn-manage-lbl').textContent=L.bnManage;
+  el('bn-loc-lbl').textContent=L.bnLoc;el('bn-care-lbl').textContent=L.bnCare;
 }
 
-/* ── HTML DOWNLOAD ── */
-function dlHTML(){
-  const inner=document.getElementById('flyer').innerHTML;
-  const blob=new Blob([`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><title>InGenius Prep Flyer</title><style>body{margin:0;padding:52px 0 30px;background:#f1f2f2;display:flex;flex-direction:column;align-items:center;font-family:'Lato',sans-serif}#fw{box-shadow:0 8px 40px rgba(0,0,0,.2)}#tb{position:fixed;top:0;left:0;right:0;background:#000002;border-bottom:2px solid #077fe7;padding:8px 18px;display:flex;align-items:center;gap:9px;font-family:'Lato',sans-serif}#tb .logo{font-size:16px;font-weight:900}.blue{color:#077fe7}#tb button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 13px;cursor:pointer;font-size:10px;font-weight:700;border-radius:5px;transition:background .15s}#tb button:hover{background:#077fe7}#sd{font-size:11px;color:rgba(255,255,255,.4);margin:0 5px}#tip{margin-left:auto;font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.8px}[data-block]{cursor:move}[data-block]:hover{outline:2px dashed rgba(7,127,231,.5)}[data-block].sel{outline:2px solid #077fe7}</style></head><body><div id="tb"><span class="logo"><span class="blue">In</span>Genius <span style="font-size:10px;opacity:.5;letter-spacing:2px">Prep</span></span><button onclick="z(-5)">−</button><span id="sd">100%</span><button onclick="z(5)">+</button><button onclick="window.print()">⎙ Print</button><span id="tip">Drag to reposition · Double-click to edit text</span></div><div style="margin-top:0"><div id="fw">${inner}</div></div><script>let sel=null,ds=null,bp={},cur=100;document.querySelectorAll('[data-block]').forEach(el=>{el.addEventListener('mousedown',e=>{if(e.target.closest('[contenteditable]'))return;const id=el.dataset.block;if(!bp[id])bp[id]={x:0,y:0};ds={el,id,sx:e.clientX,sy:e.clientY,tx:bp[id].x,ty:bp[id].y};if(sel&&sel!==el)sel.classList.remove('sel');sel=el;el.classList.add('sel');e.preventDefault();});el.addEventListener('dblclick',e=>{el.querySelectorAll('div,span').forEach(n=>{if(!n.querySelector('svg,img'))n.contentEditable='true';});el.style.cursor='text';e.stopPropagation();});});document.addEventListener('mousemove',e=>{if(!ds)return;bp[ds.id].x=ds.tx+(e.clientX-ds.sx);bp[ds.id].y=ds.ty+(e.clientY-ds.sy);ds.el.style.transform='translate('+bp[ds.id].x+'px,'+bp[ds.id].y+'px)';});document.addEventListener('mouseup',()=>{ds=null;});document.addEventListener('click',e=>{if(!e.target.closest('[data-block]')&&!e.target.closest('#tb')){if(sel)sel.classList.remove('sel');sel=null;}});function z(d){cur=Math.max(40,Math.min(200,cur+d));document.getElementById('fw').style.transform='scale('+cur/100+')';document.getElementById('fw').style.transformOrigin='top center';document.getElementById('fw').style.marginBottom=(cur-100)*6+'px';document.getElementById('sd').textContent=cur+'%';}<\/script></body></html>`],{type:'text/html'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ingenius_flyer.html';a.click();
+function renderStaticBlocks(){
+  var L=T[lang];
+  // Hours
+  var hc=el('hours-card');hc.innerHTML='';
+  for(var i=0;i<L.hours.length;i+=2){
+    var closed=L.hours[i+1]==='Closed'||L.hours[i+1]==='休息 Closed';
+    hc.innerHTML+='<div class="hours-row"><span>'+L.hours[i]+'</span><span class="'+(closed?'hours-closed':'')+'">'+L.hours[i+1]+'</span></div>';
+  }
+  // Parking
+  var pc=el('park-card');pc.innerHTML='';
+  L.parking.forEach(function(p){pc.innerHTML+='<div class="info-row"><span class="i-icon">'+p.i+'</span><div><div class="i-label">'+p.label+'</div><div class="i-val">'+p.val+'</div></div></div>';});
+  // Aftercare full
+  var af=el('ac-full');af.innerHTML='';
+  L.ac.forEach(function(a){af.innerHTML+='<div class="ac-row"><div class="ac-ic">'+a.i+'</div><div><div class="ac-title">'+a.title+'</div><div class="ac-text">'+a.text+'</div></div></div>';});
 }
 
-/* ── UTILS ── */
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1900);}
-function stab(n,el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('tc-'+n).classList.add('active');
-  if(n==='flyer')rf();
-  if(n==='sms')updateSmsCounter();
+/* ============ WEEKLY STATS ============ */
+function renderWeeklyStats(){
+  var now=new Date();
+  var day=now.getDay();
+  // Week starts Monday
+  var monday=new Date(now);
+  monday.setDate(now.getDate()-(day===0?6:day-1));
+  monday.setHours(0,0,0,0);
+  var sunday=new Date(monday);
+  sunday.setDate(monday.getDate()+6);
+
+  // Count all slots in this week
+  var totalSlots=0,bookedSlots=0;
+  for(var d=new Date(monday);d<=sunday;d.setDate(d.getDate()+1)){
+    var slots=getSlots(new Date(d));
+    totalSlots+=slots.length;
+    var key=fmtKey(new Date(d));
+    bookedSlots+=(BOOKED[key]||[]).length;
+  }
+  var remaining=totalSlots-bookedSlots;
+  var pct=totalSlots>0?Math.round((bookedSlots/totalSlots)*100):0;
+
+  var isEn=lang==='en';
+  var weekStart=monday.toLocaleDateString(isEn?'en-US':'zh-CN',{month:'short',day:'numeric'});
+  var weekEnd=sunday.toLocaleDateString(isEn?'en-US':'zh-CN',{month:'short',day:'numeric'});
+
+  el('weekly-stats').innerHTML=
+    '<div style="background:rgba(255,255,255,.15);border-radius:12px;padding:12px 8px">'+
+      '<div style="font-size:22px;font-weight:700;color:#fff">'+bookedSlots+'</div>'+
+      '<div style="font-size:11px;color:rgba(255,255,255,.8);margin-top:2px">'+(isEn?'Booked this week':'本周已预约')+'</div>'+
+    '</div>'+
+    '<div style="background:rgba(255,255,255,.15);border-radius:12px;padding:12px 8px">'+
+      '<div style="font-size:22px;font-weight:700;color:#fff">'+remaining+'</div>'+
+      '<div style="font-size:11px;color:rgba(255,255,255,.8);margin-top:2px">'+(isEn?'Spots left':'剩余位置')+'</div>'+
+    '</div>'+
+    '<div style="background:rgba(255,255,255,.15);border-radius:12px;padding:12px 8px">'+
+      '<div style="font-size:22px;font-weight:700;color:#fff">'+pct+'%</div>'+
+      '<div style="font-size:11px;color:rgba(255,255,255,.8);margin-top:2px">'+(isEn?'Full this week':'本周预约率')+'</div>'+
+    '</div>';
 }
 
-function updateSmsCounter(){
-  const el=document.getElementById('c-sms');
-  const ctr=document.getElementById('sms-counter');
-  if(!ctr)return;
-  const txt=el.innerText||'';
-  if(txt&&!el.querySelector('.ph')){
-    const n=txt.length;
-    ctr.textContent=`${n} / 160 characters${n>160?' ⚠ too long':''}`;
-    ctr.style.color=n>160?'#e05c2a':'#bbb';
-  } else {ctr.textContent='';}
-}
-// update counter whenever SMS content changes
-document.addEventListener('input',e=>{if(e.target.id==='c-sms')updateSmsCounter();});
 
-/* ── INIT ── */
-setZoom(0.74);aUI();rf();loadLib();
+function renderProg(){
+  var steps=T[lang].progSteps;
+  var html='';
+  steps.forEach(function(s,i){
+    var n=i+1,done=n<S.step,act=n===S.step;
+    if(i>0)html+='<div class="p-line'+(done?' done':'')+'"></div>';
+    html+='<div class="prog-step"><div class="pd'+(done?' done':act?' act':'')+'">'+( done?'✓':n)+'</div><div class="pl'+(act?' act':'')+'">'+s+'</div></div>';
+  });
+  el('prog-bar').innerHTML=html;
+}
+
+function renderBookCards(){
+  var container=el('sp-grid');container.innerHTML='';
+  var isRef=S.ctype==='refill';
+  STYLES.forEach(function(s){
+    var p=getPrice(s,S.ctype);
+    var name=lang==='cn'?(isRef?s.cn+'补睫':s.cn):(isRef?s.en+' Refill':s.en);
+    var sub=lang==='cn'?s.sub_cn:s.sub_en;
+    var dur=isRef?T[lang].refillDur:'120 min';
+    var div=document.createElement('div');
+    div.className='book-card';div.id='bc'+s.id;
+    var html='<div class="bc-emoji">'+s.emoji+'</div>';
+    html+='<div class="bc-cn">'+name+'</div>';
+    html+='<div class="bc-en">'+sub+'</div>';
+    if(p.orig){html+='<div class="bc-orig">'+p.orig+'</div><div class="bc-price">'+p.label+'</div><span class="bc-tag">'+p.tag+'</span>';}
+    else{html+='<div class="bc-price">'+p.label+'</div>';}
+    html+='<div class="bc-dur">🕒 '+dur+'</div>';
+    div.innerHTML=html;
+    div.addEventListener('click',function(){pickSvc(s);});
+    container.appendChild(div);
+  });
+}
+
+function renderDates(){
+  var dg=el('date-grid');dg.innerHTML='';
+  var today=new Date();today.setHours(0,0,0,0);
+  var DOW=T[lang].days;
+  var shown=0;
+  for(var i=1;i<=42&&shown<28;i++){
+    var d=new Date(today);d.setDate(today.getDate()+i);
+    var slots=getSlots(d);
+    var avail=slots.filter(function(t2){return!localConflict(d,t2)&&!calConflict(d,t2);});
+    if(!avail.length)continue;shown++;
+    (function(date,count){
+      var btn=document.createElement('div');
+      var dayStr=lang==='cn'?'周'+DOW[date.getDay()]:DOW[date.getDay()];
+      var spotsStr=lang==='cn'?count+'位':count;
+      btn.className='date-btn'+(S.date&&fmtKey(S.date)===fmtKey(date)?' sel':'');
+      btn.innerHTML='<span class="dc">'+dayStr+'</span><span class="dn">'+date.getDate()+'</span><span class="ds">'+spotsStr+'</span>';
+      btn.addEventListener('click',function(){pickDate(date);});
+      dg.appendChild(btn);
+    })(d,avail.length);
+  }
+  if(!dg.children.length)dg.innerHTML='<p style="font-size:13px;color:var(--hint)">'+(lang==='cn'?'暂无可预约时间，请联系我们':'No available times. Please contact us directly.')+'</p>';
+}
+
+function renderTimes(){
+  var slots=getSlots(S.date);
+  var avail=slots.filter(function(t2){return!localConflict(S.date,t2)&&!calConflict(S.date,t2);});
+  el('time-title').textContent=(lang==='cn'?'选择时间 — ':'Available times — ')+fmtShort(S.date);
+  var tg=el('time-grid');tg.innerHTML='';
+  avail.forEach(function(t2){
+    var btn=document.createElement('button');
+    btn.className='time-btn'+(S.time===t2?' sel':'');
+    btn.textContent=fmtTime(t2);
+    btn.addEventListener('click',function(){pickTime(t2);});
+    tg.appendChild(btn);
+  });
+  el('time-sec').classList.remove('hidden');
+}
+
+/* ============ ACTIONS ============ */
+function setType(v){
+  S.ctype=v;S.svc=null;el('btn1').disabled=true;
+  ['to-new','to-ret','to-ref'].forEach(function(id){el(id).classList.remove('sel');});
+  el({new:'to-new',returning:'to-ret',refill:'to-ref'}[v]).classList.add('sel');
+  renderBookCards();
+}
+function pickSvc(s){
+  if(!S.ctype){alert(lang==='cn'?'请先选择新客/老客/补睫':'Please select your client type first.');return;}
+  S.svc=s;
+  document.querySelectorAll('.book-card').forEach(function(c){c.classList.remove('sel');});
+  el('bc'+s.id).classList.add('sel');el('btn1').disabled=false;
+}
+function pickDate(date){S.date=date;S.time=null;el('btn2').disabled=true;renderDates();renderTimes();}
+function pickTime(t2){S.time=t2;renderTimes();el('btn2').disabled=false;}
+
+function goStep(n){
+  if(S.step===3){S.name=el('f-name').value.trim();S.phone=el('f-phone').value.trim();S.email=el('f-email').value.trim();S.notes=el('f-notes').value.trim();}
+  if(n===2)renderDates();
+  if(n===4)renderReview();
+  el('step'+S.step).classList.remove('active');S.step=n;el('step'+n).classList.add('active');
+  renderProg();scrollSec('book-sec');
+}
+
+function renderReview(){
+  var sv=S.svc,p=getPrice(sv,S.ctype),isRef=S.ctype==='refill';
+  var label=lang==='cn'?(isRef?sv.cn+'补睫':sv.cn):(isRef?sv.en+' Refill':sv.en);
+  var RK=T[lang].rk,CT=T[lang].ctypes;
+  var prHtml=p.orig?'<span style="text-decoration:line-through;color:var(--hint);font-size:13px">'+p.orig+'</span> <strong style="color:var(--bronze)">'+p.label+'</strong> <span style="font-size:11px;background:var(--sand-l);color:var(--bronze);padding:2px 7px;border-radius:10px">'+p.tag+'</span>':'<strong style="color:var(--bronze)">'+p.label+'</strong>';
+  var rows=[[RK.style,'<strong>'+label+'</strong>'],[RK.type,CT[S.ctype]],[RK.date,fmtDate(S.date)],[RK.time,fmtTime(S.time)],[RK.duration,isRef?T[lang].refillDur:'120 min'],[RK.price,prHtml],[RK.name,S.name],[RK.phone,S.phone||(lang==='cn'?'未填':'N/A')],[RK.email,S.email||(lang==='cn'?'未填':'N/A')],[RK.notes,S.notes||(lang==='cn'?'无':'None')]];
+  var html='';
+  rows.forEach(function(r){html+='<div class="review-row"><span class="rk">'+r[0]+'</span><span class="rv">'+r[1]+'</span></div>';});
+  el('review-card').innerHTML=html;
+}
+
+function doConfirm(){
+  el('btn-confirm').disabled=true;
+  el('btn-confirm').textContent=lang==='cn'?'处理中...':'Processing...';
+  var key=fmtKey(S.date);
+  if(!BOOKED[key])BOOKED[key]=[];BOOKED[key].push(S.time);
+  // Re-render stats after booking
+  storeSet('bunny-v9',BOOKED);
+  renderWeeklyStats();
+  var isRef=S.ctype==='refill',sv=S.svc,p=getPrice(sv,S.ctype);
+  var label=lang==='cn'?(isRef?sv.cn+'补睫':sv.cn):(isRef?sv.en+' Refill':sv.en);
+  var parts=key.split('-'),h=parseInt(S.time.split(':')[0]),mi=parseInt(S.time.split(':')[1]);
+  var st=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]),h,mi,0);
+  var durMin=isRef?75:120,en=new Date(st.getTime()+durMin*60000);
+  var bookingId=genId();
+  var clientDesc='📍 Bunny Beauty Studio\n7151 No. 5 Rd, Richmond, BC\n📞 236-996-7087\n💬 WeChat: LanLovesLife\n\nStyle: '+label+'\nPrice: '+p.label+(p.tag?' ('+p.tag+')':'')+'\nBooking Ref: '+bookingId+'\n\nCancel/reschedule: at least 3 days notice required\n⚠️ Directions: Look for the 7151 gate pillar on your left along No. 5 Rd — easy to miss! Park on the right after entering.';
+  var gcalUrl='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Bunny Beauty — '+label+' · '+S.name)+'&dates='+gcalFmt(st)+'/'+gcalFmt(en)+'&details='+encodeURIComponent(clientDesc)+'&location='+encodeURIComponent(CFG.address);
+  gcalUrlStr=gcalUrl;el('gcal-url').value=gcalUrl;
+  el('ref-display').textContent=bookingId;
+  // Confirm summary
+  var p2=getPrice(sv,S.ctype),RK=T[lang].rk;
+  var sumP=p2.orig?'<span style="text-decoration:line-through;color:var(--hint);font-size:13px">'+p2.orig+'</span> <strong style="color:var(--bronze)">'+p2.label+'</strong>':'<strong style="color:var(--bronze)">'+p2.label+'</strong>';
+  var sumRows=[[RK.style,'<strong>'+label+'</strong>'],[RK.date,fmtDate(S.date)],[RK.time,fmtTime(S.time)],[RK.price,sumP],[RK.name,S.name]];
+  var sumHtml='';sumRows.forEach(function(r){sumHtml+='<div class="review-row"><span class="rk">'+r[0]+'</span><span class="rv">'+r[1]+'</span></div>';});
+  el('conf-sum').innerHTML=sumHtml;
+  // Parking & aftercare in confirmation
+  var lcHtml='';T[lang].parking.forEach(function(pk){lcHtml+='<div class="info-row"><span class="i-icon">'+pk.i+'</span><div><div class="i-label">'+pk.label+'</div><div class="i-val">'+pk.val+'</div></div></div>';});
+  el('loc-conf').innerHTML=lcHtml;
+  var acHtml='';T[lang].ac.slice(0,4).forEach(function(a){acHtml+='<div class="ac-row"><div class="ac-ic">'+a.i+'</div><div><div class="ac-title">'+a.title+'</div><div class="ac-text">'+a.text.substring(0,60)+'...</div></div></div>';});
+  el('ac-mini').innerHTML=acHtml;
+  el('step4').classList.remove('active');S.step=5;el('step5').classList.add('active');
+  el('prog-bar').style.display='none';scrollSec('book-sec');
+  var record={bookingId:bookingId,eventId:'',name:S.name,phone:S.phone,style:label,price:p.label,ctype:S.ctype,dateKey:key,time:S.time,durMin:durMin,created:Date.now()};
+  storeSet('bk:'+bookingId,record);
+  var bookParams={action:'book',name:S.name,phone:S.phone||'',email:S.email||'',style:label,price:p.label+(p.tag?' ('+p.tag+')':''),ctype:S.ctype,notes:S.notes||'',bookingId:bookingId,start:st.toISOString(),end:en.toISOString()};
+  gcalReq(bookParams).then(function(res){if(res&&res.eventId){var bk=storeGet('bk:'+bookingId);if(bk){bk.eventId=res.eventId;storeSet('bk:'+bookingId,bk);}}});
+  try{var qs2=Object.keys(bookParams).map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(bookParams[k]);}).join('&');new Image().src=GCAL_URL+'?'+qs2;}catch(e){}
+}
+
+/* ============ MANAGE ============ */
+function lookupBooking(){
+  var ref=el('manage-ref').value.trim().toUpperCase();
+  if(!ref){alert(lang==='cn'?'请输入预约编号':'Please enter your booking reference');return;}
+  var res=el('manage-result'),L=T[lang];
+  res.classList.remove('hidden');
+  var bk=storeGet('bk:'+ref);
+  if(!bk){res.innerHTML='<div class="notice" style="text-align:center">'+L.lookupNotFound+' <strong>'+ref+'</strong><br><span style="font-size:13px">'+(lang==='cn'?'请检查编号，或在预约时使用的同一设备上查询':'Please check your reference or use the same device you booked on.')+'</span></div>';return;}
+  if(bk.status==='cancelled'){res.innerHTML='<div class="notice" style="text-align:center">'+L.lookupCancelled+'</div>';return;}
+  var apptDate=new Date(bk.dateKey+'T'+bk.time+':00'),daysLeft=Math.floor((apptDate-new Date())/86400000),canCancel=daysLeft>=3;
+  var html='<div class="card" style="margin-bottom:14px">';
+  [[L.rk.style,bk.style],[L.rk.date,bk.dateKey],[L.rk.time,fmtTime(bk.time)],[L.rk.name,bk.name],[L.rk.price,bk.price]].forEach(function(row){html+='<div class="review-row"><span class="rk">'+row[0]+'</span><span class="rv">'+row[1]+'</span></div>';});
+  html+='</div>';
+  if(canCancel){
+    html+='<div class="notice">'+L.daysLeft+' <strong style="color:var(--bronze)">'+daysLeft+'</strong> '+L.daysLeftUnit+'</div>';
+    html+='<button class="btn-main" style="background:#c0392b" id="do-cancel">'+L.doCancel+'</button>';
+  }else{
+    html+='<div class="notice" style="border-color:var(--sand)">'+L.daysLeftFew+' <strong style="color:var(--bronze)">'+daysLeft+'</strong> '+L.daysLeftFewUnit+'</div>';
+    html+='<a href="tel:+12369967087" class="btn-main" style="display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none">📱 (236) 996-7087</a>';
+    html+='<div style="text-align:center;margin-top:10px;font-size:14px;color:var(--hint)">WeChat: <strong>LanLovesLife</strong></div>';
+  }
+  res.innerHTML=html;
+  if(canCancel){el('do-cancel').addEventListener('click',function(){doCancelBooking(ref,bk);});}
+}
+
+function doCancelBooking(ref,bk){
+  var L=T[lang];
+  if(!confirm(lang==='cn'?'确认取消这个预约吗？':'Are you sure you want to cancel this appointment?'))return;
+  var res=el('manage-result');
+  res.innerHTML='<div style="text-align:center;padding:20px;color:var(--hint)">'+L.cancelLoading+'</div>';
+  if(BOOKED[bk.dateKey]){BOOKED[bk.dateKey]=BOOKED[bk.dateKey].filter(function(t2){return t2!==bk.time;});storeSet('bunny-v9',BOOKED);}
+  bk.status='cancelled';storeSet('bk:'+ref,bk);
+  if(bk.eventId){gcalReq({action:'cancel',eventId:bk.eventId});}
+  res.innerHTML='<div class="card" style="text-align:center;padding:24px"><div style="font-size:30px;margin-bottom:10px">✓</div><div style="font-size:18px;font-weight:600;color:var(--bronze);margin-bottom:6px">'+L.cancelDone+'</div><div style="font-size:14px;color:var(--hint)">Booking '+ref+'</div></div>';
+}
+
+/* ============ INIT ============ */
+function init(){
+  var saved=storeGet('bunny-v9');if(saved)BOOKED=saved;
+  fetchBusy();
+  applyLang();
+  renderStaticBlocks();
+  renderBookCards();
+  renderProg();
+  el('nav-book-btn').addEventListener('click',function(){scrollSec('book-sec');});
+  el('hero-book-btn').addEventListener('click',function(){scrollSec('book-sec');});
+  el('to-new').addEventListener('click',function(){setType('new');});
+  el('to-ret').addEventListener('click',function(){setType('returning');});
+  el('to-ref').addEventListener('click',function(){setType('refill');});
+  el('btn1').addEventListener('click',function(){
+    if(!busyLoaded){el('btn1').disabled=true;el('btn1').textContent=lang==='cn'?'加载中...':'Loading...';fetchBusy().then(function(){el('btn1').disabled=false;el('btn1').textContent=T[lang].btn1;goStep(2);});}
+    else{goStep(2);}
+  });
+  el('btn2').addEventListener('click',function(){goStep(3);});
+  el('btn3').addEventListener('click',function(){goStep(4);});
+  el('back1').addEventListener('click',function(){goStep(1);});
+  el('back2').addEventListener('click',function(){goStep(2);});
+  el('back3').addEventListener('click',function(){goStep(3);});
+  el('btn-confirm').addEventListener('click',doConfirm);
+  el('f-name').addEventListener('input',function(){el('btn3').disabled=!el('f-name').value.trim();});
+  el('gcal-btn').addEventListener('click',function(){if(gcalUrlStr)window.open(gcalUrlStr,'_blank');});
+  el('ac-link').addEventListener('click',function(){scrollSec('aftercare-sec');});
+  el('lookup-btn').addEventListener('click',lookupBooking);
+  function setActive(btn){document.querySelectorAll('.bn-item').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');}
+  el('bn-book').addEventListener('click',function(){scrollSec('book-sec');setActive(el('bn-book'));});
+  el('bn-manage').addEventListener('click',function(){scrollSec('manage-sec');setActive(el('bn-manage'));});
+  el('bn-loc').addEventListener('click',function(){scrollSec('loc-sec');setActive(el('bn-loc'));});
+  el('bn-care').addEventListener('click',function(){scrollSec('aftercare-sec');setActive(el('bn-care'));});
+}
+init();
 </script>
-</body>
-</html>
