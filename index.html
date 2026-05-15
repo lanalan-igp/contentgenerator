@@ -464,16 +464,8 @@ select.ctrl:focus{border-color:var(--blue)}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundled.js"></script>
 <script>
-/* ── API KEY ── */
-let userApiKey='';
-function saveKey(v){userApiKey=v.trim();try{localStorage.setItem('igp_key',userApiKey);}catch(e){}}
-function loadKey(){try{const k=localStorage.getItem('igp_key');if(k){userApiKey=k;document.getElementById('apikey').value=k;}}catch(e){}}
-function getApiUrl(){return'https://api.anthropic.com/v1/messages';}
-function getHeaders(){
-  const h={'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'};
-  if(userApiKey)h['x-api-key']=userApiKey;
-  return h;
-}
+const API='https://igp-api-proxy.lana-lan.workers.dev';
+function getHeaders(){return{'Content-Type':'application/json'};}
 let uL='en',LD=null,BD=null,eon=false,sbOpen=true;
 let spks=[{n:'',c:'',p:null}];
 let BP={},sel=null,ds=null,tData=null,zoomLvl=0.74,pv=0,styleIdx=0;
@@ -883,7 +875,7 @@ Register: ${link}${buildStyleCtx('all')}`;
 function skel(id){const ws=[72,90,58,84,68,54,78];document.getElementById('c-'+id).innerHTML=ws.map(w=>`<div class="sk" style="width:${w}%"></div>`).join('');}
 async function callA(sty,inf,att=0){
   try{
-          const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:getHeaders(),body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:[{role:'user',content:bP(sty,inf)}]})});
+          const r=await fetch(API,{method:'POST',headers:getHeaders(),body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:[{role:'user',content:bP(sty,inf)}]})});
     if(!r.ok)throw new Error(`HTTP ${r.status}`);
     const d=await r.json();if(d.error)throw new Error(d.error.message);
     return d.content[0].text;
@@ -936,7 +928,7 @@ async function exportToGdoc(){
   const docTitle=`${inf.th} — InGenius Prep Copy`;
   const content=`InGenius Prep — Copywriting Versions\nEvent: ${inf.th}\nDate: ${inf.tm} | Location: ${inf.lc}\nGenerated: ${new Date().toLocaleString()}\n\n${'━'.repeat(44)}\n01 · KNOWLEDGE SHARE\n${'━'.repeat(44)}\n\n${k||'(not generated)'}\n\n\n${'━'.repeat(44)}\n02 · CLICKBAIT / VIRAL\n${'━'.repeat(44)}\n\n${cb||'(not generated)'}\n\n\n${'━'.repeat(44)}\n03 · CLEAN & DIRECT\n${'━'.repeat(44)}\n\n${mn||'(not generated)'}`;
   try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:getHeaders(),body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1024,mcp_servers:[{type:'url',url:'https://drivemcp.googleapis.com/mcp/v1',name:'google-drive'}],messages:[{role:'user',content:`Create a new Google Doc with title "${docTitle}" and this exact content:\n${content}\n\nReturn ONLY JSON: {"fileId":"...","link":"..."}`}]})});
+    const resp=await fetch(API,{method:'POST',headers:getHeaders(),body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1024,mcp_servers:[{type:'url',url:'https://drivemcp.googleapis.com/mcp/v1',name:'google-drive'}],messages:[{role:'user',content:`Create a new Google Doc with title "${docTitle}" and this exact content:\n${content}\n\nReturn ONLY JSON: {"fileId":"...","link":"..."}`}]})});
     if(!resp.ok)throw new Error(`HTTP ${resp.status}`);
     const data=await resp.json();let fileId=null,fileLink=null;
     for(const blk of data.content||[]){
